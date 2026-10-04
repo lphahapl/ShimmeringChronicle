@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f08513fa6c7b0042b236d6d38dacc7d, type: 3}
+  m_Name: "\u51FB\u6740\u654C\u4EBA 2"
+  m_EditorClassIdentifier: Assembly-CSharp::MissionSO
+  missionID: mission_002
+  missionName: "\u6740\u654C2"
+  missionDescription: "\u51FB\u6740\u4E00\u4E2A\u6D4B\u8BD5\u654C\u4EBA001"
+  missionType: 1
+  dialog: {fileID: 0}
+  requireMents:
+  - missionDetail: "\u51FB\u6740\u6D4B\u8BD5\u654C\u4EBA"
+    type: 1
+    targetID: Enemy_001
+    requireNum: 1
+  reward:
+  - config: {fileID: 11400000, guid: 8274f4365b1c4b9a97c09bc971a1171e, type: 2}
+    num: 10

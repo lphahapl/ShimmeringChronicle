@@ -102,6 +102,7 @@ public class PlayerObj : MonoBehaviour, IDamageable, IContainerOwner,ICanChangeH
     {
         interactionMask = LayerMask.GetMask("Interactable");
         Data.missions.Add("mission_001", missionData = new MissionData(t));
+        
         this.Publish<PlayerData>(GameEvents.OnMissionsChanged, this.data);
     }
     void OnEnable()
@@ -113,6 +114,7 @@ public class PlayerObj : MonoBehaviour, IDamageable, IContainerOwner,ICanChangeH
     {
         UIManager.Instance.RefreshAll();
         this.Publish(GameEvents.OnMissionsChanged, Data);
+        print(Data.missions.Count);
     }
 
     /// <summary>背包 或 快捷栏 里有没有 —— 也就是"玩家身上有没有这个东西"</summary>

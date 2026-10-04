@@ -41,5 +41,10 @@ public static class GameEvents
     public static readonly EventKey<int>OnPlayerCombo=new EventKey<int>();
     public static readonly EventKey<EnemyObj,int>OnEnemyCombo=new EventKey<EnemyObj,int>();
     public static readonly EventKey<EnemyObj,ItemData>OnEnemyChangedHandingItem=new EventKey<EnemyObj, ItemData>();//敌人切换手持物品或者初始化时调用
+    /// <summary>
+    /// 参数分别为:
+    /// 谁，要求类型，id，个数
+    /// </summary>
+    public static readonly EventKey<PlayerData,RequirementType,string,int>OnPushMissionProgress=new EventKey<PlayerData, RequirementType, string,int>();
 
 }
