@@ -1,0 +1,33 @@
+PBR OK: Steel (base / metallic-smoothness / normal)
+PBR OK: DarkSteel (base / metallic-smoothness / normal)
+PBR OK: Brass (base / metallic-smoothness / normal)
+PBR OK: Leather (base / metallic-smoothness / normal)
+PBR OK: Cloth (base / metallic-smoothness / normal)
+Yoimiya 9._ -> 髮.png
+Yoimiya 10._sph+ -> sph+.png (additive hair highlights)
+Yoimiya 11.atamakazari -> 髮.png
+Yoimiya 13.koromo -> 衣.png
+Yoimiya 14.koromo_ -> 衣.png
+Yoimiya 15.tsutsumi -> 衣.png
+Yoimiya 16.yui1 -> 衣.png
+Yoimiya 17.koshi__ -> 衣.png
+Yoimiya 18.shiro_ -> 衣.png
+Yoimiya 19.__ -> 衣.png
+Yoimiya 20._yui -> 衣.png
+Yoimiya 21.kaminome -> 衣.png
+Yoimiya 22.kaminomeAL -> 衣.png
+Yoimiya 23.hada -> 肌.png
+Yoimiya 24.yubikabuto -> 衣.png
+Yoimiya 25._ -> 衣.png
+Yoimiya 12.me -> 髮.png
+Yoimiya 26.hoshime -> 面.png
+Yoimiya 0.men1 -> 面.png
+Yoimiya 1.men -> 面.png
+Yoimiya 2.men2 -> 面.png
+Yoimiya 3.nijuu -> 面.png
+Yoimiya 4.matsuge -> 面.png
+Yoimiya 5.shirome -> 面.png
+Yoimiya 6.kuchi -> 面.png
+Yoimiya 7._ -> 面.png
+Yoimiya 8.mayu -> 面.png
+PASS: all 27 Yoimiya renderer slots have mapped textures.

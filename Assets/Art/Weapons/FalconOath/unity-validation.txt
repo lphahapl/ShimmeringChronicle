@@ -1,0 +1,5 @@
+PASS
+Height: 2.25 m
+Triangles: 5852
+URP materials: 6
+Prefab: Assets/Art/Weapons/FalconOath/FalconOath.prefab

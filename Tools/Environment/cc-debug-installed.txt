@@ -1,0 +1,1 @@
+PASS: CharacterControllerDebugView attached to Character Warrior

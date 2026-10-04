@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ef66cb190b9b214daaecf638b5abe31, type: 3}
+  m_Name: weapon_004
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponSO
+  id: weapon_004
+  itemName: "\u7D2B\u7535"
+  description: "\u9AD8\u4F24\u5BB3\u7684\u7D2B\u6676\u957F\u5251\uFF1B\u5F53\u524D\u4E0D\u9644\u5E26\u96F7\u5143\u7D20\u6548\u679C\u3002"
+  icon: {fileID: 21300000, guid: b94b12f8b2ce42099da41a85fed8e947, type: 3}
+  stackCount: 1
+  prefab: {fileID: 6224495756377181913, guid: 35266b66d99a4784afa1b1cb10befd41, type: 3}
+  combo:
+  - damagePerHit: 16
+    radius: 1.4
+    judgeOffset: {x: 0, y: 0, z: 0.3}
+  - damagePerHit: 22
+    radius: 1.6
+    judgeOffset: {x: 0, y: 0, z: 0.3}
+  - damagePerHit: 32
+    radius: 1.9
+    judgeOffset: {x: 0, y: 0, z: 0.5}
+  overrideController: {fileID: 0}

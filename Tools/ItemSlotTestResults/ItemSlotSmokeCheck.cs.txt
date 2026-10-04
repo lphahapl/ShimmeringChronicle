@@ -1,0 +1,172 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
+using TMPro;
+using UnityEditor;
+using UnityEditor.SceneManagement;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+
+// Temporary, isolated Unity smoke checks. No scene/prefab assets are saved.
+[InitializeOnLoad]
+public static class ItemSlotSmokeCheck
+{
+    const string Request = "Temp/ItemSlotSmokeCheck.request";
+    const string Output = "Tools/ItemSlotTestResults/automated-results.txt";
+    static readonly List<string> Results = new List<string>();
+    static readonly BindingFlags Private = BindingFlags.Instance | BindingFlags.NonPublic;
+    static int failures;
+
+    static ItemSlotSmokeCheck() { EditorApplication.update += Poll; }
+
+    static void Poll()
+    {
+        if (!File.Exists(Request) || EditorApplication.isCompiling ||
+            EditorApplication.isUpdating || !EditorApplication.isPlaying) return;
+        File.Delete(Request);
+        Run();
+    }
+
+    static T Field<T>(ItemSlot slot, string name) => (T)typeof(ItemSlot).GetField(name, Private).GetValue(slot);
+    static void Set(ItemSlot slot, string name, object value) => typeof(ItemSlot).GetField(name, Private).SetValue(slot, value);
+    static void Check(string name, bool passed)
+    {
+        Results.Add((passed ? "PASS " : "FAIL ") + name);
+        if (!passed) failures++;
+    }
+
+    static Image NewImage(string name, Transform parent)
+    {
+        var go = new GameObject(name, typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
+        go.transform.SetParent(parent, false);
+        return go.GetComponent<Image>();
+    }
+
+    static ItemSlot MakeSlot(GameObject prefab, Transform parent, Scene scene, Vector2 position)
+    {
+        var go = (GameObject)PrefabUtility.InstantiatePrefab(prefab, scene);
+        go.transform.SetParent(parent, false);
+        go.transform.position = position;
+        var slot = go.GetComponent<ItemSlot>();
+        var preview = NewImage("Independent Drag Image", parent);
+        preview.rectTransform.sizeDelta = new Vector2(54, 54);
+        preview.gameObject.SetActive(false);
+        Set(slot, "dragImage", preview);
+        slot.mask = NewImage("Highlight", go.transform);
+        slot.mask.color = Color.clear;
+        slot.mask.raycastTarget = false;
+        return slot;
+    }
+
+    [MenuItem("Tools/ItemSlot Smoke Check/Run")]
+    public static void Run()
+    {
+        if (!EditorApplication.isPlaying) return;
+        Results.Clear(); failures = 0;
+        Results.Add("Unity " + Application.unityVersion + " | " + DateTime.Now.ToString("s"));
+        Results.Add("Play Mode: ExecuteEvents on real ItemSlot + real EventCenter, in an isolated additive test scene.");
+        var scene = SceneManager.CreateScene("ItemSlotSmokeCheck-Temporary");
+        Action<ItemSlot, ItemSlot> listener = null;
+        var subscriber = new object();
+        try
+        {
+            var root = new GameObject("ItemSlot Smoke Fixture", typeof(RectTransform), typeof(Canvas));
+            SceneManager.MoveGameObjectToScene(root, scene);
+            root.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceOverlay;
+            var pointer = new PointerEventData(EventSystem.current)
+            { position = new Vector2(320, 240), button = PointerEventData.InputButton.Left, pointerId = -1 };
+            var prefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/slot.prefab");
+            var prefabSlot = prefab.GetComponent<ItemSlot>();
+            Results.Add("CONFIG slot.prefab dragImage=" + (Field<Image>(prefabSlot, "dragImage") == null ? "MISSING" : "assigned") +
+                "; mask=" + (prefabSlot.mask == null ? "MISSING" : "assigned"));
+            var source = MakeSlot(prefab, root.transform, scene, new Vector2(100, 100));
+            var target = MakeSlot(prefab, root.transform, scene, new Vector2(500, 100));
+            var data = AssetDatabase.LoadAssetAtPath<WeaponSO>("Assets/Configs/ItemSO/weapon_002.asset").CreateItemData();
+            var other = AssetDatabase.LoadAssetAtPath<BasicItemSO>("Assets/Configs/ItemSO/item_001.asset").CreateItemData();
+            data.count = 3;
+            source.Bind(data, 0); target.Bind(null, 1);
+            Canvas.ForceUpdateCanvases();
+            var icon = Field<Image>(source, "iconImage");
+            var preview = Field<Image>(source, "dragImage");
+            var count = Field<TMP_Text>(source, "countText");
+            Check("Bind displays correct sprite and stack count", icon.sprite == data.icon && icon.gameObject.activeSelf && count.text == "3" && count.gameObject.activeSelf);
+            Check("Preview is independent and initially inactive", preview != icon && !preview.gameObject.activeSelf && preview.sprite == icon.sprite);
+            ExecuteEvents.Execute(source.gameObject, pointer, ExecuteEvents.pointerEnterHandler);
+            Check("Hover sets alpha to 0.3", source.isSelected && Mathf.Approximately(source.mask.color.a, .3f));
+            ExecuteEvents.Execute(source.gameObject, pointer, ExecuteEvents.pointerExitHandler);
+            Check("Exit clears highlight", !source.isSelected && source.mask.color.a == 0);
+
+            int published = 0; ItemSlot lastSource = null, lastTarget = null;
+            listener = (a, b) => { published++; lastSource = a; lastTarget = b; };
+            subscriber.Subscribe(GameEvents.OnItemDropRequested, listener);
+            pointer.pointerDrag = source.gameObject;
+            Vector3 originalPosition = icon.transform.position;
+            ExecuteEvents.Execute(source.gameObject, pointer, ExecuteEvents.beginDragHandler);
+            Check("Begin activates preview at (x,y,0)", preview.gameObject.activeSelf && preview.transform.position == new Vector3(320, 240, 0));
+            Check("Drag preview does not intercept raycasts", !preview.raycastTarget);
+            pointer.position = new Vector2(520, 360);
+            ExecuteEvents.Execute(source.gameObject, pointer, ExecuteEvents.dragHandler);
+            Check("Drag follows changed pointer position", preview.transform.position == new Vector3(520, 360, 0));
+            Check("Original icon stays visible and stationary", icon.gameObject.activeSelf && icon.transform.position == originalPosition && icon.sprite == data.icon);
+            preview.sprite = other.icon;
+            Check("Changing preview sprite leaves original unchanged", icon.sprite == data.icon);
+            source.RefreshSlot();
+            Check("Refresh resynchronizes preview sprite", preview.sprite == icon.sprite);
+            ExecuteEvents.Execute(target.gameObject, pointer, ExecuteEvents.dropHandler);
+            Check("Empty target publishes exactly one source/target request", published == 1 && lastSource == source && lastTarget == target);
+            Check("Drop hides preview without destroying its reference", preview != null && !preview.gameObject.activeSelf && Field<Image>(source, "dragImage") == preview);
+            ExecuteEvents.Execute(source.gameObject, pointer, ExecuteEvents.endDragHandler);
+            ExecuteEvents.Execute(target.gameObject, pointer, ExecuteEvents.dropHandler);
+            Check("End/repeated drop does not double-publish", published == 1);
+            Check("Request does not silently mutate inventory", source.Item == data && data.count == 3 && target.Item == null);
+
+            ExecuteEvents.Execute(source.gameObject, pointer, ExecuteEvents.beginDragHandler);
+            ExecuteEvents.Execute(source.gameObject, pointer, ExecuteEvents.dropHandler);
+            ExecuteEvents.Execute(source.gameObject, pointer, ExecuteEvents.endDragHandler);
+            Check("Drop on self cancels without an event", published == 1 && !preview.gameObject.activeSelf);
+            ExecuteEvents.Execute(source.gameObject, pointer, ExecuteEvents.beginDragHandler);
+            ExecuteEvents.Execute(source.gameObject, pointer, ExecuteEvents.endDragHandler);
+            Check("Release outside slots hides preview", published == 1 && !preview.gameObject.activeSelf);
+            ExecuteEvents.Execute(source.gameObject, pointer, ExecuteEvents.beginDragHandler);
+            source.gameObject.SetActive(false);
+            Check("Disabling source clears preview and highlight", !preview.gameObject.activeSelf && !source.isSelected);
+            source.gameObject.SetActive(true);
+            ExecuteEvents.Execute(source.gameObject, pointer, ExecuteEvents.beginDragHandler);
+            source.Bind(other, 2);
+            Check("Rebinding during drag cancels stale drag and updates icon", !preview.gameObject.activeSelf && preview.sprite == other.icon && source.index == 2);
+            Check("Single-item count is hidden", !count.gameObject.activeSelf);
+            source.Bind(null, 2);
+            ExecuteEvents.Execute(source.gameObject, pointer, ExecuteEvents.beginDragHandler);
+            ExecuteEvents.Execute(source.gameObject, pointer, ExecuteEvents.dragHandler);
+            Check("Empty slot cannot start a drag", !preview.gameObject.activeSelf && !icon.gameObject.activeSelf && !count.gameObject.activeSelf);
+            source.Bind(data, 0);
+            ExecuteEvents.Execute(source.gameObject, pointer, ExecuteEvents.beginDragHandler);
+            data.count = 0; source.RefreshSlot();
+            Check("Count reaching zero cancels preview", !preview.gameObject.activeSelf && !icon.gameObject.activeSelf);
+            data.count = 3; source.Bind(data, 0);
+            Set(source, "dragImage", null);
+            ExecuteEvents.Execute(source.gameObject, pointer, ExecuteEvents.beginDragHandler);
+            ExecuteEvents.Execute(target.gameObject, pointer, ExecuteEvents.dropHandler);
+            source.OnDisable();
+            Check("Missing preview safely rejects drag with no event", published == 1);
+            Set(source, "dragImage", icon);
+            ExecuteEvents.Execute(source.gameObject, pointer, ExecuteEvents.beginDragHandler);
+            ExecuteEvents.Execute(source.gameObject, pointer, ExecuteEvents.endDragHandler);
+            Check("Accidentally assigning original icon does not hide it", icon.gameObject.activeSelf);
+        }
+        catch (Exception e) { failures++; Results.Add("FAIL EXCEPTION " + e); }
+        finally
+        {
+            if (listener != null) subscriber.UnSubscribe(GameEvents.OnItemDropRequested, listener);
+            foreach (var fixture in scene.GetRootGameObjects()) UnityEngine.Object.DestroyImmediate(fixture);
+            SceneManager.UnloadSceneAsync(scene);
+            Results.Add("SUMMARY failures=" + failures);
+            Directory.CreateDirectory(Path.GetDirectoryName(Output));
+            File.WriteAllLines(Output, Results);
+            Debug.Log("[ItemSlotSmokeCheck] Completed; failures=" + failures + "; " + Output);
+        }
+    }
+}

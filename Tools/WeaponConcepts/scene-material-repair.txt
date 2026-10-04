@@ -1,0 +1,15 @@
+PASS: OBJ mapped to six external PBR materials. Scene lighting enabled. Explicit repaired slots: 0
+View: Shaded lighting=True effects=True
+Environment: Skybox intensity=1 sky=Default-Skybox (UnityEngine.Material) custom=
+DarkSteel active=True probeUsage=BlendProbes
+  Assets/Art/Weapons/FalconOath/DarkSteel.mat shader=Universal Render Pipeline/Lit metallic=1 smooth=1
+Garnet active=True probeUsage=BlendProbes
+  Assets/Art/Weapons/FalconOath/Garnet.mat shader=Universal Render Pipeline/Lit metallic=0.12 smooth=0.92
+Brass active=True probeUsage=BlendProbes
+  Assets/Art/Weapons/FalconOath/Brass.mat shader=Universal Render Pipeline/Lit metallic=1 smooth=1
+Leather active=True probeUsage=BlendProbes
+  Assets/Art/Weapons/FalconOath/Leather.mat shader=Universal Render Pipeline/Lit metallic=1 smooth=1
+Cloth active=True probeUsage=BlendProbes
+  Assets/Art/Weapons/FalconOath/Cloth.mat shader=Universal Render Pipeline/Lit metallic=1 smooth=1
+Steel active=True probeUsage=BlendProbes
+  Assets/Art/Weapons/FalconOath/Steel.mat shader=Universal Render Pipeline/Lit metallic=1 smooth=1

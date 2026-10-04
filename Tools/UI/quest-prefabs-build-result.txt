@@ -1,0 +1,2 @@
+PASS: 4 windows, 3 reusable entries, 1920x1080 Canvas, UI preview scene.
+All prefab controls, fonts and sprite references validated.

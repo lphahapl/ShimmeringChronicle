@@ -1,0 +1,4 @@
+Player capsule height=2.98, radius=0.5
+Test House A: PASS
+Test House B: PASS
+Test House C: PASS

@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b904376b32f4df09f3b6bcb7d8e13ac, type: 3}
+  m_Name: item_001
+  m_EditorClassIdentifier: Assembly-CSharp::BasicItemSO
+  id: item_001
+  itemName: "\u7EA2\u7389\u836F\u5242"
+  description: "\u8865\u7ED9\u7C7B\u6D4B\u8BD5\u7269\u54C1\uFF0C\u53EF\u5806\u53E0
+    20 \u74F6\u3002\u6682\u672A\u5B9E\u73B0\u4F7F\u7528\u548C\u56DE\u8840\u6548\u679C\u3002"
+  icon: {fileID: 21300000, guid: e8d2956d9d2c416fbc5194586bf34cf0, type: 3}
+  stackCount: 20
+  prefab: {fileID: 100000, guid: 277d61dbafea4b1da816c19fad4c336d, type: 3}
+  overrideController: {fileID: 22100000, guid: 869b846d00824ba08b73126b406ed700, type: 2}

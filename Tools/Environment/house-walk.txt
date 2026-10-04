@@ -1,0 +1,4 @@
+PASS
+Test House A: enter=True, exit=True, inside=(0.00, 0.08, 1.80), outside=(0.00, -0.52, -8.20)
+Test House B: enter=True, exit=True, inside=(0.00, 0.08, 1.80), outside=(0.00, -0.22, -8.20)
+Test House C: enter=True, exit=True, inside=(0.00, 0.08, 1.80), outside=(0.00, -0.88, -8.20)

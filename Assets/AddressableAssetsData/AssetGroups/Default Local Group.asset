@@ -1,0 +1,101 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default Local Group
+  m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
+  m_GroupName: Default Local Group
+  m_GUID: 95c00f75c86c50a4f9cbb89ea436824e
+  m_SerializeEntries:
+  - m_GUID: 03cd9ea3cdeb43b3b175856a7af78be2
+    m_Address: Assets/Configs/ItemSO/test_supply.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ItemSO
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1c83e6bd1ea158840ba53f958f9572d0
+    m_Address: Assets/Configs/EnemySO/testenemy.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - EnemySO
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2437451df2784a6390dc6893d82e9287
+    m_Address: Assets/Configs/ItemSO/item_001.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ItemSO
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 495d61b51610d1540b03df357bf6cf8f
+    m_Address: Assets/Configs/ItemSO/weapon_001.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ItemSO
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6ccdc7195e73417d85cb878e3632048e
+    m_Address: Assets/Configs/ItemSO/test_quest_crystal.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ItemSO
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8274f4365b1c4b9a97c09bc971a1171e
+    m_Address: Assets/Configs/ItemSO/item_002.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ItemSO
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 98f42f4202324f9cb0418e6dc74c0902
+    m_Address: Assets/Configs/ItemSO/test_ore.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ItemSO
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bcd9ba2f58c94abb93b8e17bc5a4f704
+    m_Address: Assets/Configs/ItemSO/test_potion.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ItemSO
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d5d0d11aca224c59bcfabd865586a856
+    m_Address: Assets/Configs/ItemSO/weapon_002.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ItemSO
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e01407d1156e47ac8c642000254e8256
+    m_Address: Assets/Configs/ItemSO/weapon_003.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ItemSO
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e388228327f94c79ae60e2c8287eb085
+    m_Address: Assets/Configs/ItemSO/test_herb.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ItemSO
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f7f0d5ed58cd4adab16767cb5c2f8bac
+    m_Address: Assets/Configs/ItemSO/weapon_004.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ItemSO
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fce45f032de246fa8c207f4f6f19f68a
+    m_Address: Assets/Configs/ItemSO/item_003.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ItemSO
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 5f03abaf991826b4fac1f09e99698b4c, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 131724e9870b1c94295843fb6dea50b5, type: 2}
+    - {fileID: 11400000, guid: 1af5a425da7e61b49bd564536e3d5696, type: 2}

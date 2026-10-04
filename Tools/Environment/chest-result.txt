@@ -1,0 +1,7 @@
+PASS
+Chests: 7
+Triangles per chest: 540
+Opening angle: 108
+Duration: 0.65
+Hollow body, shared materials, body collider, reversible animation.
+Saved scene: Assets/Scenes/SampleScene.unity

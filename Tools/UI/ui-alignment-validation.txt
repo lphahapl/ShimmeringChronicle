@@ -1,0 +1,1 @@
+PASS: 8 prefabs without missing scripts; parents/texts/row references; vertical layout and expanding scroll heights; 5 slots/6 objectives; click selection; progress toggles; surplus/empty rows. Domain/event stand-ins used; main-project compilation checked separately.

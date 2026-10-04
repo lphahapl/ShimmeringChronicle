@@ -1,0 +1,10 @@
+PASS
+Scene: Assets/Scenes/SampleScene.unity
+Area: 160 x 160 m
+Height range: 2.81 m
+Flat spawn radius: 10 m
+Center: (-5.29, 7.34, -6.84)
+Ground elevation: 7.27
+TerrainCollider: valid
+Previous Plane: disabled
+Backup: Tools/SceneBackups/SampleScene-before-terrain-20260923-002132.unity

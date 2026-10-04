@@ -1,0 +1,14 @@
+[
+  {
+    "name": "inventory_panel",
+    "prompt": "Use case: stylized-concept. Asset for a Unity fantasy RPG UI. Cohesive refined hand-painted style: midnight blue/slate blue, muted champagne gold metal, restrained pale teal highlights, delicate engraved celestial ornament. Straight-on orthographic flat 2D game UI sprite, clean readable silhouette, crisp edges. No text, letters, numbers, items, characters, watermark, mockup, or scene. Real alpha transparency outside the asset, never a checkerboard baked into pixels. Generate ONE tall rectangular inventory/chest window background, portrait 2:3 aspect ratio. Thin gold engraved frame, modest decorative corners, small celestial crest centered at top. Opaque dark navy interior, very subtle painted texture. Large uninterrupted empty quiet interior for placing inventory grid; empty top title strip. No internal slots or buttons. Frame occupies under 8 percent of width, 3 percent transparent padding outside. Elegant and practical, not excessively ornate."
+  },
+  {
+    "name": "slot_selection",
+    "prompt": "Use case: stylized-concept. Asset for a Unity fantasy RPG UI. Cohesive refined hand-painted style: midnight blue/slate blue, muted champagne gold metal, restrained pale teal highlights, delicate engraved celestial ornament. Straight-on orthographic flat 2D game UI sprite, clean readable silhouette, crisp edges. No text, letters, numbers, items, characters, watermark, mockup, or scene. Real alpha transparency outside the asset, never a checkerboard baked into pixels. Generate ONE square selected inventory slot frame. Truly hollow transparent center covering at least 80 percent of image width, actual alpha transparency inside AND outside the frame. Thin bright champagne gold double rim, small sculpted gold corner accents, tiny teal gem centered on top edge. Strong selection visibility at 64px, restrained highlight, no cloudy glow or filled background. Exact front facing symmetric square, 4 percent transparent outer padding. No icon inside."
+  },
+  {
+    "name": "quickbar_backplate",
+    "prompt": "Use case: stylized-concept. Asset for a Unity fantasy RPG UI. Cohesive refined hand-painted style: midnight blue/slate blue, muted champagne gold metal, restrained pale teal highlights, delicate engraved celestial ornament. Straight-on orthographic flat 2D game UI sprite, clean readable silhouette, crisp edges. No text, letters, numbers, items, characters, watermark, mockup, or scene. Real alpha transparency outside the asset, never a checkerboard baked into pixels. Generate ONE wide horizontal quick access toolbar backplate, 3:1 aspect ratio. Long dark navy opaque empty recessed interior, muted gold rim, restrained ornament at both ends, tiny central lower teal accent. Reserve continuous wide empty center for five square slots added later by Unity; do NOT draw slots, icons or dividers. Symmetric balanced silhouette. 4 percent transparent padding outside the backplate."
+  }
+]

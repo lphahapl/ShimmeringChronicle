@@ -1,0 +1,80 @@
+[
+  {
+    "id": "weapon_002",
+    "name": "铁卫练习剑",
+    "type": "WeaponSO",
+    "stackCount": 1,
+    "damage": [
+      8,
+      12,
+      18
+    ],
+    "radius": [
+      1.3,
+      1.5,
+      1.7
+    ],
+    "guid": "d5d0d11aca224c59bcfabd865586a856"
+  },
+  {
+    "id": "weapon_003",
+    "name": "霜华",
+    "type": "WeaponSO",
+    "stackCount": 1,
+    "damage": [
+      12,
+      16,
+      24
+    ],
+    "radius": [
+      1.7,
+      1.9,
+      2.2
+    ],
+    "guid": "e01407d1156e47ac8c642000254e8256"
+  },
+  {
+    "id": "weapon_004",
+    "name": "紫电",
+    "type": "WeaponSO",
+    "stackCount": 1,
+    "damage": [
+      16,
+      22,
+      32
+    ],
+    "radius": [
+      1.4,
+      1.6,
+      1.9
+    ],
+    "guid": "f7f0d5ed58cd4adab16767cb5c2f8bac"
+  },
+  {
+    "id": "item_001",
+    "name": "红玉药剂",
+    "type": "BasicItemSO",
+    "stackCount": 20,
+    "damage": [],
+    "radius": [],
+    "guid": "2437451df2784a6390dc6893d82e9287"
+  },
+  {
+    "id": "item_002",
+    "name": "银叶草",
+    "type": "BasicItemSO",
+    "stackCount": 50,
+    "damage": [],
+    "radius": [],
+    "guid": "8274f4365b1c4b9a97c09bc971a1171e"
+  },
+  {
+    "id": "item_003",
+    "name": "星蓝矿晶",
+    "type": "BasicItemSO",
+    "stackCount": 99,
+    "damage": [],
+    "radius": [],
+    "guid": "fce45f032de246fa8c207f4f6f19f68a"
+  }
+]

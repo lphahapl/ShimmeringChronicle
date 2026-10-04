@@ -1,0 +1,12 @@
+PASS
+Terrain Size: 1000 x 1000 m (Height: 120 m)
+Heightmap Resolution: 513 x 513
+Style: Vibrant Anime / Cel-Shaded (Ghibli & Genshin Aesthetic)
+Terrain Layers: 4 (Anime Grass, Anime Meadow, Anime Rock, Anime Dirt)
+Houses: 6 Walkable Houses (Door 2.6x3.6m with Ramps & Furnishings)
+Trees: 135 Anime Trees (Green Oak, Sakura Pink, Golden Autumn)
+Flora: 220 Flower Patches & Grass Tufts
+Chests: 12 Animated Chests configured with TestChest & ChestSO
+Prefab Saved: Assets/Art/Terrain/Anime1000/AnimeWorld_1000x1000.prefab
+Terrain Data Saved: Assets/Art/Terrain/Anime1000/AnimeTerrain_1000x1000_Data.asset
+Timestamp: 2026-09-27 15:48:45

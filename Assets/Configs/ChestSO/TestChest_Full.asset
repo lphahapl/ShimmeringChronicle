@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77b845f412af9b24d8613e19c398a788, type: 3}
+  m_Name: TestChest_Full
+  m_EditorClassIdentifier: Assembly-CSharp::ChestSO
+  capacity: 16
+  num: 104
+  items:
+  - config: {fileID: 11400000, guid: bcd9ba2f58c94abb93b8e17bc5a4f704, type: 2}
+    num: 20
+  - config: {fileID: 11400000, guid: e388228327f94c79ae60e2c8287eb085, type: 2}
+    num: 50
+  - config: {fileID: 11400000, guid: 98f42f4202324f9cb0418e6dc74c0902, type: 2}
+    num: 99
+  - config: {fileID: 11400000, guid: 6ccdc7195e73417d85cb878e3632048e, type: 2}
+    num: 1
+  - config: {fileID: 11400000, guid: 03cd9ea3cdeb43b3b175856a7af78be2, type: 2}
+    num: 5
+  - config: {fileID: 11400000, guid: bcd9ba2f58c94abb93b8e17bc5a4f704, type: 2}
+    num: 20
+  - config: {fileID: 11400000, guid: e388228327f94c79ae60e2c8287eb085, type: 2}
+    num: 50
+  - config: {fileID: 11400000, guid: 98f42f4202324f9cb0418e6dc74c0902, type: 2}
+    num: 99
+  - config: {fileID: 11400000, guid: 6ccdc7195e73417d85cb878e3632048e, type: 2}
+    num: 1
+  - config: {fileID: 11400000, guid: 03cd9ea3cdeb43b3b175856a7af78be2, type: 2}
+    num: 5
+  - config: {fileID: 11400000, guid: bcd9ba2f58c94abb93b8e17bc5a4f704, type: 2}
+    num: 20
+  - config: {fileID: 11400000, guid: e388228327f94c79ae60e2c8287eb085, type: 2}
+    num: 50
+  - config: {fileID: 11400000, guid: 98f42f4202324f9cb0418e6dc74c0902, type: 2}
+    num: 99
+  - config: {fileID: 11400000, guid: 6ccdc7195e73417d85cb878e3632048e, type: 2}
+    num: 1
+  - config: {fileID: 11400000, guid: 03cd9ea3cdeb43b3b175856a7af78be2, type: 2}
+    num: 5
+  - config: {fileID: 11400000, guid: bcd9ba2f58c94abb93b8e17bc5a4f704, type: 2}
+    num: 20

@@ -1,0 +1,1 @@
+PASS: 9 prefabs no missing scripts; all required panel/row/item references; counters; vertical layouts/scrolls; actual MissionsBar, MissionSlot, MissionAim and ItemSlot scripts; 5 tasks/6 objectives/10 rewards; grid wrapping/width/height; click, shrink, reuse and empty cleanup. Domain/events use stand-ins.

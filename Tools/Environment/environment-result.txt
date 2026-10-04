@@ -1,0 +1,9 @@
+PASS
+Trees: 32
+Flower patches: 35 (105 flowers)
+Grass-only tufts: 65
+Buildings: 3, doorway width 2 m
+Crates: 7
+Colliders: 69
+Spawn clear radius: 13 m; cross corridors kept clear
+Saved scene: Assets/Scenes/SampleScene.unity

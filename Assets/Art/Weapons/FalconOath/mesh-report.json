@@ -1,0 +1,9 @@
+{
+  "vertices": 3661,
+  "triangles": 5852,
+  "materials": 6,
+  "height_m": 2.25,
+  "min_triangle_area": 8.499999999999998e-10,
+  "pivot": "lower grip center",
+  "axis": "Y up"
+}

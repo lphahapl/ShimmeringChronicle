@@ -1,0 +1,2 @@
+View: Shaded lighting=True effects=True
+Environment: Skybox intensity=1 sky=Default-Skybox (UnityEngine.Material) custom=

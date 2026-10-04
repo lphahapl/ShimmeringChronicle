@@ -1,0 +1,27 @@
+Unity 6000.3.10f1 | 2026-09-22T18:59:53
+Play Mode: ExecuteEvents on real ItemSlot + real EventCenter, in an isolated additive test scene.
+CONFIG slot.prefab dragImage=MISSING; mask=MISSING
+PASS Bind displays correct sprite and stack count
+PASS Preview is independent and initially inactive
+PASS Hover sets alpha to 0.3
+PASS Exit clears highlight
+PASS Begin activates preview at (x,y,0)
+PASS Drag preview does not intercept raycasts
+PASS Drag follows changed pointer position
+PASS Original icon stays visible and stationary
+PASS Changing preview sprite leaves original unchanged
+PASS Refresh resynchronizes preview sprite
+PASS Empty target publishes exactly one source/target request
+PASS Drop hides preview without destroying its reference
+PASS End/repeated drop does not double-publish
+PASS Request does not silently mutate inventory
+PASS Drop on self cancels without an event
+PASS Release outside slots hides preview
+PASS Disabling source clears preview and highlight
+PASS Rebinding during drag cancels stale drag and updates icon
+PASS Single-item count is hidden
+PASS Empty slot cannot start a drag
+PASS Count reaching zero cancels preview
+PASS Missing preview safely rejects drag with no event
+PASS Accidentally assigning original icon does not hide it
+SUMMARY failures=0

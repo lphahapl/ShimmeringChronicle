@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77b845f412af9b24d8613e19c398a788, type: 3}
+  m_Name: TestChest_Weapons
+  m_EditorClassIdentifier: Assembly-CSharp::ChestSO
+  capacity: 16
+  num: 105
+  items:
+  - config: {fileID: 11400000, guid: d5d0d11aca224c59bcfabd865586a856, type: 2}
+    num: 1
+  - config: {fileID: 11400000, guid: e01407d1156e47ac8c642000254e8256, type: 2}
+    num: 1
+  - config: {fileID: 11400000, guid: f7f0d5ed58cd4adab16767cb5c2f8bac, type: 2}
+    num: 1
+  - config: {fileID: 0}
+    num: 0
+  - config: {fileID: 11400000, guid: bcd9ba2f58c94abb93b8e17bc5a4f704, type: 2}
+    num: 10
+  - config: {fileID: 11400000, guid: 6ccdc7195e73417d85cb878e3632048e, type: 2}
+    num: 1

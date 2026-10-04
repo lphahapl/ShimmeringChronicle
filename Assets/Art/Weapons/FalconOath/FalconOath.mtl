@@ -1,0 +1,29 @@
+newmtl Steel
+Kd 0.48 0.55 0.61
+Ks 0.4 0.4 0.4
+Ns 80
+
+newmtl DarkSteel
+Kd 0.1 0.125 0.145
+Ks 0.4 0.4 0.4
+Ns 80
+
+newmtl Brass
+Kd 0.62 0.4 0.15
+Ks 0.4 0.4 0.4
+Ns 80
+
+newmtl Leather
+Kd 0.23 0.047 0.038
+Ks 0.4 0.4 0.4
+Ns 80
+
+newmtl Garnet
+Kd 0.48 0.016 0.03
+Ks 0.4 0.4 0.4
+Ns 80
+
+newmtl Cloth
+Kd 0.38 0.045 0.04
+Ks 0.4 0.4 0.4
+Ns 80

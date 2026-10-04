@@ -1,0 +1,7 @@
+Player capsule height=2.98, radius=0.5
+Test House A: BLOCKED by Door lintel at z=-3.5
+Test House A: FAIL
+Test House B: BLOCKED by Door lintel at z=-3.5
+Test House B: FAIL
+Test House C: BLOCKED by Door lintel at z=-3.5
+Test House C: FAIL

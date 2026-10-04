@@ -1,0 +1,4 @@
+PASS
+Houses: 3
+Door clear width 2.6m, height 3.6m
+4m terrain-fitted entrance ramps, window frames, tiled roofs, porch, furnishings.

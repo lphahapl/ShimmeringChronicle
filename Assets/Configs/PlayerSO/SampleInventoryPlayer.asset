@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c85c3e944602763418bbe5a2fdf0bfb4, type: 3}
+  m_Name: SampleInventoryPlayer
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerSO
+  targetName: "背包测试角色"
+  description: "包含三种武器及三种堆叠物品的测试配置"
+  maxHp: 200
+  initialHp: 180
+  atk: 12
+  speed: 5
+  runSpeed: 10
+  turnSpeed: 720
+  quickBar:
+  - config: {fileID: 11400000, guid: d5d0d11aca224c59bcfabd865586a856, type: 2}
+    num: 1
+  - config: {fileID: 11400000, guid: 2437451df2784a6390dc6893d82e9287, type: 2}
+    num: 5
+  Bag:
+  - config: {fileID: 11400000, guid: e01407d1156e47ac8c642000254e8256, type: 2}
+    num: 1
+  - config: {fileID: 11400000, guid: f7f0d5ed58cd4adab16767cb5c2f8bac, type: 2}
+    num: 1
+  - config: {fileID: 11400000, guid: 2437451df2784a6390dc6893d82e9287, type: 2}
+    num: 18
+  - config: {fileID: 11400000, guid: 8274f4365b1c4b9a97c09bc971a1171e, type: 2}
+    num: 48
+  - config: {fileID: 11400000, guid: fce45f032de246fa8c207f4f6f19f68a, type: 2}
+    num: 99
