@@ -93,6 +93,30 @@ MonoBehaviour:
     m_SerializedLabels:
     - ItemSO
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 21370608332fa484cb82e4d6aafd3ad8
+    m_Address: Assets/Prefabs/Enemies/MossstoneSentinel/MossstoneSentinel.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - EnemySO
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5018f7397b321fc4d837a4b9eda9c427
+    m_Address: Assets/Prefabs/Enemies/MossstoneSentinel/MossstoneSentinel_Blade.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - EnemySO
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b2a53e5d8996cec4ab1f5b43a6cfe4ce
+    m_Address: Assets/Prefabs/Items/MossstoneFists/MossstoneFists.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ItemSO
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dc4ccabadb3a5864ebb29bfba3bec31f
+    m_Address: Assets/Prefabs/Items/MossstoneBlade/MossstoneBlade.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ItemSO
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 5f03abaf991826b4fac1f09e99698b4c, type: 2}
   m_SchemaSet:

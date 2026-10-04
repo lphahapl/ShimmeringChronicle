@@ -1,0 +1,10 @@
+PASS
+Body prefab: Assets/Prefabs/Enemies/MossstoneSentinel/MossstoneSentinel.prefab
+Body height: 2.6m
+Walk: 0.8m/s; chase: 1.6m/s
+Fists: 1.15s punch, 1.55s slam; 1.5s break
+Blade: 1.35s shoulder charge, 1.35s sweep, 1.85s cleave; 1.8s break
+Animations: 11
+Mesh renderers: 15
+Triangles: 3196
+No scene changes. Default fists have no mesh. Both loadouts share the body prefab. Native serialization, component references, curves and animation events checked.

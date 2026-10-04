@@ -74,16 +74,17 @@ public class ItemSlot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler,I
 
     /// <summary>
     /// 把要显示的那一叠、它在容器里的位置、和它属于哪个容器推进来。
-    /// data 传 null 表示空格子；owner 传 null 表示这一格不参与拖拽。
+    /// data 传 null 表示空格子；只读来源或 null 不参与拖拽和装备选择。
     /// </summary>
-    public void Bind(ItemData data, int index, IItemOperator owner)
+    public void Bind(ItemData data, int index, IItemProvider owner)
     {
-        // 显示的东西换了位置，正在进行的拖拽就作废
-        if (item != data || this.index != index) StopDrag();
+        var operatorOwner = owner as IItemOperator;
+        // 数据、位置或操作权限变化时，取消正在进行的拖拽。
+        if (item != data || this.index != index || this.owner != operatorOwner) StopDrag();
 
         item = data;
         this.index = index;
-        this.owner = owner;
+        this.owner = operatorOwner;
         RefreshSlot();
     }
 
@@ -132,6 +133,7 @@ public class ItemSlot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler,I
    
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if (owner == null || !owner.CanExchange(index)) return;
         if (isDragging || item == null || item.count <= 0 ||
             iconImage == null || dragImage == null || dragImage == iconImage) return;
 
@@ -184,7 +186,7 @@ public class ItemSlot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler,I
     /// </summary>
     public void OnDrop(PointerEventData eventData)
     {
-        if (eventData.pointerDrag == null) return;
+        if (owner == null || eventData.pointerDrag == null) return;
 
         var source = eventData.pointerDrag.GetComponent<ItemSlot>();
         if (source == null || source == this || !source.isDragging) return;
@@ -239,6 +241,7 @@ public class ItemSlot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler,I
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        if (owner == null) return;
         if (eventData.button == PointerEventData.InputButton.Left)
             //发起点击请求
             this.Publish(GameEvents.OnSlotSelectionRequested, this);

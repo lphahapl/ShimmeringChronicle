@@ -10,6 +10,11 @@ public class MissionSO : ScriptableObject
     public DialogSO dialog;//说话者，应该在接取任务的时候触发
     public List<MisssionRequireEntry> requireMents;
     public List<ItemSlotData> reward;
+    public MissionTaskOwner owner;
+    /// <summary>
+    /// 发布任务的人的信息
+    /// </summary>
+    public SpeakerInfo speakerInfo;
 }
 /// <summary>
 /// 任务manager或者playerobj应该监听对应类型的事件
@@ -38,4 +43,9 @@ public enum RequirementType
     击败敌人,
     收集物品,
     与人对话
+}
+public enum MissionTaskOwner
+{
+    林间驿站
+
 }

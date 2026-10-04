@@ -117,6 +117,27 @@ public class PlayerObj : MonoBehaviour, IDamageable, IContainerOwner,ICanChangeH
         print(Data.missions.Count);
     }
 
+    /// <summary>
+    /// 给玩家添加物品：先放背包，剩余的放快捷栏。
+    /// 返回实际添加数量，并按这个数量通知收集任务进度。
+    /// </summary>
+    public int AddItem(string id, int count)
+    {
+        if (string.IsNullOrEmpty(id) || count <= 0) return 0;
+
+        EnsureContainers();
+        if (data == null) return 0;
+
+        int added = bag.AddItem(id, count);
+        if (added < count)
+            added += quickBar.AddItem(id, count - added);
+
+        if (added > 0)
+            this.Publish(GameEvents.OnPushMissionProgress, data, RequirementType.收集物品, id, added);
+
+        return added;
+    }
+
     /// <summary>背包 或 快捷栏 里有没有 —— 也就是"玩家身上有没有这个东西"</summary>
     public bool HasItem(string id)
     {
@@ -268,7 +289,7 @@ public class PlayerObj : MonoBehaviour, IDamageable, IContainerOwner,ICanChangeH
         if (!ReferenceEquals(selected, displayedItem)) ChangeItem(selected);
     }
 
-    // Shared by mouse selection and future quickbar wheel input.
+   
     public bool SelectSlot(ItemSlot slot)
     {
         if (slot == null || (slot.Owner != Bag && slot.Owner != QuickBar)) return false;

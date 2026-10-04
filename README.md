@@ -1,387 +1,527 @@
-# Practice：Unity 角色与背包测试项目
+# Shimmering Chronicle
 
-本项目用于练习角色移动、Animator 状态切换、生命值、背包与快捷栏，以及基于 ScriptableObject 的配置和运行时数据分离。主场景为 `Assets/Scenes/SampleScene.unity`。本文按当前源码记录；示例是 Unity C# 调用，不是 HTTP API。
+Shimmering Chronicle 是一个持续开发中的 Unity 动作 RPG 练习项目。围绕角色战斗、敌人追逐、物品收集和任务推进，练习 ScriptableObject 配置、运行时数据、事件总线和可复用 UI 的协作。
 
-## 1. 环境与启动
+主场景为 `Assets/Scenes/SampleScene.unity`。仓库名为 `ShimmeringChronicle`，Unity 工程的 `productName` 目前仍为 `Practice`。本文描述当前源码中的实现，类图省略 Unity 基类、调试字段和部分泛型工厂层。
+
+## 1. 当前功能
+
+| 系统 | 已实现内容 |
+| --- | --- |
+| 玩家 | CharacterController 移动、跑步、动画状态切换、受击、死亡和手持物品切换 |
+| 战斗 | 武器运行时数据、AnimatorOverrideController、动画事件驱动的分段攻击、范围与角度判定、同次判定命中去重 |
+| 敌人 | 触发范围感知、NavMeshAgent 追逐、根运动位移、攻击朝向、连招、攻击间隔和受击硬直 |
+| 对象池 | 按敌人预制体复用实例，重置角色与武器数据，死亡动画回调后回收 |
+| 物品 | 固定格数背包与快捷栏、堆叠、扣除、交换、拆分、格子选中与模型装备 |
+| 交互 | 范围与遮挡检测、F 键交互、箱盖开合、多个箱子窗口、窗口拖拽 |
+| 任务 | 多目标配置、事件驱动的目标进度、击杀计数、添加物品计数、任务详情与奖励格子显示 |
+| UI | 背包、快捷栏、玩家与敌人血条、任务面板；另有任务接取和左右头像对话框预制体 |
+| 配置 | Addressables 分别异步加载 `ItemSO` 与 `EnemySO`，通过字符串 ID 查询 |
+
+任务接取对话、地点与对话目标的自动通知、正式奖励发放和存档仍在完善，见“当前边界”。
+
+## 2. 环境与启动
 
 | 项目 | 当前配置 |
 | --- | --- |
-| Unity | 6000.3.10f1（Unity 6.3 LTS） |
-| 渲染 | URP 17.3.0 |
-| 配置加载 | Addressables 2.9.0，物品标签 `ItemSO` |
-| 输入 | 安装 Input System 1.18.0，Active Input Handling 为 Both；角色目前仍使用旧 `Input` API |
-| UI | uGUI、TextMesh Pro、EventSystem |
+| Unity | `6000.3.10f1` |
+| 渲染 | URP `17.3.0` |
+| 配置加载 | Addressables `2.9.0`，标签 `ItemSO` / `EnemySO` |
+| 导航 | AI Navigation `2.0.10` |
+| 输入 | Input System `1.18.0`；角色代码目前使用旧 `Input` API，编辑器需允许旧输入 |
+| UI | uGUI `2.0.0`、TextMesh Pro、EventSystem |
+| 资源版本管理 | Git LFS；模型、贴图等资源按 `.gitattributes` 管理 |
 
-通过 Unity Hub 打开项目根目录，等待资源导入，打开 `SampleScene` 后进入 Play Mode。发布前应按 Addressables 工作流构建资源；编辑器测试也要确认 Play Mode Script 能读取配置。
+首次获取工程时需安装 Git LFS 并下载资源：
 
-场景需要一个 `GameManager`、一个 `UIManager`，以及带 `PlayerObj`、`PlayerController`、`Animator`、`CharacterController` 的玩家。为 `PlayerObj.config` 指定 `PlayerSO`。摄像机的 `CameraMove.Player` 可直接指定，未指定时按 `Player` 标签查找。
+```bash
+git lfs install
+git clone https://github.com/lphahapl/ShimmeringChronicle.git
+cd ShimmeringChronicle
+git lfs pull
+```
+
+通过 Unity Hub 打开工程，等待资源导入后打开 `SampleScene`。测试敌人使用 NavMesh；场景已有 `Assets/Scenes/SampleScene/NavMesh-GameManager.asset`，调整地形和可通行范围后应重新烘焙。构建游戏前还需按 Addressables 工作流构建资源。
+
+场景主要依赖 `GameManager`、`UIManager`、`EnemyManager` 和 `MissionManager`。玩家需要 `PlayerObj`、`PlayerController`、`Animator`、`CharacterController`，并为 `PlayerObj.config` 指定 `PlayerSO`。当前 `PlayerObj.Awake()` 会用 `t` 创建测试任务并写入 `mission_001`，测试时也需绑定这个 `MissionSO`。
 
 | 操作 | 按键 | 当前行为 |
 | --- | --- | --- |
 | 移动 | WASD / 方向轴 | 相对摄像机的水平移动 |
 | 跑步 | 左 Shift | 使用 `PlayerData.runSpeed` |
-| 攻击 | 鼠标左键 | 触发最多三段 Animator 连招 |
-| 跳跃 | Space | 触发跳跃动画；没有向上的物理初速度 |
+| 攻击 | 鼠标左键 | 按当前武器连招配置触发动画，玩家最多三段 |
+| 跳跃 | Space | 触发跳跃动画，尚无向上的物理初速度 |
+| 交互 | F | 对当前最近且可见的目标执行交互 |
+| 背包 | Tab | 开关 `BagPanel` |
+| 任务 | V | 开关 `MissionsBar` |
+| 手持物品 | 点击玩家物品格 / 鼠标滚轮 | 选择背包或快捷栏格子；滚轮切换快捷栏格子 |
 | 测试受伤 | H | 对自身造成 50 点伤害 |
-| 测试死亡 | L | 直接切换控制器的死亡状态，**不等价于将生命值归零** |
-| 背包 | Tab | `UIManager.Toggle<BagPanel>()` |
+| 测试死亡 | L | 直接改变控制器死亡状态，不等价于将玩家 HP 归零 |
 
-## 2. 目录
+背包或箱子窗口打开、物品拖拽时会限制部分战斗输入；鼠标位于相关物品界面时也会屏蔽快捷栏滚轮。移动和 F 键交互尚未统一接入 UI 输入屏蔽。
+
+## 3. 目录
 
 ```text
 Assets/
-  Scenes/                  主场景
+  Scenes/                      主场景、NavMesh 与任务 UI 预览场景
   Scripts/
-    SO/                    ScriptableObject 配置与数据工厂
-    Data/                  运行时数据、事件键
-    Interfaces/            伤害、交互、物品容器契约
-    Logic/                 角色、事件中心、配置加载、物品规则和格子交互
-    UI/                    UI 管理、背包、快捷栏、血条、ItemContainer
-  Configs/                 玩家与物品配置资产
-  AddressableAssetsData/   Addressables 标签和分组
-  Art/Weapons/FalconOath/  长枪模型、PBR 材质、贴图与预制体
-  Art/33 宵宫/             宵宫模型及已绑定材质的 Yoimiya_URP.prefab
-  Art/Terrain/TestGround/  简单起伏 Terrain
-  Art/Environment/TestVillage/ 测试树木、花草与建筑资源
-  Editor/                 美术资产和测试场景生成菜单（仅编辑器）
+    SO/                        玩家、敌人、物品、武器、箱子、任务与对话配置
+    Data/                      运行时数据、攻击段数据、GameEvents
+    Interfaces/                伤害、交互、容器和手持物品契约
+    Logic/                     角色、敌人 AI / 对象池、任务管理、事件中心、物品规则
+    UI/                        UI 管理、背包、快捷栏、箱子窗口、任务面板和血条
+  Configs/                     玩家、敌人、箱子和任务配置资产
+  Prefabs/
+    Items/<itemID>/             单个物品的配置与预制体，有动画时放 Animations/
+    TestEnemy/                 方块测试敌人、控制器及测试动画
+    UI/
+      QuestPanel/              任务面板
+      QuestOffer/              任务接取对话框
+      Dialogue/                左右头像对话框
+      Shared/                  任务条目、目标条目、奖励条目和 Canvas
+  AddressableAssetsData/       Addressables 标签和分组
+  Art/                        角色、武器、地形、房屋、植物与箱子资源
+  Editor/                     美术生成、材质修复与场景调试工具
 Tools/
-  WeaponConcepts/          武器参考图、Python 生成脚本和检查结果
-  Environment/            测试装饰生成结果
-  SceneBackups/           自动操作前的场景文件备份
-  ItemSlotTestResults/    旧版格子测试记录，不代表当前版本的完整验证
+  UI/                         UI 设计说明与检查资料
+  WeaponConcepts/             武器参考、生成脚本与检查结果
+  Environment/                测试地形和装饰生成记录
+  SceneBackups/               场景修改前的备份
+  ItemSlotTestResults/         历史格子测试记录
 ```
 
-## 3. 系统设计
+`Scripts/Logic` 和 `Scripts/UI` 是当前文件位置，例如 `ItemSlot`、`MissionSlot` 位于 `Logic`，`ItemContainer` 位于 `UI`；职责划分以代码为准。
 
-### 配置、运行时数据与行为分离
+## 4. 类图与职责
 
-`PlayerSO` 保存初始属性和初始物品；`PlayerObj.Data` 首次访问时调用 `CreateData()`，生成该角色独有的 `PlayerData`。`ItemSO` 的子类同样创建 `ItemData` 或 `WeaponData`。游戏中的数量、生命值应写入运行时数据，不要直接修改配置资产。
+### 4.1 角色、敌人和武器
+
+配置创建运行时数据，行为组件使用这些数据。玩家当前手持数据来自选中的物品格；敌人默认武器初始化后，`data.HandingItem` 与 `data.weaponData` 指向同一份武器运行时实例。
 
 ```mermaid
-flowchart TD
-    P[PlayerSO] -->|CreateData| D[PlayerData]
-    I[ItemSO / WeaponSO] -->|CreateItemData| IT[ItemData / WeaponData]
-    IT --> D
-    D --> PO[PlayerObj]
-    PO --> C[ItemContainer：Bag / QuickBar]
-    C --> R[ItemRules]
-    R --> E[EventCenter / GameEvents]
-    PO --> E
-    E --> U[BagPanel / QuickBar / PlayerHPBar]
-    U --> S[ItemSlot]
-    S -->|OnDrop / Exchange| R
-    PO --> PC[PlayerController]
-    PC --> A[Animator + CharacterController]
-    GM[GameManager / Addressables] -->|按 id 查询配置| C
-```
-
-| 模块 | 责任与边界 |
-| --- | --- |
-| `GameManager` | 按 `ItemSO` 标签异步加载配置，建立 `id → ItemSO` 字典；销毁时释放 Addressables handle |
-| `PlayerObj` | 持有角色数据，提供背包/快捷栏操作接口，处理伤害并发布事件 |
-| `PlayerController` | 读取键鼠，控制移动和动画；监听本角色受伤、死亡事件 |
-| `ItemContainer` | 包装现有 `List<ItemData>`，提供增删操作并通知 UI |
-| `ItemRules` | 静态物品规则：查找、合堆、扣除、交换、拆分 |
-| `UIManager` | 按 UI 的具体类型管理场景内面板；每种类型保留一个实例 |
-| `UIBase` | 统一显隐状态和 `Refresh`、`OnShow`、`OnHide` 扩展点 |
-| `ItemSlot` | 展示数据、悬停高亮和拖拽；落点直接调用 `ItemRules.Exchange` |
-| `EventCenter` | 同步、全局、强类型事件总线，支持 0～5 个参数 |
-| `InteractBase` | 封装重复/一次性/交互后销毁策略，具体交互由子类实现 |
-
-### 主要流程
-
-1. `GameManager.Awake()` 启动物品配置加载，`Ready` 表示对应异步任务。
-2. `UIManager.Awake()` 收集场景中的 `UIBase`，包括未激活对象。动态创建的面板需要主动 `Register`。
-3. `PlayerObj.Data` 延迟构造；`Bag` 和 `QuickBar` 各包装一份数据列表。`PlayerObj.Start()` 调用 `UIManager.RefreshAll()`。
-4. 背包/快捷栏绑定容器，格子绑定 `ItemData + index + owner`。事件携带具体列表，UI 通过列表引用判断是否需要刷新。
-5. `TakeDamage` 修改 HP，依次发布 `Damaged`、`HpChanged`，致死时再发布 `Died`。控制器负责动画响应，血条负责显示。
-
-### 数据约定
-
-- `ItemData.count` 是当前数量，`stackCount` 是单格上限；非正堆叠上限按 1 处理。
-- 空格保留 `null`，不要随意 `RemoveAt`，否则后续格子的索引会整体变化。
-- `ToItemDataList()` 按 `ItemSlotData.num` 创建数量；空配置和非正数量转换为 `null`，保留位置。
-- `ItemData.Clone()` 为浅复制；`WeaponData.Clone()` 另外深复制 `combo` 和各个 `AttackData`。Sprite、Prefab、动画控制器仍共享资产引用。
-- `PlayerObj` 缓存的容器引用原列表；初始化后不要直接换掉 `Data.Bag` 或 `Data.quickBar` 的列表实例。
-- `AddInto` 会合并同 id 堆叠、填空格，然后追加新格；当前没有背包容量限制。
-
-## 4. API 调用方法
-
-### 4.1 等待物品配置并加入背包
-
-把下面脚本挂到测试对象，为 `player` 绑定场景中的 `PlayerObj`。`item_001` 是项目现有物品 id。
-
-```csharp
-using System;
-using UnityEngine;
-
-public class InventoryExample : MonoBehaviour
-{
-    [SerializeField] PlayerObj player;
-
-    async void Start()
-    {
-        var manager = GameManager.Instance;
-        if (manager == null || player == null) return;
-        try
-        {
-            await manager.Ready;
-            if (this == null || player == null || manager == null) return;
-            var config = manager.GetItem("item_001");
-            if (config == null) return;
-
-            int added = player.Bag.AddItem(config.id, 3);
-            Debug.Log($"实际添加：{added}");
-        }
-        catch (Exception e) { Debug.LogException(e); }
+classDiagram
+    class PlayerObj {
+        +PlayerData Data
+        +ItemData SelectedItem
+        +AddItem(string id, int count) int
+        +TakeDamage(float damage, GameObject attacker)
+        +ChangeItem(ItemData item) bool
     }
-}
+    class EnemyObj {
+        +EnemySO SO
+        +EnemyData data
+        +ItemData HandingItem
+        +ResetEnemyStatu(EnemySO config)
+        +PublishEnemyCombo(int index)
+        +Died()
+    }
+    class EnemyManager {
+        +SpawnEnemy(string id, Vector3 position, Quaternion rotation) GameObject
+        +RecycleEnemy(GameObject enemy, GameObject prefab)
+        +GetEnemies~T~() IReadOnlyList~EnemyObj~
+    }
+    class WeaponObj {
+        +WeaponData weaponData
+        +InitWeapon(GameObject owner)
+        +CheckAttack(int index)
+        +EnemyCheckAttack(EnemyObj owner, int index)
+    }
+    class IDamageable {
+        <<interface>>
+        +TakeDamage(float damage, GameObject attacker)
+    }
+    BaseData <|-- PlayerData
+    BaseData <|-- EnemyData
+    ItemData <|-- WeaponData
+    ItemSO <|-- WeaponSO
+    IDamageable <|.. PlayerObj
+    IDamageable <|.. EnemyObj
+    PlayerSO ..> PlayerData : CreateData
+    EnemySO ..> EnemyData : CreateData
+    WeaponSO ..> WeaponData : CreateData
+    PlayerObj *-- PlayerData
+    EnemyObj *-- EnemyData
+    PlayerController --> PlayerObj
+    EnemyAI --> EnemyObj
+    EnemyAI --> NavMeshAgent
+    EnemyAI --> Animator
+    PlayerController --> Animator
+    PlayerController --> CharacterController
+    EnemyManager o-- EnemyObj : 按预制体复用
+    EnemySO --> WeaponSO : 默认武器
+    PlayerObj --> WeaponObj : 初始化手持模型
+    EnemyObj --> WeaponObj : 初始化默认武器
+    WeaponObj --> WeaponData
+    WeaponData *-- AttackData : combo
 ```
 
-`Ready` 完成不代表一定加载成功；仍需检查 `GetItem` 返回值。当前失败分支可能将 `IsReady` 设为 true，异步异常也可能向上传递。空 id、重复 id 会记录错误；重复项保留先加载的那一个。
+图中的 `ItemSO → WeaponSO` 继承关系省略了实际的 `ItemSO<WeaponData>` 中间层；玩家与敌人的 SO 工厂同样经过 `BaseDataSO<TData>`。
 
-### 4.2 创建运行时数据
+### 4.2 物品容器与交互
 
-以下片段中的 `playerConfig`、`itemConfig`、`weaponConfig` 均为已绑定的对应 SO 引用。
+`ItemContainer` 是普通 C# 对象，包装现有列表；玩家、箱子和任务奖励通过 `IContainerOwner` 暴露容器。`ChestWindow` 表示单个箱子的窗口，`ChestPanel` 表示容纳多个窗口的界面。
 
-```csharp
-PlayerData freshPlayer = playerConfig.CreateData(); // PlayerSO
-ItemData freshItem = itemConfig.CreateItemData();  // ItemSO 通用入口
-WeaponData freshWeapon = weaponConfig.CreateData(); // WeaponSO 强类型入口
-ItemData independentCopy = freshWeapon.Clone();
+```mermaid
+classDiagram
+    class IItemProvider {
+        <<interface>>
+        +GetItemList() List~ItemData~
+        +ContainsItem(string id) bool
+    }
+    class IItemOperator {
+        <<interface>>
+        +AddItem(string id, int count) int
+        +RemoveItem(string id, int count) bool
+        +RemoveItemAt(int index, int count) bool
+        +CanExchange(int index) bool
+    }
+    class IContainerOwner {
+        <<interface>>
+        +GetContainer(ContainerKind kind) IItemOperator
+    }
+    IItemProvider <|-- IItemOperator
+    IItemOperator <|.. ItemContainer
+    IContainerOwner <|.. PlayerObj
+    IContainerOwner <|.. TestChest
+    IContainerOwner <|.. MissionsBar
+    IInteractable <|.. InteractBase
+    InteractBase <|-- TestChest
+    PlayerObj *-- ItemContainer : 背包和快捷栏
+    TestChest *-- ItemContainer : 箱子物品
+    ItemContainer o-- ItemData : 引用已有列表
+    ItemContainer ..> ItemRules : 增删规则
+    ItemSlot --> IItemOperator : Owner
+    ItemSlot ..> ItemRules : Exchange
+    UIBase <|-- BagPanel
+    UIBase <|-- QuickBar
+    UIBase <|-- ChestPanel
+    BagPanel o-- ItemSlot
+    QuickBar o-- ItemSlot
+    ChestPanel o-- ChestWindow
+    ChestWindow o-- ItemSlot
+    ChestWindow --> IContainerOwner : ContainerOwner
+    TestChest --> ChestSO
+    TestChest *-- ChestData
 ```
 
-这只是创建数据，不会自动入包、实例化模型、装备武器或触发 UI 更新。`WeaponSO.combo` 的元素不能为 null，当前 `FillExtra` 会直接调用每个元素的 `Clone()`。
+### 4.3 任务与 UI
 
-### 4.3 容器查询与增删
+`MissionSO` 定义目标和奖励，`MissionData` 保存进度。`MissionManager` 只处理任务进度通知，UI 监听处理结果。
 
-场景对象通过 `IContainerOwner.GetContainer(ContainerKind kind = ContainerKind.Default)` 提供容器；`ItemContainer` 是普通 C# 对象，不能用 `GetComponent<IItemOperator>()` 查找。用 `GetComponentInParent<IContainerOwner>()` 可以从箱体碰撞子物体找到拥有者。
+```mermaid
+classDiagram
+    class MissionSO {
+        +string missionID
+        +string missionName
+        +string missionDescription
+        +MissionType missionType
+        +DialogSO dialog
+    }
+    class MisssionRequireEntry {
+        +string missionDetail
+        +RequirementType type
+        +string targetID
+        +int requireNum
+    }
+    class MissionData {
+        +MissionSO SO
+        +MissionStatu missionStatus
+        +int[] currentNums
+        +List~ItemData~ reward
+    }
+    class MissionsBar {
+        +Refresh()
+        +DrawMainPos(MissionSlot slot)
+        +RefreshRewardSlots()
+    }
+    class MissionSlot {
+        +Init(MissionsBar parent)
+        +Select()
+        +SetSelected(bool selected)
+    }
+    class MissionAim {
+        +Bind(MissionData data, int index)
+        +Refresh()
+    }
+    MissionSO *-- MisssionRequireEntry : 多个目标
+    MissionSO o-- ItemSlotData : 奖励配置
+    MissionSO --> DialogSO : 接取对话配置
+    DialogSO --> SpeakerInfo : 说话者
+    MissionData --> MissionSO
+    MissionData o-- ItemData : 运行时奖励
+    PlayerData *-- MissionData : missions
+    MissionManager --> PlayerObj
+    MissionManager ..> EventCenter : 订阅进度与发布变动
+    PlayerObj ..> EventCenter : 收集物品进度
+    EnemyObj ..> EventCenter : 击杀进度
+    UIBase <|-- MissionsBar
+    MissionsBar ..> EventCenter : 监听任务变动
+    MissionsBar o-- MissionSlot
+    MissionsBar o-- MissionAim
+    MissionsBar o-- ItemSlot : 奖励格子
+    MissionSlot --> MissionData
+    MissionAim --> MissionData
+```
 
-调用约定：箱子等单容器对象统一调用 `GetContainer()`，使用 `Default`。只有玩家需要选择栏位时才显式指定 `Bag` 或 `QuickBar`；单容器实现不需要按类型分支。
+| 模块 | 职责 |
+| --- | --- |
+| `GameManager` | 分别加载物品和敌人配置，维护 ID 字典和对应加载任务 |
+| `PlayerObj` | 持有玩家数据与容器，提供玩家级加物品入口，处理伤害、交互目标和手持模型 |
+| `PlayerController` | 键鼠输入、移动、动画、玩家连招与快捷栏滚轮选择 |
+| `EnemyManager` | 敌人注册、按类型查询、按预制体复用实例 |
+| `EnemyObj` / `EnemyAI` | 敌人数据与生命周期 / 感知、导航、攻击决策和根运动同步 |
+| `WeaponObj` | 按攻击段执行范围和角度检测，并向目标施加伤害 |
+| `ItemContainer` / `ItemRules` | 容器增删和通知 / 查找、堆叠、扣除、交换与拆分规则 |
+| `MissionManager` | 匹配目标类型与 ID，累加进度，判定所有目标完成并通知 UI |
+| `UIManager` / `UIBase` | 按具体类型管理面板 / 显隐状态与刷新扩展点 |
+| `MissionsBar` / `MissionSlot` / `MissionAim` | 任务面板 / 可点击任务条目 / 目标描述、计数和完成标记 |
+| `EventCenter` / `GameEvents` | 同步强类型事件总线 / 全局事件键，支持 0～5 个参数 |
 
-| 拥有者 | `Default`（省略参数） | `Bag` | `QuickBar` |
-| --- | --- | --- | --- |
-| `PlayerObj` | 玩家背包 | 玩家背包，与默认返回同一实例 | 独立快捷栏 |
-| `TestChest` | 当前箱子的储物容器 | 同一储物容器 | 同一储物容器 |
+## 5. 物品与玩家 API
 
-省略参数时使用 `Default`；对象没有专门处理的类型（包括未知枚举值）也回退到默认容器。玩家仅对 `QuickBar` 返回快捷栏，其余返回背包；箱子所有类型都返回自身储物容器。玩家缺少 `PlayerSO` 时仍可能返回 `null`。接口和实现类都声明默认参数，因此通过接口或具体类调用均可省略参数。重复获取会复用容器，每只箱子的物品列表相互独立。箱子目前为初始空的运行时容器，没有容量限制或存档恢复。
+### 5.1 配置和运行时数据
+
+`PlayerSO.CreateData()`、`EnemySO.CreateData()` 创建角色数据。物品通过 `ItemSO.CreateItemData()` 创建，武器也可使用强类型的 `WeaponSO.CreateData()`。运行时数量、HP、攻击间隔和 Buff 等应写入数据实例，不应回写 SO 资产。
+
+- `ItemData.count` 是当前数量，`stackCount` 是单格上限；非正上限按 1 处理。
+- 列表长度就是容器容量，空格保留 `null`。添加物品只合并堆叠和填空格，不追加新格。
+- `PlayerSO.bagCapacity`、`quickBarCapacity` 和 `ChestSO.capacity` 用于初始化格数；初始配置超过容量时当前转换方法不会截断。
+- 不要在容器初始化后直接替换 `Data.Bag` 或 `Data.quickBar` 的列表实例，容器和 UI 引用的是原列表。
+- `ItemData.Clone()` 是浅复制；`WeaponData.Clone()` 另外复制 `combo` 和各个 `AttackData`。Prefab、Sprite 和动画控制器仍共享资产引用。
+
+### 5.2 给玩家添加物品并推进任务
+
+拾取、奖励等“玩家获得物品”的业务入口使用 `PlayerObj.AddItem`：
 
 ```csharp
-IContainerOwner owner = hit.collider.GetComponentInParent<IContainerOwner>();
-IItemOperator container = owner?.GetContainer();
-if (container != null)
-{
-    bagPanel.Bind(container);
-    // AddItem 仍要求 GameManager 完成初始化。
-    int added = container.AddItem("item_001", 1);
-}
+// 在 GameManager.Awake() 执行后调用，例如其他组件的 Start() 中。
+await GameManager.Instance.LoadingTasks.ItemComplete;
 
+int requested = 3;
+int added = player.AddItem("item_001", requested);
+int remaining = requested - added;
+```
+
+该方法先放背包，剩余的放快捷栏，返回实际添加数量。各容器沿用 `OnItemsChanged` 刷新物品 UI；总添加数量大于 0 时，额外发布一次：
+
+```csharp
+OnPushMissionProgress(player.Data, RequirementType.收集物品, itemID, added)
+```
+
+无效 ID、非正数量、未准备好的物品配置或没有可用空间时，不计入未添加的部分。调用方应保留 `remaining`，避免物品未全部入包就销毁整个拾取对象或将奖励标记为已全部领取。
+
+等待加载任务结束后仍需确认 `GetItem(id)` 有结果；加载结束标志不保证 ID 存在或所有配置有效。旧的 `GameManager.Ready` / `IsReady` 已由 `LoadingTasks` / `LoadingStatus` 替代。
+
+### 5.3 直接操作单个容器
+
+```csharp
+IItemOperator bag = player.GetContainer(ContainerKind.Bag);
 IItemOperator quickBar = player.GetContainer(ContainerKind.QuickBar);
-```
-
-`BagPanel` 和 `QuickBar` 的玩家来源通过显式类型获取；已有的 `player.Bag`、`player.QuickBar` 属性仍可使用。取容器本身不打开箱盖或 UI，也不进行距离、锁定等交互权限检查。
-
-```csharp
-IItemOperator bag = player.Bag;
-bool owns = player.HasItem("item_001"); // 背包或快捷栏里任一有即可
+bool owns = player.HasItem("item_001"); // 背包或快捷栏任一存在即可
 int total = ItemRules.CountOf(bag.GetItemList(), "item_001");
-int first = ItemRules.FindItem(bag.GetItemList(), "item_001"); // 不存在为 -1
-int added = bag.AddItem("item_001", 5);   // 自动发布变更事件
-bool removed = bag.RemoveItem("item_001", 2); // 跨堆扣除，不足则完全不扣
-bool removedAt = bag.RemoveItemAt(0, 1); // 只扣第 0 格，不足返回 false
+
+int added = bag.AddItem("item_001", 5);
+bool removed = bag.RemoveItem("item_001", 2);
+bool removedAt = bag.RemoveItemAt(0, 1);
 ```
 
-`FindItem(list,id,count)` 查找**单个格子**数量是否足够；跨堆总量请用 `CountOf`。`GetItemList()` 暴露的是原始可变列表，不是副本。
+容器自己的 `AddItem` 只通知物品变化，不通知任务进度。`RemoveItem` 总量不足时完全不扣；`RemoveItemAt` 只操作指定格子。`FindItem(list, id, count)` 检查单格数量，跨堆总量使用 `CountOf`。
 
-```csharp
-// 直接改列表时需自行通知 UI；通常优先使用容器 API。
-player.Data.Bag[0] = null; // 前提：列表已经初始化且存在第 0 格
-player.PublishBagChanged();
-player.PublishQuickBarChanged(); // 修改快捷栏后使用
-```
+`GetContainer()` 默认返回玩家背包；`TestChest` 默认返回自身储物容器；`MissionsBar` 返回当前显示的奖励容器。`ItemContainer` 不是组件，不通过 `GetComponent<IItemOperator>()` 获取。
 
-### 4.4 交换、合堆和拆分
+### 5.4 交换和选择
 
 ```csharp
 bool allowed = ItemRules.CanExchange(player.Bag, 0, player.QuickBar, 1);
 bool moved = ItemRules.Exchange(player.Bag, 0, player.QuickBar, 1);
+// 单独的拆分示例：从背包第 0 格向快捷栏第 1 格转移 2 个。
 bool movedTwo = ItemRules.Exchange(player.Bag, 0, player.QuickBar, 1, 2);
 ```
 
-以上是三次独立调用示例，请按需求选择；索引必须对应真实列表格子。`count <= 0` 或大于源数量时按整堆处理。同 id 合堆到上限，不同 id 仅支持整堆互换。`Exchange` 成功时通知两边列表，同一列表也会被通知两次。
+这些是独立操作示例，调用前需使用实际存在的格子索引。同 ID 合堆到上限，不同 ID 仅支持整堆互换；空目标格可以接收物品。成功后通知两边列表。背包与快捷栏互相移动不属于新增获取，不触发收集任务计数。
 
-**当前实现限制：** `ItemRules.CanExchange` 同时调用两端容器的 `CanExchange`，而 `ItemContainer.CanExchange` 对空格返回 false。因此虽然规则中写了“移动到空格”的分支，使用当前 `ItemContainer` 时会提前拒绝空目标。本文记录此行为，没有在文档任务中修改规则。
+点击格子发布 `OnSlotSelectionRequested`，玩家仅接受自己的背包或快捷栏格子。选中后更新手持模型和 `PlayerData.HandingItem`，发布 `OnSelectedSlotChanged`。玩家战斗通过 `PlayerData.GetWeaponData()` 读取当前手持武器。
 
-### 4.5 UI 面板
+直接修改列表时需自行通知物品 UI：
+
+```csharp
+player.PublishBagChanged();
+player.PublishQuickBarChanged();
+```
+
+这两个方法不补发任务进度。
+
+## 6. 敌人、战斗与根运动
+
+生成敌人前等待敌人配置：
+
+```csharp
+await GameManager.Instance.LoadingTasks.EnemyComplete;
+GameObject enemy = EnemyManager.Instance.SpawnEnemy(
+    "Enemy_001", spawnPosition, Quaternion.identity);
+```
+
+对象池以预制体为 key。新建和复用实例都通过 `ResetEnemyStatu(so)` 重新创建敌人数据、恢复碰撞体与血条、初始化武器与 AI，并通过 `Animator.Rebind()` 重绑动画状态。
+
+默认武器配置相同且模型仍存在时复用模型，但重新创建武器运行时数据；配置不同时重新实例化武器。默认武器初始化完成后再发布 `OnEnemyChangedHandingItem`。`EnemyObj` 当前没有实现通用换手持接口。
+
+`EnemyAI` 用触发器进入/退出记录玩家，重生时重新扩张感知范围。Agent 负责寻路，`updatePosition = false`，位移由 `OnAnimatorMove()` 读取 `animator.rootPosition`，高度取导航表面，再将位置反馈给 Agent。移动动画需要实际根位移；仅增加 Agent 的 `speed` 不能直接替代动画移动速度。
+
+进入武器停止距离后停止追逐并尝试攻击。敌人当前使用 `Attack1` / `Attack2` Trigger，攻击前转向玩家；`WeaponData.attackBreak` 和 `EnemyData.hitStun` 保存运行时攻击间隔与硬直。
+
+| 动画事件 | 接收组件 | 用途 |
+| --- | --- | --- |
+| `PublishPlayerCombo` | `PlayerController` | 从动画状态解析玩家攻击段，发布 `OnPlayerCombo` |
+| `PublishEnemyCombo(int index)` | `EnemyObj` | 发布带敌人身份的攻击段事件，index 从 0 开始 |
+| `ChangeAttackStatu` | `EnemyAI` | 结束当前攻击标记，整轮连招结束时设置攻击间隔 |
+| `Died` | `EnemyObj` | 死亡动画结束后回收实例 |
+
+武器根据拥有者订阅玩家或敌人攻击事件；敌人武器过滤事件里的 `EnemyObj`，防止其他敌人的攻击触发自身判定。判定使用球形范围和角度筛选，以拥有者的位置、朝向和 `judgeOffset` 确定中心；每次判定用集合避免同一角色的多个 Collider 重复受伤。
+
+敌人 HP 归零时发布死亡和击杀任务进度，停止参与存活敌人查询，并触发死亡动画；实例回收由动画末尾的 `Died` 完成。`RecycleEnemy` 的队列检查防止同一空闲实例重复入队。
+
+## 7. 任务系统
+
+### 7.1 配置与进度
+
+`MissionSO` 保存 `missionID`、名称、描述、主线/支线类型、接取对话、目标列表和奖励配置。每个 `MisssionRequireEntry` 包含：
+
+| 字段 | 含义 |
+| --- | --- |
+| `missionDetail` | UI 目标描述 |
+| `type` | 到达地点、击败敌人、收集物品、与人对话 |
+| `targetID` | 目标标识，按要求类型匹配敌人 ID、物品 ID 或后续地点/角色 ID |
+| `requireNum` | 需要完成的数量 |
+
+`MissionData.currentNums[i]` 对应 `SO.requireMents[i]`。任务进行期间应保持目标数量和顺序稳定。奖励通过配置转换为运行时 `ItemData` 列表。
+
+`MissionManager` 监听 `(PlayerData, RequirementType, targetID, count)`，过滤玩家后遍历任务，对类型和 ID 相同的目标累加数量，达到目标上限后封顶。所有目标完成时将 `missionStatus` 设为 `已完成`，然后发布 `OnMissionsChanged`。
+
+```mermaid
+flowchart TD
+    A[PlayerObj.AddItem] --> B[背包与快捷栏实际添加]
+    B -->|OnItemsChanged| C[物品 UI 刷新]
+    B -->|实际添加总量大于 0| D[OnPushMissionProgress]
+    E[EnemyObj 致死伤害] -->|击败敌人及 enemyID| D
+    D --> F[MissionManager 匹配玩家、类型和目标 ID]
+    F --> G[累加目标进度并判定任务完成]
+    G -->|OnMissionsChanged| H[MissionsBar.Refresh]
+    H --> I[任务条目、目标与奖励显示]
+```
+
+目前收集目标统计的是通过玩家级 API **新获得的数量**，不会因使用、丢弃或移出背包而倒退。直接操作容器、拖入箱子物品、初始背包物品不会自动补计进度；若后续改为“当前持有数量”，需另外设计总量同步。
+
+### 7.2 测试接取与其他目标通知
+
+当前还没有正式接取 API，测试时可在任务管理器和玩家完成初始化后插入运行时任务：
+
+```csharp
+var data = player.Data;
+if (!data.missions.ContainsKey(missionSO.missionID))
+{
+    data.missions.Add(missionSO.missionID, new MissionData(missionSO));
+    player.Publish(GameEvents.OnMissionsChanged, data);
+}
+```
+
+地点和对话完成时，后续业务组件可沿用现有进度事件：
+
+```csharp
+this.Publish(GameEvents.OnPushMissionProgress, player.Data,
+    RequirementType.到达地点, locationID, 1);
+```
+
+`Dictionary` 本身不会自动发事件，接取、移除或直接修改任务后需显式通知。`completedMissions` 是单独的记录，当前进度处理器不会自动把已完成任务移入该字典，也不会自动发奖。
+
+## 8. UI 与事件
+
+### 8.1 面板使用
 
 ```csharp
 UIManager.Instance.Open<BagPanel>();
-UIManager.Instance.Close<BagPanel>();
-UIManager.Instance.Toggle<BagPanel>();
-BagPanel panel = UIManager.Instance.Get<BagPanel>();
-if (panel != null) panel.Bind(player.Bag);
+UIManager.Instance.Toggle<MissionsBar>();
+UIManager.Instance.Close<MissionsBar>();
 UIManager.Instance.RefreshAll();
 ```
 
-调用前确保场景中的 `UIManager` 已执行 Awake。`Get<T>()` 未找到时返回 null 并记录警告。`Open<T>()` 会将面板移到同级最后，再调用 `Show()`。
+`UIManager` 按具体类型注册场景中的 `UIBase`，包括未激活对象，每种类型保留一个实例。动态创建面板需调用 `Register`。基类销毁时负责注销；子类重写 `OnDestroy()` 应调用 `base.OnDestroy()`。
 
-新面板继承 `UIBase`，重写 `Refresh()` / `OnShow()` / `OnHide()`。动态实例化后调用 `UIManager.Instance.Register(panel)`；销毁时基类负责注销。重写 `OnDestroy` 需要调用 `base.OnDestroy()`。
+`UIBase.Awake()` 将 `IsOpen` 与初始可见状态同步。实际显隐依赖 `viewRoot`，未绑定时当前 `Show/Hide` 只更新状态，不自动失活自身。
 
-Inspector 接线要求：
+`MissionsBar` 监听自己玩家的 `OnMissionsChanged`。任务、目标和奖励格子不足时生成，多余时失活复用；刷新时尽量保留选中的任务。`MissionSlot` 用 `IPointerClickHandler` 处理左键选择，不依赖 Button。`MissionAim` 用不可交互 Toggle 显示完成状态。
 
-- `UIBase.viewRoot` 指定实际显隐根节点。**当前代码在 viewRoot 为空时只修改 IsOpen，不会自动 SetActive 自身。**
-- `BagPanel` 绑定 `player`、带 `ItemSlot` 的 `slotPrefab` 和 `spawnPos`；也可通过 `Bind` 指定其他容器。
-- `QuickBar` 绑定 `player` 和固定 `quickSlots`。容器可增长，超过已绑定格子数的物品不会显示。
-- `ItemSlot` 绑定 `iconImage`、`countText`、独立的 `dragImage` 和高亮 `mask`。拖拽图不能与原图是同一个 Image，应初始隐藏且不拦截射线。
-- 当前拖拽位置直接使用屏幕坐标，适合 Screen Space Overlay；换成其他 Canvas 模式需要坐标转换。
-- `PlayerHPBar` 绑定 `player`、`fill`、`buffer` 和 `hpPrompt`；血条图片应配置为 Filled。
+主要接线要求：
 
-### 4.6 伤害、移动和动画
+- 背包：`player`、`slotPrefab`、`spawnPos`；快捷栏：`player`、固定 `quickSlots`，格数需与数据列表一致。
+- 物品格：图标、数量、独立拖拽图、高亮和选中边框；拖拽图不拦截射线。
+- 任务面板：玩家、任务标题/类型/描述、计数、关闭按钮，以及任务/目标/奖励预制体和各自父节点。
+- `slotsParent`、`aimsParent` 使用竖向布局；`rewardSlotsPos` 使用网格布局。已有 `QuestPanel.prefab` 的对应节点是任务列表 Content、`ObjectiveList` 和 `RewardList`。
+- 玩家与敌人血条绑定角色及填充/缓冲图片；敌人世界空间血条通过 `worldCanvas` 跟随主摄像机朝向。
 
-```csharp
-player.TakeDamage(25f, attacker); // attacker 为 GameObject，也可传 null
-var motor = player.GetComponent<PlayerController>();
-motor.SetMove(Vector3.forward, false); // 世界坐标方向
-motor.StopMove();
-motor.Attack();
-motor.Jump();
-Debug.Log(motor.CurrentStateName);
-```
+左右头像对话框、任务接取框目前提供视觉预制体，尚未接入完整对话播放、接取和奖励发放流程。任务面板中的奖励格子目前表示配置奖励，不代表已经发放到玩家身上。
 
-`SetMove` 会将方向投影到水平面并归一化，但 `Update` 中的 `ReadKeyboard()` 每帧会覆盖它。要由 AI 或其他输入源持续控制，需要先拆分或关闭现有键盘读取逻辑。
+### 8.2 主要事件
 
-`Attack()` 目前只触发动画，不使用 `WeaponData.combo` 自动做伤害判定。`Jump()` 只发 Animator Trigger。业务死亡应通过 HP/伤害流程；`PlayerController.Die()` 只改变控制器和动画状态，不修改 `PlayerObj.IsDead` 或 HP。`DestorySelf()` 按当前源码拼写提供销毁接口。
-
-Animator 参数需要包含 `IsWalking`、`IsRunning`、`IsDead`（Bool），`Jump`、`Hit`、`Attack_01`、`Attack_02`、`Attack_03`（Trigger）。状态判断依赖 `Idle`、`Walk`、`Run`、`Jump` 等名称。
-
-### 4.7 订阅事件
-
-```csharp
-using UnityEngine;
-
-public class HpListenerExample : MonoBehaviour
-{
-    [SerializeField] PlayerObj player;
-    void OnEnable() => this.Subscribe(GameEvents.HpChanged, OnHp);
-    void OnDisable() => this.UnSubscribe(GameEvents.HpChanged, OnHp);
-    void OnHp(GameObject who, float hp, float maxHp)
-    {
-        if (player == null || who != player.gameObject) return;
-        Debug.Log($"HP：{hp}/{maxHp}");
-    }
-}
-```
-
-| 事件 | 参数 | 发布时机 |
+| 事件 | 参数 | 用途 |
 | --- | --- | --- |
-| `Damaged` | `GameObject victim, float damage, GameObject attacker` | 生命值已扣除；damage 为传入伤害值 |
-| `HpChanged` | `GameObject who, float hp, float maxHp` | 受伤更新生命值后 |
-| `Died` | `GameObject who` | `PlayerObj` 首次受到致死伤害 |
-| `OnItemsChanged` | `List<ItemData> changed` | 容器增删、规则交换或手动发布 |
+| `HpChanged` | `GameObject, float hp, float maxHp` | 角色血条更新 |
+| `Damaged` | `GameObject victim, float damage, GameObject attacker` | 已扣血后的受击反应 |
+| `Died` | `GameObject` | 玩家或敌人的死亡响应 |
+| `OnItemsChanged` | `List<ItemData>` | 容器 UI 按列表引用过滤变动 |
+| `OnSlotSelectionRequested` | `ItemSlot` | 请求选中玩家物品格 |
+| `OnSelectedSlotChanged` | `ItemSlot` | 更新选中边框和玩家武器动画 |
+| `OnPlayerCombo` | `int index` | 玩家武器攻击判定 |
+| `OnEnemyCombo` | `EnemyObj, int index` | 指定敌人的武器攻击判定 |
+| `OnEnemyChangedHandingItem` | `EnemyObj, ItemData` | 敌人手持数据初始化完成后的通知 |
+| `OnPushMissionProgress` | `PlayerData, RequirementType, string targetID, int count` | 累加对应任务目标进度 |
+| `OnMissionsChanged` | `PlayerData` | 刷新对应玩家的任务面板 |
+| `OnChestShow` / `OnChestHide` | `IContainerOwner` | 绑定或关闭指定箱子窗口 |
+| `OnChestWindowHoverChanged` | `ChestWindow` | 箱子窗口悬停状态通知 |
 
-必须使用 `GameEvents` 中的同一静态键实例；新建一个同类型 `EventKey` 不会匹配原订阅。事件同步执行，不自动去重、隔离异常或清理订阅。匿名 lambda 若需要退订，应保存原委托。回调中不要再次执行造成同一事件的业务操作，以免递归。
+必须使用 `GameEvents` 中的静态键实例。事件同步执行，不自动隔离异常或清理订阅；订阅和退订应成对。伤害事件回调只负责反应，不要再次施加同一次伤害。
 
-### 4.8 新增拾取交互
+## 9. 测试资源与工具
 
-```csharp
-using UnityEngine;
+主场景包含测试 Terrain、植物、可进入房屋和可开合木箱。角色和长枪资源位于 `Assets/Art/33 宵宫`、`Assets/Art/Weapons/FalconOath`；方块敌人位于 `Assets/Prefabs/TestEnemy`，默认敌人武器及两段攻击动画位于 `Assets/Prefabs/Items/EnemyWeapon_001`。
 
-public class TestPickup : InteractBase
-{
-    public string itemId = "item_001";
-    public int amount = 1;
-    public override string InteractPrompt() => "拾取物品";
-    protected override bool InteractLogic(GameObject interactor)
-    {
-        if (interactor == null || amount <= 0) return false;
-        var player = interactor.GetComponent<PlayerObj>();
-        return player != null && player.Bag != null
-            && player.Bag.AddItem(itemId, amount) == amount;
-    }
-}
-```
-
-为实例设置 `interactType = DestroyAfterInteract`，成功才会销毁。调用方通过 `CanInteract(actor)` 和 `OnInteract(actor)` 使用接口。项目当前没有自动查找交互目标并按 E 执行的完整输入流程，需另接射线/触发器检测。示例依赖当前无容量限制的 AddItem；将来允许部分添加时应另外处理剩余数量。
-
-## 5. 测试环境与美术资源
-
-主场景包含 160 × 160 米的缓坡 Terrain，总高差约 2.8 米，中心约 10 米半径保持平坦。原 Plane 停用保留。
-
-测试装饰集中在 `Test Environment - Village and Plants` 根节点：32 棵树、35 组花丛、65 组草、3 座简易可进入建筑和 7 个箱子。花草无碰撞，树干、建筑主体和箱子有碰撞。中心活动区和交叉通道留空；使用程序化基础形体、共享 URP 材质，供功能测试，尚未做 LOD、烘焙和性能优化，也没有烘焙 NavMesh。
+`TestChest` 从 `ChestSO` 初始化独立容器，`ChestOpen.anim` 使用 Legacy Animation，同一动画正向开盖、反向关盖。F 键交互会切换箱盖和对应窗口，窗口关闭按钮也会关闭箱盖。`DragUI` 提供窗口拖拽。
 
 | Unity 菜单 | 用途 |
 | --- | --- |
-| `Tools/Terrain/Create Gentle Test Ground` | 首次生成测试地形；已有数据资产时不重复生成 |
-| `Tools/Terrain/Add Test Village and Plants` | 添加测试装饰；同名场景根节点存在时跳过 |
-| `Tools/Terrain/Upgrade Accessible Test Houses` | 重建三栋测试房屋，保存独立预制体并验证进出；会备份、保存场景 |
-| `Tools/Terrain/Check House Passages` | 按当前玩家胶囊尺寸检查房屋门口至室内的碰撞净空 |
-| `Tools/Weapons/Build Falcon Oath` | 重建长枪预制体，并给 OBJ 映射正式材质 |
-| `Tools/Weapons/Repair Falcon Scene Materials` | 修正仍引用 OBJ 内嵌材质的场景实例，开启 Scene 光照 |
-| `Tools/Weapons/Check Scene Appearance` | 输出长枪材质、视图光照与反射检查信息 |
-| `Tools/Art/Upgrade Falcon and Bind Yoimiya` | 配置长枪 PBR 贴图并重建宵宫 27 个材质槽映射 |
+| `Tools/Terrain/Create Gentle Test Ground` | 生成测试地形 |
+| `Tools/Terrain/Add Test Village and Plants` | 添加植物和村落装饰 |
+| `Tools/Terrain/Upgrade Accessible Test Houses` | 重建可进入房屋和入口坡道 |
+| `Tools/Terrain/Check House Passages` | 检查玩家胶囊通过门口的净空 |
+| `Tools/Terrain/Build and Scatter Low Poly Chests` | 重建并摆放可开合木箱 |
+| `Tools/Items/Create Missing Item Prefabs` | 补建缺失物品预制体 |
+| `Tools/Weapons/Build Falcon Oath` | 重建长枪预制体与材质映射 |
+| `Tools/Weapons/Repair Falcon Scene Materials` | 修复场景长枪材质引用 |
+| `Tools/Weapons/Check Scene Appearance` | 检查长枪材质和视图光照 |
+| `Tools/Art/Upgrade Falcon and Bind Yoimiya` | 更新 PBR 贴图与角色材质绑定 |
+| `Tools/Debug/Attach CC Scene Debug View` | 为玩家添加 CharacterController 可视化 |
 
-部分编辑器工具带 `InitializeOnLoad` 首次执行逻辑，通过 `Tools` 下的结果文件防重复。地形/装饰工具会备份并保存当前 SampleScene；美术升级会改写生成的材质参数。不要把这些菜单当作无副作用的查询按钮。场景备份不包含全部资源副本。
+生成工具可能修改资产、备份并保存场景；结果文件和历史测试记录位于 `Tools`。`CharacterControllerDebugView` 可显示胶囊、坡面射线、坡度和落地状态；`WeaponObj` 的调试绘制可显示攻击范围和命中目标。
 
-### 可进入的测试房屋
+## 10. 当前边界与验证
 
-三栋房屋的资源位于 `Assets/Art/Environment/TestHouses`，包含独立房屋预制体、瓦片屋顶、山墙、木结构、窗框、门廊、桌凳和置物架。门洞净宽 2.6 米、净高 3.6 米；旧门洞仅高 2.5 米，会阻挡当前高 2.98 米的玩家控制器。入口改为约 4 米长的贴地坡道，室内中央保持通畅。
+- 任务接取/提交对话、奖励领取、地点与对话目标的实际发布点、存档尚未形成完整流程。
+- 收集任务是新增获取计数，需走 `PlayerObj.AddItem`；不会扫描全部容器变化，也不回溯接取前已有物品。
+- 已完成任务尚未自动归档到 `completedMissions`；任务面板计数目前分别读取两个字典的数量。
+- 敌人当前围绕有默认武器的测试配置工作；致死伤害的击杀通知要求攻击者能获取 `PlayerObj`，环境伤害和其他攻击者来源仍需扩展。
+- 配置加载的失败处理和 Addressables handle 释放仍需完善，目前 `OnDestroy()` 只释放物品 handle。
+- 对象池尚未提供预热、最大空闲数量或统一场景清理接口；测试环境尚未完成整体性能优化。
+- 跳跃尚未接入真实跳跃位移，移动与交互的 UI 输入屏蔽尚未统一。
+- 部分运行时脚本仍引用 `UnityEditor`，正式 Player 构建前需清理；编辑器脚本编译通过不代表所有目标平台构建已验证。
 
-升级工具会按各房屋位置采样地形设置地板高度和坡道，保留房屋位置与朝向；移动预制体到其它地形后需重新调整入口。装饰瓦片没有碰撞，基础地板、墙体、窗玻璃、屋顶和主要家具使用碰撞体。窗玻璃使用 URP Lit 透明混合，淡蓝色、Alpha 0.16，关闭深度写入及阴影投射；可透视但仍有碰撞。房门保持敞开，没有开关门逻辑。
+建议在 Play Mode 验证以下流程：
 
-`Tools/Environment/house-before.txt` 记录旧门楣阻挡；`house-after.txt` 记录净空检查；`house-walk.txt` 用与当前玩家相同尺寸及爬坡参数的临时 CharacterController，在编辑器中调用 Move 验证三栋房屋进入与退出，不移动真实玩家。这不等同于完整 Play Mode 下动画、相机的人工体验测试。
+1. 配置加载完成后查询物品和敌人 ID，检查无缺失配置。
+2. 背包堆叠、空格转移、拆分和满容量部分添加；确认返回数量与实际物品数量一致。
+3. 选择玩家物品格，检查手持数据、模型和动画控制器同步。
+4. 敌人发现玩家、追逐、两段攻击、硬直、死亡动画和对象池重生。
+5. 击杀相同目标 ID 的敌人推进任务；通过玩家 API 获得物品推进收集目标，内部换格不重复计数。
+6. 完成多个目标后检查任务状态、V 键开关、第一次点击关闭按钮、任务切换及条目复用。
+7. F 键开关箱子、窗口拖拽、物品交换，以及鼠标悬停时快捷栏滚轮屏蔽。
 
-### 测试箱子（低面数，可开合）
-
-靠近可交互物体时，`PlayerObj` 在玩家位置上方 0.8 米进行默认半径 2 米的范围检测，向碰撞体父级查找 `IInteractable`，选取最近且未被实体遮挡的可交互目标。`prompt` 显示 `[F]` 加目标提示；离开范围、目标不可交互或玩家死亡时隐藏。`PlayerController` 通过 `GetKeyDown(KeyCode.F)` 调用 `player.TryInteract()`，不再碰撞即自动开箱。可在 PlayerObj 上调整 `interactionRange`、`interactionMask`；检测层需包含箱体子物体所在层。使用旧 Input，尚未接入 UI 输入屏蔽。
-
-`Assets/Art/Environment/TestChest/TestChest.prefab` 是独立可复用的木箱预制体，每只 540 个三角面，含空心箱体、独立箱盖、铁箍和铜扣。主场景的 `Test Environment - Village and Plants/Scattered Chests` 下已分散放置 7 只，替换原来的方块箱子。
-
-`ChestOpen.anim` 使用 Legacy Animation，0.65 秒绕背部铰链打开 108°，关闭时反向播放，同一动画支持开合途中反向。默认关闭，不自动播放。箱体使用简化 BoxCollider；箱盖无碰撞，不用于物理容器。
-
-```csharp
-TestChest chest = chestObject.GetComponent<TestChest>();
-chest.Open();
-chest.Close();
-chest.Toggle();
-bool targetIsOpen = chest.IsOpen; // 目标状态，不表示动画已经播完
-
-// 已继承 InteractBase，可从未来的交互检测系统调用：
-chest.OnInteract(playerGameObject);
-```
-
-Play Mode 下可在 TestChest 组件右键菜单使用 `Preview/Open (Play Mode)` 和 `Preview/Close (Play Mode)`。尚未接入按键检测、奖励或存档。
-
-Unity 菜单 `Tools/Terrain/Build and Scatter Low Poly Chests` 可重建资源并重新摆放这 7 只箱子；会备份并保存 SampleScene，覆盖箱子生成资源及位置。生成检查见 `Tools/Environment/chest-result-v2.txt`。
-
-## 6. 当前边界与后续工作
-
-- 打开背包目前不会禁用移动/攻击；旧 Input 读取不受 UI Raycast 阻挡。后续可拆出角色输入组件或切换 Input System Action Map。
-- 空目标格拖拽的容器校验存在前述限制；拆分数量也没有对应的 UI 操作入口。
-- 尚未实现完整装备切换、武器判定、物品使用、存档、AI 和导航流程。配置字段存在不代表玩法已接通。
-- UIManager 按具体类型注册一个面板；不能直接用同一类型管理多个独立窗口。
-- SO 工厂与运行时字段需同步维护；新增可变引用字段需检查深复制。
-- `Tools/ItemSlotTestResults` 是历史记录，其中旧版落点事件说明与当前直接 Exchange 实现不同，应以当前源码为准。
-- 部分旧源码中文注释存在编码显示问题，本文使用 UTF-8，不顺带改写那些文件。
-
-## 7. 验证入口
-
-### CharacterController 坡面可视化
-
-玩家挂载 `CharacterControllerDebugView`。在 Scene 视图打开 Gizmos，Play Mode 下观察角色上坡、下坡或跨台阶；无需选中角色（可勾选 `Only When Selected` 限制显示）。`Show` 控制显示，`Probe Distance` 控制向下探测距离，`Ground Mask` 过滤检测层。
-
-- 青色：按 CC Center、Height、Radius 和物体缩放绘制的胶囊。
-- 黄色：胶囊最低点平面与 Step Offset 高度圈。
-- 绿色/红色：中心和四周向下射线、命中法线；红色表示坡度超过 Slope Limit。灰色表示未命中。
-- 紫色：Humanoid 左右脚骨位置及到地面的竖直距离，脚骨不等于鞋底。
-- 文字：最后一次 Move 的 isGrounded、CollisionFlags、CC 速度、中心探测坡度、胶囊底部至地面竖直间距及 Skin Width。编辑模式不评估 isGrounded。
-
-射线是独立的调试探测，不是 CC 内部接触算法；球形底部在坡面上接触时，中心竖直间距可能大于零，不能单靠该数值判定悬空。结合 isGrounded、法线及脚骨/模型位置判断。组件不调用 Move、不修改贴地逻辑，也不实现脚部 IK，绘制逻辑只在编辑器编译。菜单 `Tools/Debug/Attach CC Scene Debug View` 可为主场景玩家补挂组件并保存场景。
-
-```powershell
-# OBJ 所有面是否有有效法线；需要本机 Python
-python Tools/WeaponConcepts/check_falcon_normals.py
-```
-
-`Tools/Environment/environment-result.txt` 记录装饰生成结果；`Tools/WeaponConcepts/test-terrain-result.txt` 记录地形尺寸与碰撞检查。它们属于生成时检查，不等同于角色移动、每个建筑碰撞和整套背包功能的完整 Play Mode 回归测试。
-
-建议在 Play Mode 手动验证：出生点落地、缓坡移动、树干/屋墙碰撞、穿过门洞、Tab 显隐、H 扣血、背包添加与扣除、有效非空格之间交换。当前项目没有可直接宣称覆盖全部系统的自动化测试套件。
+本 README 按当前源码和资源结构整理；`Tools` 中的生成检查和历史记录不等于完整玩法回归测试。

@@ -1,0 +1,1 @@
+PASS: seven native Unity model/pose previews rendered.

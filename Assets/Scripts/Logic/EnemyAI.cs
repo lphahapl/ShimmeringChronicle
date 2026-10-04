@@ -24,6 +24,7 @@ public class EnemyAI : MonoBehaviour
    {
         Animator.StringToHash("Attack1"),
         Animator.StringToHash("Attack2"),
+        Animator.StringToHash("Attack3"),
        
     };
     /// <summary>

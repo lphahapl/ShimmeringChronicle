@@ -1,0 +1,18 @@
+# 苔石守卫设计稿 v3
+
+使用内置 image_gen，以 v2 设计稿为参考生成。本次只完成设计稿，尚未生成模型、动画、SO 或预制体，也未新增 EliteEnemyObj。
+
+## 确定的资源方向
+
+- 体型约 2.6 米，石质分节身体、苔绿点缀、青绿晶核和眼睛，少量黄铜装饰。
+- 慢速移动、慢速攻击；移动和攻击都保留水平根运动。
+- 默认武器为空手：做一个没有显示网格的空物体武器预制体，后续挂 WeaponObj，配独立 WeaponSO 和两段攻击动画。空手是可产生伤害的正式武器配置，区别于缺少武器数据。
+- 空手连招：直拳 → 双拳砸击。
+- 第二把可用武器为长石刀，总长暂定约 1.5 米，刀身约 1.15 米，柄与护手合计约 0.35 米。
+- 持刀连招：肩部冲撞 → 横斩 → 重劈。冲撞使用身体造成攻击，刀收在身侧；仍复用该武器的攻击判定和动画事件。
+- 后续按武器分别配置 Override Controller、连招参数和动画事件，不在本次设计阶段新增 EliteEnemyObj 或切换武器业务逻辑。
+- 各动作时长、前冲距离、伤害和攻击间隔留待实际制作与测试调整，保持明显起手和收招。
+
+## 完整生成提示词
+
+Use case: stylized-concept. Asset type: version 3 concept sheet of Mossstone Sentinel / 苔石守卫 for ShimmeringChronicle, a Unity fantasy action RPG. Reference image role: preserve the established character identity and art direction, but REORGANIZE this concept board to incorporate two distinct equipment modes requested by the user. It remains a slow, weighty, approximately 2.6m tall slate-blue faceted stone guardian, broader and thicker than the original v1, with moss-green accents, a turquoise diamond chest core and eye slits, modest aged brass trim, visible dark articulated joints. Clean anime-fantasy game art, feasible segmented low-poly modelling, warm parchment backdrop, champagne-gold rules and dark blue-gray legible Chinese headings. Upper half: large FULL-BODY three-quarter hero of the guardian in DEFAULT UNARMED mode, EMPTY clenched stone fists, NO blade, no glove accessory or held object; three small matching FRONT/SIDE/BACK unarmed turnaround views beside it, height annotation '约2.6m'. Do NOT include any human scale silhouette. Include a clearly isolated second-weapon design inset: an elongated heavy stone cleaver matching the old design, but much LONGER blade and slightly longer wooden handle. Overall cleaver length approximately 1.5m, approximately 1.15m long blade plus a 0.35m handle/guard assembly; broad angular gray stone blade with a turquoise inset and aged-brass guard, visibly long enough for this large guardian, consistent across every armed panel. Annotate weapon area '第二把武器：长石刀'. Lower half: two precisely separated attack-storyboard strips. FIRST strip titled '默认空手 · 二连击', containing TWO full-body action drawings of the same guardian with NO weapon: '01 直拳' = deliberate short planted step forward and a powerful right stone-fist punch, '02 双拳砸击' = two empty fists clasped/raised together then a heavy downward slam, grounded with readable windup, sparse stone chips at impact. SECOND strip titled '持刀 · 三连击', containing THREE full-body drawings: '01 冲撞' = crouched telegraphed SHOULDER/body charge forward, the long cleaver held tucked safely BACK and close to the right side, shoulder is the impact surface (do not depict a stab or a blade slash); '02 横斩' = wide deliberate horizontal swing of the SAME long stone cleaver; '03 重劈' = two-handed overhead long-cleaver smash with clear heavy windup. Show short muted arrows on the ground beneath each figure to indicate limited forward ROOT MOTION, no fast teleport, no airborne spinning, no acrobatics. All five attacks are slow with visible windup and recovery; restrained motion arcs, never hide the weapons/arms with effects. The unarmed default design must have truly empty hands, the armed design MUST use the SAME much longer cleaver from the weapon inset. Exactly 2 unarmed poses and exactly 3 armed poses; keep both strips readable and never blend the sequences. Main title '苔石守卫'; small subtitle '重型 · 慢速 · 双武器方案'; footer '移动与攻击保留根运动'. Keep typography sparse, labels clean, all full bodies and weapons within the board, generous gutters, no HUD, no game screenshots, no code, no empty-gameobject diagram, no software or class names. This is a RESOURCE CONCEPT proposal, not a screenshot of implemented models or gameplay.

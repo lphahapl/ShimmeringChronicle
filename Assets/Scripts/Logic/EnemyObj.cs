@@ -27,6 +27,7 @@ public class EnemyObj : MonoBehaviour,IDamageable
         {
             isDead = true;
             this.Publish<GameObject>(GameEvents.Died, this.gameObject);
+            this.Publish(GameEvents.OnPushMissionProgress, Attacker.GetComponent<PlayerObj>().Data, RequirementType.击败敌人, data.enemyID, 1);
         }
         print($"{this.gameObject.name}收到了来自{Attacker.name}的{damage}伤害剩余{data.hp}血量");
         

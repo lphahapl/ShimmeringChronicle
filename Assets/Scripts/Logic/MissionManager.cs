@@ -75,4 +75,12 @@ public class MissionManager : MonoBehaviour
         }
         return true;
     }
+    public void ReceiveMission(string missionID, MissionData data)
+    {
+        if (player.Data.missions.ContainsKey(missionID)
+            || player.Data.completedMissions.ContainsKey(missionID)) return;
+
+        player.Data.missions.Add(missionID, data);
+        this.Publish<PlayerData>(GameEvents.OnMissionsChanged, player.Data);
+    }
 }

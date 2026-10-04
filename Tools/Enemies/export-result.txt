@@ -1,0 +1,1 @@
+PASS: 47 exported assets; 59 GUID dependencies and all prefab local references resolve in the main project; URP Lit materials complete; original source MonoScript references restored; four Addressables entries registered; root detection Default and body enemy layer.

@@ -6,7 +6,7 @@ public class CameraMove : MonoBehaviour
     public float pivotHeight = 1.5f;
 
     public Vector3 offset = new Vector3(0.6f, 0.2f, -3f);
-
+    public LayerMask barrierLayer;
     public float mouseSensitivity = 3f;
     public float minPitch = -60f;
     public float maxPitch = 70f;
@@ -14,8 +14,10 @@ public class CameraMove : MonoBehaviour
     private float yaw;//ÈÆyÐý×ª
     private float pitch;//ÈÆxÐý×ª
 
+
     void Start()
     {
+        barrierLayer = LayerMask.GetMask("Envirnment");
         if (player == null)
         {
             var obj = GameObject.FindGameObjectWithTag("Player");
@@ -40,8 +42,17 @@ public class CameraMove : MonoBehaviour
 
         Vector3 pivot =
             player.position + Vector3.up * pivotHeight;
-        transform.position = pivot + rotation * offset;
+        Vector3 desiredPos = pivot + rotation * offset;
+        Vector3 dir = desiredPos - pivot;
+        if (Physics.Linecast(pivot, desiredPos, out RaycastHit hit, barrierLayer))
+        {
+            float safeDistance = Mathf.Max(0f, hit.distance - 0.05f);
+            desiredPos = pivot + dir.normalized * safeDistance;
+        }
+        transform.position = desiredPos;
+        float rotationT = 1f - Mathf.Exp(-50f * Time.deltaTime);
         transform.rotation = rotation;
-        
+            //Quaternion.Slerp(transform.rotation, rotation, rotationT);
+
     }
 }
