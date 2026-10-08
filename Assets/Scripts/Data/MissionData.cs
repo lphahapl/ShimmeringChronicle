@@ -27,5 +27,6 @@ public enum MissionStatu
 {
     待接取,
     进行中,
+    待交付,
     已完成
 }

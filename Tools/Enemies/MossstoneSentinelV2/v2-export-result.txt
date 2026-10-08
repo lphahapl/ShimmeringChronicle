@@ -1,0 +1,1 @@
+PASS: 47 V2 assets; 58 GUID references resolve uniquely in main Assets/PackageCache; all prefab local references resolve; URP material fields and source script references restored; four unique Addressables registrations; GIF frames decode; all 100 V1 files remain unchanged.

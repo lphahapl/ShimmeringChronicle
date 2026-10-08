@@ -35,7 +35,7 @@ public class MissionReceivePanel : UIBase
     private void OnReceiveMission()
     {
         if (SO == null) return;
-        MissionManager.Instance.ReceiveMission(SO.missionID, new MissionData(SO));
+        MissionManager.Instance.ReceiveMission(SO.missionID);
         Hide();
     }
 
@@ -51,10 +51,14 @@ public class MissionReceivePanel : UIBase
         var previewData = new MissionData(SO);
         reward = new ItemReviewer(previewData.reward);
         Owner.text = "ю╢вт" + SO.owner.ToString();
-        headIcon.sprite = SO.speakerInfo != null && SO.speakerInfo.head != null
-            ? SO.speakerInfo.head.sprite : null;
+        headIcon.sprite = null;
+        delegateOwnerName.text = "";
+        if (SO.speakerInfo != null)
+        {
+            headIcon.sprite = SO.speakerInfo.head;
+            delegateOwnerName.text = SO.speakerInfo.speakerName;
+        }
         headIcon.enabled = headIcon.sprite != null;
-        delegateOwnerName.text = SO.speakerInfo != null ? SO.speakerInfo.speakerName : "";
         missionType.text=SO.missionType.ToString();
         missionName.text=SO.missionName;
         missionDescription.text=SO.missionDescription;
@@ -92,6 +96,8 @@ public class MissionReceivePanel : UIBase
     {
         if (SO == null) return;
         OnDrawPanel(SO);
+        if (transform.parent != null) transform.parent.SetAsLastSibling();
+        transform.SetAsLastSibling();
         this.Show();
     }
     

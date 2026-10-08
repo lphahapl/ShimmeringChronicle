@@ -104,6 +104,7 @@ MonoBehaviour:
     - default
     - ItemSO
     - EnemySO
+    - MissionSO
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 48a16f8cc9e664b4d97aca8e8bc1969a, type: 2}

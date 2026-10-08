@@ -224,7 +224,7 @@ public static class BuildMossstoneSentinel
     }
     static GameObject Weapon(WeaponSO config,string folder,bool visible)
     {
-        var go=new GameObject(visible?"MossstoneBlade":"MossstoneFists");var weapon=go.AddComponent<WeaponObj>();weapon.SO=config;weapon.showDebug=false;weapon.onlyWhenSelected=true;
+        var go=new GameObject(visible?"MossstoneBlade":"MossstoneFists");var weapon=go.AddComponent<WeaponObj>();weapon.SO=config;weapon.showDebug=true;weapon.onlyWhenSelected=false;
         if(visible){var mesh=Joint(go.transform,"BladeMesh",Vector3.zero);BladeModel(mesh);}
         var asset=PrefabUtility.SaveAsPrefabAsset(go,folder+"/"+go.name+".prefab");Object.DestroyImmediate(go);return asset;
     }

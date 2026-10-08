@@ -58,6 +58,27 @@ public class UIManager : MonoBehaviour
         return null;
     }
 
+    public bool IsOpen<T>() where T : UIBase
+    {
+        if (!_panels.TryGetValue(typeof(T), out var ui) || ui == null) return false;
+        return ui.IsOpen;
+    }
+
+    // 背包、任务和箱子面板；常驻血条和快捷栏不计入。
+    public bool HasOpenPanel
+    {
+        get
+        {
+            if (IsOpen<BagPanel>()) return true;
+            if (IsOpen<MissionReceivePanel>()) return true;
+            if (IsOpen<MissionSubmitPanel>()) return true;
+            if (IsOpen<MissionsBar>()) return true;
+            if (_panels.TryGetValue(typeof(ChestPanel), out var ui) && ui != null && ui is ChestPanel chest)
+                return chest.isAnyChestPanelActive;
+            return false;
+        }
+    }
+
     public void Open<T>() where T : UIBase
     {
         var ui = Get<T>();

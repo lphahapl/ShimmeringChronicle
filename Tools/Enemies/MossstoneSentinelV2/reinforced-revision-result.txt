@@ -1,0 +1,1 @@
+PASS: bent elbow forearm ground impacts; small forward root-motion charge preserved.

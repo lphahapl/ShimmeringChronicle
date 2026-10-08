@@ -21,11 +21,20 @@ MonoBehaviour:
   combo:
   - damagePerHit: 16
     radius: 1.4
+    priority: 50
+    scale: 0.1
+    time: 0.035
     judgeOffset: {x: 0, y: 0, z: 0.3}
   - damagePerHit: 22
     radius: 1.6
+    priority: 50
+    scale: 0.08
+    time: 0.05
     judgeOffset: {x: 0, y: 0, z: 0.3}
   - damagePerHit: 32
     radius: 1.9
+    priority: 50
+    scale: 0.05
+    time: 0.075
     judgeOffset: {x: 0, y: 0, z: 0.5}
   overrideController: {fileID: 0}

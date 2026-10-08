@@ -12,6 +12,7 @@ public class EnemyAI : MonoBehaviour
     public GameObject Player;
     public NavMeshAgent self;
     public EnemyObj enemyObj;
+    private float dtFix => enemyObj.dtFix;
     AnimatorStateInfo stateInfo;
     public float distance;
     public float stopDistance;
@@ -35,6 +36,7 @@ public class EnemyAI : MonoBehaviour
     private Coroutine detectionRoutine;
     private void Awake()
     {
+        if (!enemyObj) enemyObj = GetComponent<EnemyObj>();
         self=GetComponent<NavMeshAgent>();
         triggerCollider = GetComponent<BoxCollider>();
         triggerCollider.isTrigger = true;
@@ -75,7 +77,7 @@ public class EnemyAI : MonoBehaviour
     {
         if (data.hitStun > 0)
         {
-            data.hitStun-=Time.deltaTime;
+            data.hitStun-=dtFix;
         }
         else
         {
@@ -83,7 +85,7 @@ public class EnemyAI : MonoBehaviour
         }
         if (data.weaponData.attackBreak > 0)
         {
-            data.weaponData.attackBreak -= Time.deltaTime;
+            data.weaponData.attackBreak -= dtFix;
         }
         else
         {
@@ -137,7 +139,7 @@ public class EnemyAI : MonoBehaviour
        
         while(t<duration)
         {
-            t += Time.deltaTime;
+            t += dtFix;
             float T = Mathf.Clamp01(t / duration);
             triggerCollider.size = Vector3.Lerp(origin,targetVector3, T);
             yield return null;

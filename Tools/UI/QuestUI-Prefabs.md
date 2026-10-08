@@ -8,6 +8,7 @@
 | 任务面板 | Assets/Prefabs/UI/QuestPanel/QuestPanel.prefab |
 | 左侧头像对话框 | Assets/Prefabs/UI/Dialogue/DialogueLeft.prefab |
 | 右侧头像对话框 | Assets/Prefabs/UI/Dialogue/DialogueRight.prefab |
+| 对话选项按钮 | Assets/Prefabs/UI/Dialogue/DialogueChoiceButton.prefab |
 | 配套 Canvas | Assets/Prefabs/UI/Shared/QuestUICanvas.prefab |
 | 任务列表项 | Assets/Prefabs/UI/Shared/QuestListEntry.prefab |
 | 目标行 | Assets/Prefabs/UI/Shared/QuestObjectiveEntry.prefab |
@@ -20,6 +21,8 @@
 先放入 QuestUICanvas，再把需要的窗口拖到它下面，保持本地缩放为 1。CanvasScaler 已设为 Scale With Screen Size、1920×1080、Match 0.5。现有背包 Canvas 的参考分辨率为 800×600，使用配套 Canvas 能保留这些窗口的设计比例。
 
 两个任务窗口居中；两个对话框锚定底部，距底 60。一次显示一个对话框。
+
+对话选项的独立预览场景为 `Assets/Scenes/UI/DialogueChoicePreview.unity`。按钮宽 720、最小高度 64，长文字在纵向布局中自动撑高。DialogueChoiceButton 继承 Button，提供 Label 引用，使用 onClick、interactable 接线。父级 ChoicesContent 的布局与位置可以参考预览场景；列表滚动与对话分支由最终对话面板接入。详细说明见 DialogueUI-Design.md。
 
 ## 后续接线
 
@@ -58,3 +61,5 @@
 接线检查：主工程 C# 编译零警告、零错误；临时 Unity 工程加载全部 8 个预制体，无 Missing Script。使用现有任务 UI 脚本和临时数据/事件替身，验证了 5 个任务、6 个目标的动态布局、点击选择、完成勾选、缩减与清空时隐藏多余行。未验证真实接取任务事件流程。
 
 奖励接线检查：全部必需引用、9 个预制体的脚本、计数文本、滚动控件与布局组件检查通过。在临时 Unity 工程使用实际 MissionsBar/MissionSlot/MissionAim/ItemSlot 脚本与数据事件替身，验证 5 个任务、6 个目标、10 个奖励，奖励自动换成两行且不与目标区重叠，增减、复用及清空正常。主工程编译零警告、零错误。
+
+对话选项检查：在独立 Unity 6000.3.10f1 工程编译新增显示脚本并生成按钮和预览场景，检查预制体脚本、文字与背景引用、整行射线和点击、不可用文字状态。单行高 64，测试长文本换成两行后高 85.88。已目视检查左右对话框与按钮状态的实际渲染截图：DialogueChoicesLeft.png、DialogueChoicesRight.png、DialogueChoiceStates.png。此次未验证真实对话节点跳转和任务事件。

@@ -1,0 +1,1 @@
+PASS: all 100 original enemy asset/meta files match the snapshot at the start of this stance revision. Only five Reinforced Sentinel attack clips and its idle clip exported; existing GUIDs, prefabs, weapon configs, other animations and main gameplay scripts preserved.

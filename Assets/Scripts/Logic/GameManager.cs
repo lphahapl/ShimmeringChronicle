@@ -24,18 +24,23 @@ public class GameManager : MonoBehaviour
     [SerializeField] string itemLabel = "ItemSO";
     [Tooltip("Addressables 里给所有敌人配置（EnemySO 及其子类）打的标签名")]
     [SerializeField] string enemyLabel = "EnemySO";
+    [Tooltip("Addressables 里给所有敌人配置（EnemySO 及其子类）打的标签名")]
+    [SerializeField] string missionLabel = "MissionSO";
 
     readonly Dictionary<string, ItemSO> itemConfigs = new Dictionary<string, ItemSO>();
     readonly Dictionary<string, EnemySO> enemyConfigs = new Dictionary<string, EnemySO>();
+    readonly Dictionary<string, MissionSO> missionConfigs = new Dictionary<string, MissionSO>();
 
     AsyncOperationHandle<IList<ItemSO>> itemHandle;
     AsyncOperationHandle<IList<EnemySO>> enemyHandle;
+    AsyncOperationHandle<IList<MissionSO>> missionHandle;
 
     /// <summary>
     /// 只读，表本身改不了。要遍历就遍历，要按 id 取就用 GetItem。
     /// </summary>
     public IReadOnlyDictionary<string, ItemSO> ItemConfigs => itemConfigs;
     public IReadOnlyDictionary<string, EnemySO> EnemyConfigs => enemyConfigs;
+    public IReadOnlyDictionary<string, MissionSO> MissionConfigs => missionConfigs;
 
     /// <summary>
     /// 加载流程结束了（成功失败都算结束，失败时表是空的、Console 里有 error）。
@@ -47,7 +52,7 @@ public class GameManager : MonoBehaviour
     {
         public bool ItemIsRead;
         public bool EnemyIsReady;
-
+        public bool MissionIsReady;
     }
     /// <summary>
     /// 各种的加载状态
@@ -57,6 +62,7 @@ public class GameManager : MonoBehaviour
     {
         public Task ItemComplete {get;  set; }
         public Task EnemyComplete {get;  set; }
+        public Task MissionComplete {get; set; }
 
     }
     public TaskStatu LoadingTasks;
@@ -76,6 +82,7 @@ public class GameManager : MonoBehaviour
         // 不 await：让加载在后台跑，谁要用谁去等 Ready
         LoadingTasks.ItemComplete = LoadAllItemConfigsAsync();
         LoadingTasks.EnemyComplete=LoadAllEnemyConfigAsync();
+        LoadingTasks.MissionComplete=LoadAllMissionConfigAsync();
         
     }
 
@@ -122,6 +129,33 @@ public class GameManager : MonoBehaviour
 
         LoadingStatus.ItemIsRead = true;
         
+    }
+    async Task LoadAllMissionConfigAsync()
+    {
+        missionHandle = Addressables.LoadAssetsAsync<MissionSO>(missionLabel, (a) => { print($"加载完成{a.missionName}"); });
+        await missionHandle.Task;
+        if (missionHandle.Status != AsyncOperationStatus.Succeeded)
+        {
+            Debug.LogWarning($"[GameManager] 加载物品配置失败（标签 {missionLabel}）：" +
+                           $"{missionHandle.OperationException}", this);
+        }
+        foreach(var so in missionHandle.Result)
+        {
+            if(so==null) continue;
+            if (string.IsNullOrEmpty(so.missionID))
+            {
+                Debug.LogError($"[GameManager] {so.name} 没填 id，跳过", so);
+                continue;
+            }
+            if (enemyConfigs.ContainsKey(so.missionID))
+            {
+                Debug.LogError($"[GameManager] id 重复：{so.missionID}" +
+                              $"（{itemConfigs[so.missionID].name} 和 {so.name}），保留先来的", so);
+                continue;
+            }
+            missionConfigs.Add(so.missionID, so);
+        }
+        LoadingStatus.MissionIsReady = true;
     }
     async Task LoadAllEnemyConfigAsync()
     {
@@ -185,5 +219,20 @@ public class GameManager : MonoBehaviour
 
         Debug.LogWarning($"[GameManager] 没有 id 为 {id} 的物品配置", this);
         return null;
+    }
+    public MissionSO GetMission(string id)
+    {
+        if (string.IsNullOrEmpty(id)) return null;
+        if (!LoadingStatus.MissionIsReady)
+        {
+            Debug.LogWarning("任务配置还没读完");
+            return null;
+        }
+        if (missionConfigs.TryGetValue(id, out var so)) return so;
+        else
+        {
+            Debug.LogWarning($"没找到{id}的任务");
+            return null;
+        }
     }
 }

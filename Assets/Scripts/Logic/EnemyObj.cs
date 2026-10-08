@@ -17,7 +17,9 @@ public class EnemyObj : MonoBehaviour,IDamageable
     private GameObject handingInstance;//手上的预制体
     private WeaponSO reservedWeaponSO;
     public ItemData HandingItem=>data.HandingItem;//手上的数据
-   
+
+    public CharacterTime hitStop;
+    public float dtFix => hitStop ? hitStop.DeltaTime : Time.deltaTime;
 
     public void TakeDamage(float damage, GameObject Attacker)
     {
@@ -38,6 +40,7 @@ public class EnemyObj : MonoBehaviour,IDamageable
 
     private void Awake()
     {
+        if (!hitStop) hitStop = GetComponent<CharacterTime>();
         animator = GetComponent<Animator>();
         HPBar = GetComponent<EnemyHPBar>();
         
@@ -50,6 +53,7 @@ public class EnemyObj : MonoBehaviour,IDamageable
     {
         
         this.Subscribe(GameEvents.Damaged, OnDameged);
+        this.Subscribe(GameEvents.HitStopRequested, OnHitStopRequested);
         this.Subscribe(GameEvents.Died, OnDie);
     }
     void Start()
@@ -107,8 +111,17 @@ public class EnemyObj : MonoBehaviour,IDamageable
     // Reset animation state for a new life without moving the spawn transform.
     
 
+    private void OnHitStopRequested(GameObject victim, GameObject attacker, AttackData attack)
+    {
+        if (victim != gameObject && attacker != gameObject) return;
+        if (!hitStop || attack == null || attack.time <= 0f) return;
+        hitStop.Apply(attack.priority, attack.scale, attack.time);
+    }
+
     private void OnDameged(GameObject victim ,float damage,GameObject attacker)
     {
+
+        //还应该在这里获取攻击双方的卡肉逻辑
         if (victim != this.gameObject|| isDead) return;
         Vector3 damageDir = attacker.transform.position - transform.position;
         damageDir.y = 0f; 
@@ -155,6 +168,7 @@ public class EnemyObj : MonoBehaviour,IDamageable
     private void OnDisable()
     {
         this.UnSubscribe(GameEvents.Damaged, OnDameged);
+        this.UnSubscribe(GameEvents.HitStopRequested, OnHitStopRequested);
         this.UnSubscribe(GameEvents.Died, OnDie);
     }
     public void PublishEnemyCombo(int index)

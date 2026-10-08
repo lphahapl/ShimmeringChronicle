@@ -1,0 +1,1 @@
+PASS: native model comparison, 11 model/pose stills and 18fps footage of both complete combos rendered.

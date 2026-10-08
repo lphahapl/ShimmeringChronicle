@@ -11,6 +11,13 @@ using UnityEngine;
 /// </summary>
 public static class GameEvents
 {
+
+    public static readonly EventKey<DialogueUI, string> OnDialogueChoiceSelected =
+        new EventKey<DialogueUI, string>();
+
+    public static readonly EventKey<DialogueUI, string> OnDialogueContinueRequested =
+        new EventKey<DialogueUI, string>();
+
     public static readonly EventKey<PlayerData> OnMissionsChanged = new EventKey<PlayerData>();
     /// <summary>血量变化：(谁, 当前血量, 血量上限)。血条订阅这个</summary>
     public static readonly EventKey<GameObject, float, float> HpChanged =
@@ -23,6 +30,10 @@ public static class GameEvents
     /// <summary>死亡：(谁)。死亡之后不再发 HpChanged / Damaged</summary>
     public static readonly EventKey<GameObject> Died =
         new EventKey<GameObject>();
+
+    // Victim, attacker, and the attack's time-effect settings.
+    public static readonly EventKey<GameObject, GameObject, AttackData> HitStopRequested =
+        new EventKey<GameObject, GameObject, AttackData>();
     /// <summary>
     /// 任何物品容器变了。参数就是变动的那个列表 —— 谁发的不用管，
     /// 接收方拿它跟自己正在显示的那个比，比得上才刷新。
@@ -46,5 +57,10 @@ public static class GameEvents
     /// 谁，要求类型，id，个数
     /// </summary>
     public static readonly EventKey<PlayerData,RequirementType,string,int>OnPushMissionProgress=new EventKey<PlayerData, RequirementType, string,int>();
+    public static readonly EventKey<PlayerObj,bool>OnPlayerTalk=new EventKey<PlayerObj,bool>();
+    public static readonly EventKey OnPlayerContinue = new EventKey();
+    public static readonly EventKey<PlayerData,string> OnPlayerReceiveMission =new EventKey<PlayerData,string>();
+    public static readonly EventKey<string> OnPlayerSubmitMission=new EventKey<string>();
+    public static readonly EventKey<string> OnPlayerTalkedToNPC=new EventKey<string>();
 
 }

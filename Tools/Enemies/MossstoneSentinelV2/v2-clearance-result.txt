@@ -1,0 +1,8 @@
+ReinforcedFists_Attack01_Punch: 118 sampled poses; grounded soles and hands/forearms/blade clear of torso/head.
+ReinforcedFists_Attack02_GroundSlap authored hit: fore=0.003935193 hand=0.08143523 foot=0.004999988 knee=166 hip=0.4670721 arm=(280.00, 0.00, 0.00) blade=0.1183488
+ReinforcedFists_Attack02_GroundSlap: 151 sampled poses; grounded soles and hands/forearms/blade clear of torso/head.
+ReinforcedBlade_Attack01_Charge: 135 sampled poses; grounded soles and hands/forearms/blade clear of torso/head.
+ReinforcedBlade_Attack02_Sweep: 161 sampled poses; grounded soles and hands/forearms/blade clear of torso/head.
+ReinforcedBlade_Attack03_GroundSlap authored hit: fore=0.003935193 hand=0.08143523 foot=0.004999988 knee=166 hip=0.4670721 arm=(292.00, 0.00, 50.00) blade=0.3082885
+ReinforcedBlade_Attack03_GroundSlap: 200 sampled poses; grounded soles and hands/forearms/blade clear of torso/head.
+Worst torso/head penetration: 0m; min foot: 0.004999937m; min blade: 0.3081675m; maximum added arm clearance: 0deg; wrist floor correction: 0deg.

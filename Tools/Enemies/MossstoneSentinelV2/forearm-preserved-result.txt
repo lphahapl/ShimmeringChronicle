@@ -1,0 +1,1 @@
+PASS: all 100 original enemy asset/meta files match the snapshot at the start of the forearm revision. Only the two Reinforced Sentinel ground-impact animation clips were exported; prefab, weapon configs and charge/punch clips were preserved.

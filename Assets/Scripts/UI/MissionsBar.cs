@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class MissionsBar : UIBase,IContainerOwner
 {
     public List<MissionSlot> slots = new List<MissionSlot>();
+    public List<MissionSlot> finishedSlots = new List<MissionSlot>();
 
     public TMP_Text missionType;
     public TMP_Text missionName;
@@ -25,6 +26,7 @@ public class MissionsBar : UIBase,IContainerOwner
     public TMP_Text progressingNum;
     public TMP_Text completedNum;
     public Button closeBtn;
+    public bool isUnFnishedMission = false;
 
 
     protected override void Awake()
@@ -66,10 +68,12 @@ public class MissionsBar : UIBase,IContainerOwner
             foreach (var aim in aimsParent.GetComponentsInChildren<MissionAim>(true))
                 aims.Add(aim.gameObject);
 
+        var displaySlots = slots;
+        if (!isUnFnishedMission) displaySlots = finishedSlots;
         if (slot == null || slot.data == null)
         {
             selectedSlot = null;
-            foreach (var other in slots)
+            foreach (var other in displaySlots)
                 if (other != null) other.SetSelected(false);
             missionType.text = "";
             missionName.text = "";
@@ -80,7 +84,7 @@ public class MissionsBar : UIBase,IContainerOwner
         }
 
         selectedSlot = slot;
-        foreach (var other in slots)
+        foreach (var other in displaySlots)
             if (other != null) other.SetSelected(other == slot);
         slot.SetSelected(true);
 
@@ -101,47 +105,92 @@ public class MissionsBar : UIBase,IContainerOwner
         RefreshRewardSlots();
     }
 
+    public void ShowMissions(bool showUnfinished)
+    {
+        isUnFnishedMission = showUnfinished;
+        selectedSlot = null;
+        Refresh();
+    }
+
     public override void Refresh()
     {
         if (player == null || player.Data == null) return;
-
-        if (slots.Count == 0 && slotsParent != null)
+        if (slots.Count == 0 && finishedSlots.Count == 0 && slotsParent != null)
             slots.AddRange(slotsParent.GetComponentsInChildren<MissionSlot>(true));
 
-        string selectedID = selectedSlot != null && selectedSlot.data != null
-            ? selectedSlot.data.SO.missionID : null;
+        completedNum.text = "已完成" + player.Data.completedMissions.Count;
+        progressingNum.text = "未完成" + player.Data.missions.Count;
+        if (isUnFnishedMission)
+        {
+            HideSlots(finishedSlots);
+            RefreshMissionList(slots, player.Data.missions.Values);
+        }
+        else
+        {
+            HideSlots(slots);
+            RefreshMissionList(finishedSlots, GetCompletedMissions());
+        }
+    }
+
+    private IEnumerable<MissionData> GetCompletedMissions()
+    {
+        var manager = GameManager.Instance;
+        if (manager == null) yield break;
+        // 已完成字典只存任务 ID，这里生成详情展示用的数据。
+        foreach (string missionID in player.Data.completedMissions.Keys)
+        {
+            var config = manager.GetMission(missionID);
+            if (config == null) continue;
+            var mission = new MissionData(config);
+            mission.missionStatus = MissionStatu.已完成;
+            for (int i = 0; i < mission.currentNums.Length; i++)
+                mission.currentNums[i] = config.requireMents[i].requireNum;
+            yield return mission;
+        }
+    }
+
+    private void RefreshMissionList(List<MissionSlot> displaySlots, IEnumerable<MissionData> missions)
+    {
+        string selectedID = null;
+        if (selectedSlot != null && selectedSlot.data != null)
+            selectedID = selectedSlot.data.SO.missionID;
         MissionSlot first = null;
         MissionSlot nextSelected = null;
         int index = 0;
-        completedNum.text="已完成"+player.Data.completedMissions.Count.ToString();
-        progressingNum.text="进行中"+player.Data.missions.Count.ToString();
-        foreach (var mission in player.Data.missions.Values)
+        foreach (var mission in missions)
         {
             if (mission == null) continue;
-            if (index >= slots.Count)
-                slots.Add(Instantiate(slotPrefab, slotsParent).GetComponent<MissionSlot>());
+            if (index >= displaySlots.Count)
+                displaySlots.Add(Instantiate(slotPrefab, slotsParent).GetComponent<MissionSlot>());
 
-            var slot = slots[index];
+            var slot = displaySlots[index];
             slot.SetSelected(false);
             slot.data = mission;
             slot.Init(this);
             slot.gameObject.SetActive(true);
-
             if (first == null) first = slot;
-            if (selectedID != null && mission.SO.missionID == selectedID)
-                nextSelected = slot;
+            if (mission.SO.missionID == selectedID) nextSelected = slot;
             index++;
         }
-
-        for (int i = index; i < slots.Count; i++)
+        for (int i = index; i < displaySlots.Count; i++)
         {
-            slots[i].SetSelected(false);
-            slots[i].data = null;
-            slots[i].gameObject.SetActive(false);
+            displaySlots[i].SetSelected(false);
+            displaySlots[i].data = null;
+            displaySlots[i].gameObject.SetActive(false);
         }
-
-        DrawMainPos(nextSelected != null ? nextSelected : first);
+        if (nextSelected == null) nextSelected = first;
+        DrawMainPos(nextSelected);
     }
+
+    private void HideSlots(List<MissionSlot> hiddenSlots)
+    {
+        foreach (var slot in hiddenSlots)
+        {
+            slot.SetSelected(false);
+            slot.gameObject.SetActive(false);
+        }
+    }
+
     public void RefreshRewardSlots()
     {
         var items = selectedSlot != null && selectedSlot.data != null

@@ -108,6 +108,7 @@ GameObject:
   - component: {fileID: 4709190411578323930}
   - component: {fileID: 4092056495037044919}
   - component: {fileID: 717932484600347341}
+  - component: {fileID: 930000000000000101}
   m_Layer: 0
   m_Name: Character Warrior
   m_TagString: Player
@@ -220,6 +221,7 @@ MonoBehaviour:
   interactionMask:
     serializedVersion: 2
     m_Bits: 4294967295
+  hitStop: {fileID: 930000000000000101}
 --- !u!114 &717932484600347341
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3868,3 +3870,16 @@ Transform:
   m_Children: []
   m_Father: {fileID: 811827106626602696}
   m_LocalEulerAnglesHint: {x: -1.8300399, y: 0.65585303, z: -33.730392}
+--- !u!114 &930000000000000101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 658962691282374774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab2b9b09fc23bcd4ea11878f327b2727, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterTime
+  animator: {fileID: 369237693990037452}

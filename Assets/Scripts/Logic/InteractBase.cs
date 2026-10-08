@@ -4,7 +4,7 @@ using UnityEngine;
 /// </summary>
 public class InteractBase : MonoBehaviour,IInteractable
 {
-
+    public string interactString;
     protected virtual void Awake()
     {
         int interactionLayer = LayerMask.NameToLayer("Interactable");
@@ -41,7 +41,7 @@ public class InteractBase : MonoBehaviour,IInteractable
 
     public virtual string InteractPrompt()
     {
-        return "这是交互测试物体";
+        return interactString;
     }
 
 

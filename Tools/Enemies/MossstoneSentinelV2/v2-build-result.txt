@@ -1,0 +1,12 @@
+Historical initial V2 creation report. Current assets were renamed and revised; see reinforced-revision-result.txt, reinforced-contact-result.txt, and reinforced-export-validation.txt.
+
+PASS
+Body prefab: Assets/Prefabs/Enemies/MossstoneSentinelV2/MossstoneSentinelV2.prefab
+Body height: ~3.0m
+Walk: 0.7m/s; chase: 1.6m/s
+Fists: 1.8s punch / hit .70, 2.4s slam / hit 1.02; break 1.3s
+Blade: 2.15s charge / hit 1.03, 2.55s sweep / hit 1.15, 3.2s cleave / hit 1.51; break 1.6s
+Animations: 11
+Mesh renderers: 15
+Triangles: 4576
+No scene changes. Default fists have no mesh. Both loadouts share the body prefab. Native serialization, component references, curves and animation events checked.

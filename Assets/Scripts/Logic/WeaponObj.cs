@@ -83,7 +83,7 @@ public class WeaponObj : MonoBehaviour
         targets.Clear();
         hitEnemies.Clear();
 
-        // 运行时让调试预览自动跟随当前触发的连招索引
+      
         debugComboIndex = index;
 
         if (weaponData?.combo == null || index < 0 || index >= weaponData.combo.Count)
@@ -120,7 +120,11 @@ public class WeaponObj : MonoBehaviour
 
             hitEnemies.Add(enemy);
             targets.Add(col);
+            
+            float hpBefore = enemy.data.hp;
             enemy.TakeDamage(attack.damagePerHit, parent);
+            if (enemy.data.hp < hpBefore)
+                PublishHitStop(enemy.gameObject, attack);
         }
 
         // 调用调试器函数，显示范围检测的范围及命中目标
@@ -129,6 +133,12 @@ public class WeaponObj : MonoBehaviour
             DrawAttackDebug(judgePos, facing, attack.radius, angle, hits, targets);
         }
     }
+    private void PublishHitStop(GameObject victim, AttackData attack)
+    {
+        if (attack.time <= 0f) return;
+        this.Publish(GameEvents.HitStopRequested, victim, parent, attack);
+    }
+
     public virtual void EnemyCheckAttack(EnemyObj targetEnemy,int index)
     {
         if (!isActiveAndEnabled || ownerEnemy == null || targetEnemy != ownerEnemy) return;
@@ -174,7 +184,10 @@ public class WeaponObj : MonoBehaviour
 
             hitPlayers.Add(player);
             targets.Add(col);
+            float hpBefore = player.Data.hp;
             player.TakeDamage(attack.damagePerHit, parent);
+            if (player.Data.hp < hpBefore)
+                PublishHitStop(player.gameObject, attack);
         }
 
         // 调用调试器函数，显示范围检测的范围及命中目标

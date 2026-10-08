@@ -1,0 +1,6 @@
+ReinforcedFists_Attack01_Punch: final fore/aft foot spacing=0.46m; minimum sole=0.004956722m; stride lift=0.07639393m; leg mesh minimum=0.004956722m; stepping with root motion; foot goals solved and grounded.
+ReinforcedFists_Attack02_GroundSlap: final fore/aft foot spacing=0.4600001m; minimum sole=0.004999697m; stride lift=0m; leg mesh minimum=-0.01085061m; zero root displacement and fixed foot goals; foot goals solved and grounded.
+ReinforcedBlade_Attack01_Charge: final fore/aft foot spacing=0.4600001m; minimum sole=0.004999876m; stride lift=0.1779956m; leg mesh minimum=-8.898973E-05m; stepping with root motion; foot goals solved and grounded.
+ReinforcedBlade_Attack02_Sweep: final fore/aft foot spacing=0.4600001m; minimum sole=0.004999876m; stride lift=0m; leg mesh minimum=0.004999876m; zero root displacement and fixed foot goals; foot goals solved and grounded.
+ReinforcedBlade_Attack03_GroundSlap: final fore/aft foot spacing=0.4600001m; minimum sole=0.004955828m; stride lift=0m; leg mesh minimum=-0.01084656m; zero root displacement and fixed foot goals; foot goals solved and grounded.
+Reinforced_Idle: final fore/aft foot spacing=0.4600001m; minimum sole=0.004999876m; stride lift=0m; leg mesh minimum=0.004999876m; zero root displacement and fixed foot goals; foot goals solved and grounded.

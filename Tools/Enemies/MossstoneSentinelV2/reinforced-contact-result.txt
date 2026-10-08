@@ -1,0 +1,15 @@
+ReinforcedFists_Attack01_Punch L palm minimum=1.853451 position=(-0.58, 2.06, 1.59) relativeZ=1.483122
+ReinforcedFists_Attack01_Punch R palm minimum=0.8946669 position=(1.29, 1.15, 0.18) relativeZ=0.08068121
+ReinforcedFists_Attack01_Punch all-frame forearm/hand floor clearance=0.6021128
+ReinforcedFists_Attack02_GroundSlap L palm minimum=0.08143523 position=(-0.87, 0.28, 0.57) relativeZ=0.5721512
+ReinforcedFists_Attack02_GroundSlap L forearm minimum=0.003935188 relativeZ=0.5471512 elbow=87.04922 horizontal deviation=1.192093E-07
+sampled hip=0.4670721 foot=0.005000085 knee=(74.03, 0.00, 0.00) arm=(280.00, 0.00, 0.00) fore=(270.00, 0.00, 0.00)
+ReinforcedFists_Attack02_GroundSlap R palm minimum=0.08143523 position=(0.87, 0.28, 0.57) relativeZ=0.5721512
+ReinforcedFists_Attack02_GroundSlap R forearm minimum=0.003935188 relativeZ=0.5471512 elbow=87.04922 horizontal deviation=1.192093E-07
+sampled hip=0.4670721 foot=0.005000085 knee=(74.03, 0.00, 0.00) arm=(280.00, 0.00, 0.00) fore=(270.00, 0.00, 0.00)
+ReinforcedFists_Attack02_GroundSlap all-frame forearm/hand floor clearance=0.003089726
+ReinforcedBlade_Attack03_GroundSlap L palm minimum=0.08143523 position=(-0.87, 0.28, 0.57) relativeZ=0.5721512
+ReinforcedBlade_Attack03_GroundSlap L forearm minimum=0.003935188 relativeZ=0.5471512 elbow=87.04922 horizontal deviation=1.192093E-07
+sampled hip=0.4670721 foot=0.005000085 knee=(74.03, 0.00, 0.00) arm=(280.00, 0.00, 0.00) fore=(270.00, 0.00, 0.00)
+ReinforcedBlade_Attack03_GroundSlap R palm minimum=0.2582698 position=(1.17, 0.50, 0.47) relativeZ=0.4723746
+ReinforcedBlade_Attack03_GroundSlap all-frame forearm/hand floor clearance=0.00310719

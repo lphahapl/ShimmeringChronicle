@@ -1,0 +1,1 @@
+PASS: 44 resources, 4 prefabs; all 59 external GUIDs resolve uniquely; all local prefab references resolve; URP materials; four Addressables entries at renamed paths; original enemy files preserved including the external controller edit; GIFs decoded.

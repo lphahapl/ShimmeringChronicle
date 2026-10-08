@@ -28,7 +28,7 @@ public class MissionAim : MonoBehaviour
         toggle.interactable = false;
         toggle.SetIsOnWithoutNotify(completed);
 
-        Color color = completed ? new Color(.65f, .8f, .57f) : new Color(.96f, .94f, .88f);
+        Color color = completed ? new Color(0.65f, 0.8f, 0.57f) : new Color(0.96f, 0.94f, 0.88f);
         missionDetail.color = color;
         progress.color = color;
     }

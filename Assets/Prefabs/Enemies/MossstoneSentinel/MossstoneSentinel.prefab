@@ -2387,6 +2387,7 @@ GameObject:
   - component: {fileID: 6746100543622065584}
   - component: {fileID: 5773170002460809759}
   - component: {fileID: 3647718684911186719}
+  - component: {fileID: 5149799531195770091}
   m_Layer: 0
   m_Name: MossstoneSentinel
   m_TagString: Untagged
@@ -2498,6 +2499,7 @@ MonoBehaviour:
   enemyAI: {fileID: 7494078598159065416}
   handPos: {fileID: 8035790473470436654}
   isDead: 0
+  hitStop: {fileID: 5149799531195770091}
 --- !u!95 &6746100543622065584
 Animator:
   serializedVersion: 7
@@ -2568,6 +2570,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &5149799531195770091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8453641100961537359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab2b9b09fc23bcd4ea11878f327b2727, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterTime
+  animator: {fileID: 6746100543622065584}
 --- !u!1 &8867212709464832496
 GameObject:
   m_ObjectHideFlags: 0

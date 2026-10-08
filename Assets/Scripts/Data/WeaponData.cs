@@ -41,7 +41,13 @@ public class AttackData
     public float damagePerHit;
     public float radius;
     public float angle;
-
+    [Header("卡肉优先级")]
+    public ETimePriority priority;
+    [Header("卡肉时间缩放")]
+    public float scale;
+    [Header("卡肉时长")]
+    public float time;
+    
     /// <summary>判定偏移</summary>
     public Vector3 judgeOffset;
 
@@ -56,7 +62,10 @@ public class AttackData
             damagePerHit = damagePerHit,
             radius       = radius,
             judgeOffset  = judgeOffset,
-            angle = angle
+            angle = angle,
+            priority = priority,
+            scale = scale,
+            time = time
         };
     }
 }

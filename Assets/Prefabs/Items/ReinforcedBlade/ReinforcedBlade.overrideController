@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: ReinforcedBlade
+  m_Controller: {fileID: 9100000, guid: 91253d7d749ad83489466ea4806dac9e, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: d855e1f2204f3ad479cdae85c451de85, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: c36149bc01f9181449698a22183ce606, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 1ae7c363f5f9dac489a24634d965885f, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 2f7a1fe1f08de1e4e917463f72bf8019, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 7daacc2f57483644e8f7fdafd8b2f0cb, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: ac6b9505dc1b1404c8c46ff0caf77b8f, type: 2}

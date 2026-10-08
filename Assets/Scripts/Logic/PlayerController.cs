@@ -66,6 +66,9 @@ public class PlayerController : MonoBehaviour
     PlayerObj player;              // 同一个物体上的数据持有者
     PlayerData data;               // 只在 Awake 里取一次，之后用本地副本
     public bool isCanAttack=true;
+    public bool isTalking;
+    public CharacterTime hitStop=>player.hitStop;
+    public float dtFix=>player.dtFix;
     [Header("调试")]
     [Tooltip("在屏幕左上角显示当前状态名，验证状态机用")]
     public bool showDebugHUD = true;
@@ -120,9 +123,11 @@ public class PlayerController : MonoBehaviour
     void OnEnable()
     {
         this.Subscribe(GameEvents.Damaged, OnDamaged);
+        this.Subscribe(GameEvents.HitStopRequested, OnHitStopRequested);
         this.Subscribe(GameEvents.Died, OnDied);
         this.Subscribe(GameEvents.OnItemsChanged, OnItemsChanged);
         this.Subscribe(GameEvents.OnSelectedSlotChanged, OnSelectedSlotChanged);
+        this.Subscribe(GameEvents.OnPlayerTalk, OnPlayerTalk);
         RefreshItemAnimator();
     }
 
@@ -131,9 +136,19 @@ public class PlayerController : MonoBehaviour
         ResetCombo();
         comboWeapon = null;
         this.UnSubscribe(GameEvents.Damaged, OnDamaged);
+        this.UnSubscribe(GameEvents.HitStopRequested, OnHitStopRequested);
         this.UnSubscribe(GameEvents.Died, OnDied);
         this.UnSubscribe(GameEvents.OnItemsChanged, OnItemsChanged);
         this.UnSubscribe(GameEvents.OnSelectedSlotChanged, OnSelectedSlotChanged);
+        this.UnSubscribe(GameEvents.OnPlayerTalk, OnPlayerTalk);
+    }
+
+    void OnPlayerTalk(PlayerObj talkingPlayer, bool talking)
+    {
+        if (talkingPlayer != player) return;
+        isTalking = talking;
+        isCanAttack = CheckCanAttack();
+        if (isTalking) StopMove();
     }
 
     void OnItemsChanged(List<ItemData> changed)
@@ -172,6 +187,13 @@ public class PlayerController : MonoBehaviour
         animator.runtimeAnimatorController = controller;
     }
  
+    void OnHitStopRequested(GameObject victim, GameObject attacker, AttackData attack)
+    {
+        if (victim != gameObject && attacker != gameObject) return;
+        if (!player || !hitStop || attack == null || attack.time <= 0f) return;
+        hitStop.Apply(attack.priority, attack.scale, attack.time);
+    }
+
     void OnDamaged(GameObject victim, float damage, GameObject attacker)
     {
         if (victim != gameObject) return;   // 总线上有别人的受伤事件，只认自己
@@ -212,7 +234,17 @@ public class PlayerController : MonoBehaviour
     
     void ReadKeyboard()
     {
-       
+        if (Input.GetKeyDown(KeyCode.Tab) && UIManager.Instance)
+            UIManager.Instance.Toggle<BagPanel>();
+        if (Input.GetKeyDown(KeyCode.V) && UIManager.Instance)
+            UIManager.Instance.Toggle<MissionsBar>();
+        if (isTalking)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+                this.Publish(GameEvents.OnPlayerContinue);
+            return;
+        }
+
         float h = Input.GetAxis("Horizontal");   // A/D
         float v = Input.GetAxis("Vertical");     // W/S
 
@@ -233,11 +265,7 @@ public class PlayerController : MonoBehaviour
 
       
         if (Input.GetKeyDown(KeyCode.F) && !IsDead) player?.TryInteract();
-        if (Input.GetKeyDown(KeyCode.Tab) && UIManager.Instance)
-            UIManager.Instance.Toggle<BagPanel>();
-        if(Input.GetKeyDown(KeyCode.V)&& UIManager.Instance){
-            UIManager.Instance.Toggle<MissionsBar>();
-        }
+        if (isTalking) return;
         ReadQuickBarWheel();
 
         isCanAttack = CheckCanAttack();
@@ -294,7 +322,7 @@ public class PlayerController : MonoBehaviour
 
     public void Jump()
     {
-        if (IsDead) return;
+        if (IsDead || isTalking) return;
         animator.SetTrigger(JumpHash);
     }
 
@@ -317,7 +345,7 @@ public class PlayerController : MonoBehaviour
         animator.SetBool(IsDeadHash, true);
     }
 
-    // Unity supplies the state that emitted this event, including during blends.
+   
     public void PublishPlayerCombo(AnimationEvent animationEvent)
     {
         if (IsDead || !isActiveAndEnabled || data?.GetWeaponData() == null ||
@@ -359,7 +387,9 @@ public class PlayerController : MonoBehaviour
     }
     void UpdateLocomotion()
     {
+        float dt = dtFix;
         bool moving = !IsDead
+                   && !isTalking
                    && IsLocomotionState()
                    && moveDir.sqrMagnitude > 0.0001f;
         animator.SetBool(IsWalkingHash, moving);
@@ -373,19 +403,19 @@ public class PlayerController : MonoBehaviour
             if (!stateInfo.IsName("Base Layer.Hit"))
             {
                 transform.rotation = Quaternion.RotateTowards(
-                transform.rotation, target, turnSpeed * Time.deltaTime);
+                transform.rotation, target, turnSpeed * dt);
 
             }
            
         }
         if (characterController.isGrounded && verticalVelocity < 0f) verticalVelocity = -2f;
-        verticalVelocity += gravity * Time.deltaTime;
+        verticalVelocity += gravity * dt;
 
         float speed = (moving && wantsRun) ? runSpeed : walkSpeed;
         Vector3 velocity = (moving ? moveDir * speed : Vector3.zero)
                          + Vector3.up * verticalVelocity;
 
-        characterController.Move(velocity * Time.deltaTime);
+        characterController.Move(velocity * dt);
     }
 
     void UpdateComboReset()
@@ -436,14 +466,11 @@ public class PlayerController : MonoBehaviour
     }
     private bool CheckCanAttack()
     {
+        if (isTalking) return false;
         if (ItemSlot.IsAnyDragging) return false;
         var manager = UIManager.Instance;
         if (manager == null) return true;
 
-        var bag = manager.Get<BagPanel>();
-        var chest = manager.Get<ChestPanel>();
-        bool bagOpen = bag != null && bag.IsOpen;
-        bool chestOpen = chest != null && chest.isAnyChestPanelActive;
-        return !bagOpen && !chestOpen;
+        return !manager.HasOpenPanel;
     }
 }

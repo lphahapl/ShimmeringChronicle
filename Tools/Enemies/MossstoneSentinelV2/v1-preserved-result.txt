@@ -1,0 +1,1 @@
+PASS: 99 of 100 original V1 asset/meta files match the earlier snapshot. The generator did not write any original enemy resource. External controller edit retained, not restored: ['Assets/Prefabs/Enemies/MossstoneSentinel/MossstoneSentinel.controller']. Current hashes recorded in preserved-external-edits.json.

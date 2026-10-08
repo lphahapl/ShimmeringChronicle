@@ -23,12 +23,23 @@ MonoBehaviour:
   - damagePerHit: 10
     radius: 3.5
     angle: 160
+    priority: 50
+    scale: 0.1
+    time: 0.03
     judgeOffset: {x: 0, y: 0, z: 0.2}
   - damagePerHit: 15
     radius: 3.5
     angle: 180
+    priority: 50
+    scale: 0.1
+    time: 0.04
     judgeOffset: {x: 0, y: 0, z: 0.2}
   - damagePerHit: 50
     radius: 4
     angle: 180
+    priority: 50
+    scale: 0.08
+    time: 0.08
     judgeOffset: {x: 0, y: 0, z: 1}
+  stopDistance: 0
+  attackBreak: 0.8

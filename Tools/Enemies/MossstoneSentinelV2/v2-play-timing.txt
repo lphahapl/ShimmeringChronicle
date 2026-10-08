@@ -1,0 +1,8 @@
+Fists event 0 at 4.401451s
+Fists event 1 at 6.44164s
+Fists complete combo displacement=0.1200013m
+Blade event 0 at 11.1309s
+First blade charge actual root displacement=0.7004136m
+Blade event 1 at 13.32156s
+Blade event 2 at 16.15208s
+Blade complete combo displacement=0.6991919m

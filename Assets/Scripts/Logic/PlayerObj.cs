@@ -25,10 +25,16 @@ public class PlayerObj : MonoBehaviour, IDamageable, IContainerOwner,ICanChangeH
 
     ItemContainer bag;
     ItemContainer quickBar;
+    public CharacterTime hitStop;
+    public float dtFix => hitStop ? hitStop.DeltaTime : Time.deltaTime;
+
     public MissionSO t;
     public MissionData missionData;
+
+
     public GameObject HandingItem;
     ItemData displayedItem;
+
     public Transform handPos;
     /// <summary>
     /// 目前手持物品的引用
@@ -100,6 +106,7 @@ public class PlayerObj : MonoBehaviour, IDamageable, IContainerOwner,ICanChangeH
     }
     public void Awake()
     {
+        if (!hitStop) hitStop = GetComponent<CharacterTime>();
         interactionMask = LayerMask.GetMask("Interactable");
         Data.missions.Add("mission_001", missionData = new MissionData(t));
         
@@ -292,6 +299,7 @@ public class PlayerObj : MonoBehaviour, IDamageable, IContainerOwner,ICanChangeH
    
     public bool SelectSlot(ItemSlot slot)
     {
+        if (TryGetComponent<PlayerController>(out var controller) && controller.isTalking) return false;
         if (slot == null || (slot.Owner != Bag && slot.Owner != QuickBar)) return false;
         if (SelectedSlot == slot) return false;
         SelectedSlot = slot;

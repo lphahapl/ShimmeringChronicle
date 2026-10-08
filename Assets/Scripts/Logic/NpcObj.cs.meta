@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: ac92e28b1c12d78478af4fcfb97324c1
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - SO: {instanceID: 0}
+  - dialog: {instanceID: 0}
+  - LDialogBox: {fileID: 3673591752895807633, guid: 433a4a5e344171d408f426aa040d1d85, type: 3}
+  - RDialogBox: {fileID: 6438084656289164859, guid: 48ec43205fce3c24fbdc0d55b8c35c32, type: 3}
+  - buttonPrefab: {fileID: 3294069209607749983, guid: a55249b41e539814880ed525c7ae2714, type: 3}
+  - btnPos: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

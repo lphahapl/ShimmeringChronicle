@@ -15,25 +15,68 @@ public class MissionManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
         if (player == null) player = FindFirstObjectByType<PlayerObj>();
-        this.Subscribe<PlayerData, RequirementType, string, int>(GameEvents.OnPushMissionProgress, OnReceivedNewProgress);
-    }
-    void Start()
-    {
-        
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnEnable()
     {
-        
+        this.Subscribe(GameEvents.OnPushMissionProgress, OnReceivedNewProgress);
+        this.Subscribe(GameEvents.OnPlayerReceiveMission, OnPlayerReceiveMission);
+        this.Subscribe(GameEvents.OnPlayerSubmitMission, SubmitMission);
+        this.Subscribe(GameEvents.OnPlayerTalkedToNPC, OnPlayerTalkedToNPC);
+    }
+
+    private void OnDisable()
+    {
+        this.UnSubscribe(GameEvents.OnPushMissionProgress, OnReceivedNewProgress);
+        this.UnSubscribe(GameEvents.OnPlayerReceiveMission, OnPlayerReceiveMission);
+        this.UnSubscribe(GameEvents.OnPlayerSubmitMission, SubmitMission);
+        this.UnSubscribe(GameEvents.OnPlayerTalkedToNPC, OnPlayerTalkedToNPC);
+    }
+
+    private void OnDestroy()
+    {
+        if (instance == this) instance = null;
+    }
+
+    private void OnPlayerReceiveMission(PlayerData data, string missionID)
+    {
+        if (player == null || data != player.Data || string.IsNullOrEmpty(missionID)) return;
+        if (data.missions.ContainsKey(missionID) || data.completedMissions.ContainsKey(missionID)) return;
+        if (GameManager.Instance == null || UIManager.Instance == null) return;
+        var config = GameManager.Instance.GetMission(missionID);
+        if (config == null) return;
+        var panel = UIManager.Instance.Get<MissionReceivePanel>();
+        if (panel == null) return;
+        panel.ShowMissionPanel(config);
+    }
+
+    private void OnPlayerTalkedToNPC(string npcID)
+    {
+        if (player == null || string.IsNullOrEmpty(npcID)) return;
+        OnReceivedNewProgress(player.Data, RequirementType.与人对话, npcID, 1);
+    }
+
+    public void SubmitMission(string missionID)
+    {
+        if (player == null || string.IsNullOrEmpty(missionID)) return;
+        var data = player.Data;
+        if (data.completedMissions.ContainsKey(missionID)) return;
+        if (!data.missions.TryGetValue(missionID, out var mission)) return;
+        if (mission.missionStatus != MissionStatu.待交付) return;
+
+        if (UIManager.Instance == null) return;
+        var panel = UIManager.Instance.Get<MissionSubmitPanel>();
+        if (panel == null) return;
+        panel.ShowMissionPanel(mission, player);
     }
     private void OnReceivedNewProgress( PlayerData data, RequirementType type, string targetID, int count)
     {
         bool anyMissionChanged = false;
-        if (data != player.Data) return;
+        if (player == null || data == null || data != player.Data || count <= 0) return;
 
         foreach (var missiondata in data.missions.Values)
         {
+            if (missiondata.missionStatus != MissionStatu.进行中) continue;
             var requireList = missiondata.SO.requireMents;
 
             for (int j = 0; j < requireList.Count; j++)
@@ -54,7 +97,10 @@ public class MissionManager : MonoBehaviour
 
                         if (isAllAimCompleted(requireList, missiondata.currentNums))
                         {
-                            missiondata.missionStatus = MissionStatu.已完成;
+                            missiondata.missionStatus = MissionStatu.待交付;
+                            //交任务才发奖励和操作字典
+
+                            print(missiondata.SO.missionName + "待交付");
                             anyMissionChanged = true;
                             
                         }
@@ -75,10 +121,14 @@ public class MissionManager : MonoBehaviour
         }
         return true;
     }
-    public void ReceiveMission(string missionID, MissionData data)
+    public void ReceiveMission(string missionID)
     {
+        if (player == null || string.IsNullOrEmpty(missionID) || GameManager.Instance == null) return;
         if (player.Data.missions.ContainsKey(missionID)
             || player.Data.completedMissions.ContainsKey(missionID)) return;
+        var config = GameManager.Instance.GetMission(missionID);
+        if (config == null) return;
+        MissionData data = new MissionData(config);
 
         player.Data.missions.Add(missionID, data);
         this.Publish<PlayerData>(GameEvents.OnMissionsChanged, player.Data);

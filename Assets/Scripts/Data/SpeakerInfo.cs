@@ -5,8 +5,14 @@ using UnityEngine.UI;
 
 public class SpeakerInfo:ScriptableObject
 {
-    public Image head;//Í·Ïñ
+    public Sprite head;//Í·Ïñ
     public string speakerName;
     public string description;
-    
+    public ESpeakerType SpeakerType;
+}
+public enum ESpeakerType
+{
+    NPC,
+    Player,
+    Enemy
 }

@@ -25,3 +25,4 @@ MonoBehaviour:
   reward:
   - config: {fileID: 11400000, guid: 8274f4365b1c4b9a97c09bc971a1171e, type: 2}
     num: 10
+  speakerInfo: {fileID: 11400000, guid: 5fb1212e72b6e1c408c9b2b5865b987f, type: 2}

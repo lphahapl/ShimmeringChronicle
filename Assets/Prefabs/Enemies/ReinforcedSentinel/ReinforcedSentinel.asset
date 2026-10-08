@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a23c4f8813a0fd4b95a0c752f17f892, type: 3}
+  m_Name: ReinforcedSentinel
+  m_EditorClassIdentifier: Assembly-CSharp::EnemySO
+  targetName: "\u5F3A\u5316\u5B88\u536B"
+  description: "\u91CD\u578B\u77F3\u8D28\u5B88\u536B\uFF0C\u6162\u901F\u79FB\u52A8\uFF0C\u5DE6\u62F3\u4E0E\u53CC\u638C\u62CD\u5730\u4E8C\u8FDE\u51FB\u3002"
+  maxHp: 260
+  initialHp: 260
+  atk: 20
+  speed: 0.7
+  enemyID: Enemy_ReinforcedSentinel
+  type: 0
+  chaseSpeed: 1.6
+  turnSpeed: 180
+  chaseDistance: 18
+  hitStun: 0.65
+  defaultWeaponSO: {fileID: 11400000, guid: 6d3c2834502946842a203ab15b9b4ebd, type: 2}
+  prefab: {fileID: 7823792802434078888, guid: 6f2b4eab25d4a064881c694ebee4f7ba, type: 3}

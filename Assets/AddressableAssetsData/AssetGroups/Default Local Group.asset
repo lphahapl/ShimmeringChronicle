@@ -21,8 +21,20 @@ MonoBehaviour:
     m_SerializedLabels:
     - ItemSO
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1668e79eac459174c90f09dfffe41e25
+    m_Address: Assets/Prefabs/Enemies/ReinforcedSentinel/ReinforcedSentinel.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - EnemySO
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1c83e6bd1ea158840ba53f958f9572d0
     m_Address: Assets/Configs/EnemySO/testenemy.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - EnemySO
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 21370608332fa484cb82e4d6aafd3ad8
+    m_Address: Assets/Prefabs/Enemies/MossstoneSentinel/MossstoneSentinel.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - EnemySO
@@ -33,14 +45,32 @@ MonoBehaviour:
     m_SerializedLabels:
     - ItemSO
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 44fd394b8c3daff4697f11642a26affe
+    m_Address: Assets/Prefabs/Enemies/ReinforcedSentinel/ReinforcedSentinel_Blade.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - EnemySO
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 495d61b51610d1540b03df357bf6cf8f
     m_Address: Assets/Configs/ItemSO/weapon_001.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - ItemSO
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5018f7397b321fc4d837a4b9eda9c427
+    m_Address: Assets/Prefabs/Enemies/MossstoneSentinel/MossstoneSentinel_Blade.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - EnemySO
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6ccdc7195e73417d85cb878e3632048e
     m_Address: Assets/Configs/ItemSO/test_quest_crystal.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ItemSO
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6d3c2834502946842a203ab15b9b4ebd
+    m_Address: Assets/Prefabs/Items/ReinforcedFists/ReinforcedFists.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - ItemSO
@@ -51,8 +81,26 @@ MonoBehaviour:
     m_SerializedLabels:
     - ItemSO
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 84be671eabcee4144b415c2d8a6a69f8
+    m_Address: "Assets/Configs/missionSO/\u51FB\u6740\u654C\u4EBA 2.asset"
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - MissionSO
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 98f42f4202324f9cb0418e6dc74c0902
     m_Address: Assets/Configs/ItemSO/test_ore.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ItemSO
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b2a53e5d8996cec4ab1f5b43a6cfe4ce
+    m_Address: Assets/Prefabs/Items/MossstoneFists/MossstoneFists.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ItemSO
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b2fd1b7fe042753479ff0a872f8ea836
+    m_Address: Assets/Prefabs/Items/ReinforcedBlade/ReinforcedBlade.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - ItemSO
@@ -63,8 +111,20 @@ MonoBehaviour:
     m_SerializedLabels:
     - ItemSO
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c863cb31e34bc504993698488f9e177b
+    m_Address: "Assets/Configs/missionSO/\u51FB\u6740\u654C\u4EBA.asset"
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - MissionSO
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d5d0d11aca224c59bcfabd865586a856
     m_Address: Assets/Configs/ItemSO/weapon_002.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ItemSO
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dc4ccabadb3a5864ebb29bfba3bec31f
+    m_Address: Assets/Prefabs/Items/MossstoneBlade/MossstoneBlade.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - ItemSO
@@ -89,30 +149,6 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: fce45f032de246fa8c207f4f6f19f68a
     m_Address: Assets/Configs/ItemSO/item_003.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ItemSO
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 21370608332fa484cb82e4d6aafd3ad8
-    m_Address: Assets/Prefabs/Enemies/MossstoneSentinel/MossstoneSentinel.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - EnemySO
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 5018f7397b321fc4d837a4b9eda9c427
-    m_Address: Assets/Prefabs/Enemies/MossstoneSentinel/MossstoneSentinel_Blade.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - EnemySO
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: b2a53e5d8996cec4ab1f5b43a6cfe4ce
-    m_Address: Assets/Prefabs/Items/MossstoneFists/MossstoneFists.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ItemSO
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: dc4ccabadb3a5864ebb29bfba3bec31f
-    m_Address: Assets/Prefabs/Items/MossstoneBlade/MossstoneBlade.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - ItemSO
