@@ -69,6 +69,22 @@ public class MissionManager : MonoBehaviour
         if (panel == null) return;
         panel.ShowMissionPanel(mission, player);
     }
+    // 奖励全部发出后，才把任务移入完成记录。
+    public bool CompleteMission(string missionID)
+    {
+        if (player == null || string.IsNullOrEmpty(missionID)) return false;
+        var data = player.Data;
+        if (data == null || data.completedMissions.ContainsKey(missionID)) return false;
+        if (!data.missions.TryGetValue(missionID, out var mission)) return false;
+        if (mission.missionStatus != MissionStatu.待交付
+            || !mission.reward.TrueForAll(item => item == null || item.count <= 0)) return false;
+
+        mission.missionStatus = MissionStatu.已完成;
+        data.missions.Remove(missionID);
+        data.completedMissions.Add(missionID, true);
+        this.Publish(GameEvents.OnMissionsChanged, data);
+        return true;
+    }
     private void OnReceivedNewProgress( PlayerData data, RequirementType type, string targetID, int count)
     {
         bool anyMissionChanged = false;

@@ -12,17 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c85c3e944602763418bbe5a2fdf0bfb4, type: 3}
   m_Name: SampleInventoryPlayer
   m_EditorClassIdentifier: Assembly-CSharp::PlayerSO
-  targetName: "背包测试角色"
-  description: "包含三种武器及三种堆叠物品的测试配置"
+  targetName: "\u80CC\u5305\u6D4B\u8BD5\u89D2\u8272"
+  description: "\u5305\u542B\u4E09\u79CD\u6B66\u5668\u53CA\u4E09\u79CD\u5806\u53E0\u7269\u54C1\u7684\u6D4B\u8BD5\u914D\u7F6E"
   maxHp: 200
   initialHp: 180
   atk: 12
   speed: 5
   runSpeed: 10
   turnSpeed: 720
+  quickBarCapacity: 5
+  bagCapacity: 5
   quickBar:
-  - config: {fileID: 11400000, guid: d5d0d11aca224c59bcfabd865586a856, type: 2}
+  - config: {fileID: 11400000, guid: 495d61b51610d1540b03df357bf6cf8f, type: 2}
     num: 1
+  - config: {fileID: 11400000, guid: 2437451df2784a6390dc6893d82e9287, type: 2}
+    num: 5
+  - config: {fileID: 11400000, guid: 2437451df2784a6390dc6893d82e9287, type: 2}
+    num: 5
+  - config: {fileID: 11400000, guid: 2437451df2784a6390dc6893d82e9287, type: 2}
+    num: 5
   - config: {fileID: 11400000, guid: 2437451df2784a6390dc6893d82e9287, type: 2}
     num: 5
   Bag:
@@ -32,7 +40,7 @@ MonoBehaviour:
     num: 1
   - config: {fileID: 11400000, guid: 2437451df2784a6390dc6893d82e9287, type: 2}
     num: 18
-  - config: {fileID: 11400000, guid: 8274f4365b1c4b9a97c09bc971a1171e, type: 2}
-    num: 48
+  - config: {fileID: 11400000, guid: d5d0d11aca224c59bcfabd865586a856, type: 2}
+    num: 1
   - config: {fileID: 11400000, guid: fce45f032de246fa8c207f4f6f19f68a, type: 2}
     num: 99

@@ -48,7 +48,13 @@ MonoBehaviour:
     speaker: {fileID: 11400000, guid: 5fb1212e72b6e1c408c9b2b5865b987f, type: 2}
     content: "\u8BE5\u4EFB\u52A1\u5DF2\u63A5\u53D6"
     nextNodeID: 
-    choices: []
+    choices:
+    - choiceID: 1
+      text: "\u4EA4\u4ED8\u4EFB\u52A1"
+      targetNodeID: 
+      actions:
+      - type: 2
+        targetID: mission_002
   - nodeID: 0005
     speaker: {fileID: 11400000, guid: 5fb1212e72b6e1c408c9b2b5865b987f, type: 2}
     content: "\u8BE5\u4EFB\u52A1\u5DF2\u5B8C\u6210"

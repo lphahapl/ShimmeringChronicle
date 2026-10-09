@@ -5,6 +5,8 @@
 | 预制体 | 路径 |
 | --- | --- |
 | 任务接取框 | Assets/Prefabs/UI/QuestOffer/QuestOfferDialog.prefab |
+| 任务交付框 | Assets/Prefabs/UI/QuestSubmit/QuestSubmitDialog.prefab |
+| 任务交付 Canvas | Assets/Prefabs/UI/QuestSubmit/QuestSubmitCanvas.prefab |
 | 任务面板 | Assets/Prefabs/UI/QuestPanel/QuestPanel.prefab |
 | 左侧头像对话框 | Assets/Prefabs/UI/Dialogue/DialogueLeft.prefab |
 | 右侧头像对话框 | Assets/Prefabs/UI/Dialogue/DialogueRight.prefab |
@@ -15,6 +17,8 @@
 | 奖励项 | Assets/Prefabs/UI/Shared/QuestRewardEntry.prefab |
 
 打开 `Assets/Scenes/UI/QuestUIPreview.unity`，运行后通过顶部四个按钮切换预览。场景包含 EventSystem；项目当前 Input Handling 为 Both，支持预览场景的 StandaloneInputModule。
+
+交任务 UI 的静态视觉预览为 `Assets/Scenes/UI/QuestSubmitPreview.unity`；窗口已加入 SampleScene，并绑定现有 MissionSubmitPanel。奖励容器使用 ItemContainer，面板实现 IContainerOwner。接入与结算接口说明见 `QuestSubmitUI.md`。
 
 ## 放进场景
 

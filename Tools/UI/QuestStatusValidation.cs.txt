@@ -1,0 +1,45 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using TMPro;
+using UnityEditor;
+using UnityEditor.SceneManagement;
+using UnityEngine;
+[InitializeOnLoad]
+public static class QuestStatusValidation
+{
+    const string Flag = "QuestStatusValidation.Run";
+    static QuestStatusValidation() { if (SessionState.GetBool(Flag,false)) EditorApplication.update += Check; }
+    public static void Run() { EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single); SessionState.SetBool(Flag,true); EditorApplication.EnterPlaymode(); }
+    static void Assert(bool value,string message) { if(!value) throw new Exception(message); }
+    static void Check()
+    {
+        if (!EditorApplication.isPlaying || EditorApplication.isCompiling) return;
+        EditorApplication.update -= Check; SessionState.SetBool(Flag,false);
+        try
+        {
+            var config=ScriptableObject.CreateInstance<MissionSO>(); config.missionID="status_test"; config.missionName="Status test";
+            config.requireMents=new List<MisssionRequireEntry>{new MisssionRequireEntry{type=RequirementType.击败敌人,targetID="enemy",requireNum=1}};
+            config.reward=new List<ItemSlotData>(); var mission=new MissionData(config);
+            var data=new PlayerData{Bag=new List<ItemData>(),quickBar=new List<ItemData>()}; data.missions.Add(config.missionID,mission);
+            var go=new GameObject("TestPlayer"); go.SetActive(false); var player=go.AddComponent<PlayerObj>(); player.enabled=false;
+            typeof(PlayerObj).GetField("data",BindingFlags.Instance|BindingFlags.NonPublic).SetValue(player,data);
+            player.t=config; go.SetActive(true); data.missions.Remove("mission_001");
+            var manager=new GameObject("MissionManager").AddComponent<MissionManager>(); manager.player=player;
+            var panel=UnityEngine.Object.Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/UI/QuestPanel/QuestPanel.prefab"));
+            var bar=panel.GetComponent<MissionsBar>(); bar.player=player; bar.ShowMissions(true);
+            var status=panel.GetComponentsInChildren<TMP_Text>(true).Single(t=>t.name=="Status" && t.transform.parent.name=="QuestMeta");
+            Assert(status.text=="进行中", "Initial selected detail status: "+status.text);
+            player.Publish(GameEvents.OnPushMissionProgress,data,RequirementType.击败敌人,"enemy",1);
+            Assert(mission.missionStatus==MissionStatu.待交付,"Model status did not become ready");
+            Assert(bar.slots[0].sideStatu.text=="待交付","List status did not refresh: "+bar.slots[0].sideStatu.text);
+            Assert(status.text=="待交付","Selected detail status stayed stale: "+status.text+"; model="+mission.missionStatus+"; list="+bar.slots[0].sideStatu.text);
+            data.missions.Clear(); player.Publish(GameEvents.OnMissionsChanged,data);
+            Assert(status.text=="","Empty selection must clear detail status");
+            File.WriteAllText("quest-status-validation.txt","PASS: actual mission progress event changes model and list status to 待交付, selected detail status also updates, and empty selection clears the detail status. Actual MissionsBar and QuestPanel prefab in isolated Unity Play Mode."); EditorApplication.Exit(0);
+        }
+        catch(Exception e) {Debug.LogException(e); File.WriteAllText("quest-status-validation.txt","FAIL: "+e); EditorApplication.Exit(1);}
+    }
+}

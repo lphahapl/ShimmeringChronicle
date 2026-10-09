@@ -457,6 +457,7 @@ MonoBehaviour:
   missionType: {fileID: 2483017467686026624}
   missionName: {fileID: 8520747259527125110}
   missionDescription: {fileID: 2902403729820705156}
+  missionStatusText: {fileID: 357945710378558178}
   aims: []
   aimPrefab: {fileID: 5625409425662207132, guid: 2aa8f287e85a094499f32b7e41aea945, type: 3}
   aimsParent: {fileID: 3617410426905561333}

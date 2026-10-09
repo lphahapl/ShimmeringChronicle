@@ -1,0 +1,128 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using UnityEditor;
+using UnityEditor.SceneManagement;
+using UnityEngine;
+
+[InitializeOnLoad]
+public static class QuestChainValidation
+{
+    const string Flag = "QuestChainValidation.Run";
+    const BindingFlags Private = BindingFlags.Instance | BindingFlags.NonPublic;
+    static QuestChainValidation() { if (SessionState.GetBool(Flag, false)) EditorApplication.update += Check; }
+    public static void Run()
+    {
+        EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
+        SessionState.SetBool(Flag, true);
+        EditorApplication.EnterPlaymode();
+    }
+    static void Assert(bool condition, string message) { if (!condition) throw new Exception(message); }
+    static void Field(object target, string name, object value) => target.GetType().GetField(name, Private).SetValue(target, value);
+    static DropItem[] Drops() => UnityEngine.Object.FindObjectsByType<DropItem>(FindObjectsSortMode.None).Where(d => d.isActiveAndEnabled).ToArray();
+    static void Check()
+    {
+        if (!EditorApplication.isPlaying || EditorApplication.isCompiling) return;
+        EditorApplication.update -= Check;
+        SessionState.SetBool(Flag, false);
+        try
+        {
+            var managerGo = new GameObject("TestGameManager"); managerGo.SetActive(false);
+            var game = managerGo.AddComponent<GameManager>();
+            typeof(GameManager).GetProperty("Instance").SetValue(null, game);
+            game.LoadingStatus = new GameManager.ConfigStatu { ItemIsRead = true, MissionIsReady = true };
+            var itemConfig = ScriptableObject.CreateInstance<BasicItemSO>(); itemConfig.id = "reward_test"; itemConfig.stackCount = 10;
+            ((Dictionary<string, ItemSO>)typeof(GameManager).GetField("itemConfigs", Private).GetValue(game)).Add(itemConfig.id, itemConfig);
+            var configs = (Dictionary<string, MissionSO>)typeof(GameManager).GetField("missionConfigs", Private).GetValue(game);
+            var playerGo = new GameObject("TestPlayer"); playerGo.SetActive(false);
+            var player = playerGo.AddComponent<PlayerObj>(); player.enabled = false;
+            var state = new PlayerData { Bag = new List<ItemData> { null }, quickBar = new List<ItemData> { null } };
+            Field(player, "data", state);
+            player.t = ScriptableObject.CreateInstance<MissionSO>(); player.t.requireMents = new List<MisssionRequireEntry>(); player.t.reward = new List<ItemSlotData>();
+            playerGo.AddComponent<CharacterController>();
+            var child = new GameObject("SecondPlayerCollider"); child.transform.SetParent(playerGo.transform, false); child.AddComponent<BoxCollider>();
+            playerGo.SetActive(true); state.missions.Clear();
+            var canvas = UnityEngine.Object.Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/UI/QuestSubmit/QuestSubmitCanvas.prefab"));
+            var panel = canvas.GetComponentInChildren<MissionSubmitPanel>(true);
+            var ui = new GameObject("TestUIManager").AddComponent<UIManager>();
+            var missions = new GameObject("TestMissionManager").AddComponent<MissionManager>(); missions.player = player;
+            int changes = 0;
+            Action<PlayerData> changed = data => { if (data == state) changes++; };
+            player.Subscribe(GameEvents.OnMissionsChanged, changed);
+            var model = new GameObject("RewardPrefab"); model.transform.position = Vector3.one * 100;
+            Func<int, ItemData> item = count => new ItemData { id = itemConfig.id, count = count, stackCount = 10, prefab = model };
+            Func<string, List<ItemData>, MissionData> accept = (id, rewards) => {
+                var config = ScriptableObject.CreateInstance<MissionSO>(); config.missionID = id; config.missionName = id;
+                config.requireMents = new List<MisssionRequireEntry> { new MisssionRequireEntry { type = RequirementType.击败敌人, targetID = "enemy", requireNum = 1 } };
+                config.reward = new List<ItemSlotData>(); configs.Add(id, config);
+                missions.ReceiveMission(id); state.missions[id].reward = rewards; return state.missions[id];
+            };
+            Action progress = () => player.Publish(GameEvents.OnPushMissionProgress, state, RequirementType.击败敌人, "enemy", 1);
+
+            var first = accept("mission_002", new List<ItemData> { null, item(2), null });
+            panel.ShowMissionPanel(first, player); panel.submitBtn.onClick.Invoke();
+            Assert(!panel.submitBtn.interactable && !state.completedMissions.ContainsKey("mission_002") && state.Bag[0] == null, "Unfinished mission must not pay out");
+            panel.Hide(); progress();
+            Assert(first.missionStatus == MissionStatu.待交付 && first.currentNums[0] == 1, "Progress must mark the mission ready");
+            var dialogConfig = AssetDatabase.LoadAssetAtPath<DialogSO>("Assets/Configs/DialogSO/testNPC.asset");
+            var node = dialogConfig.nodes.First(n => n.nodeID == dialogConfig.receivedStartNodeID);
+            var choice = node.choices.First(c => c.actions.Any(a => a.type == DialogActionType.SubmitMission));
+            var dialogueGo = new GameObject("TestDialogue"); dialogueGo.SetActive(false);
+            var dialogue = dialogueGo.AddComponent<DialogueUI>(); Field(dialogue, "currentNode", node); Field(dialogue, "playerObj", player);
+            typeof(DialogueUI).GetMethod("SelectChoice", Private).Invoke(dialogue, new object[] { choice });
+            Assert(panel.IsOpen && panel.mission == first && panel.submitBtn.interactable, "Actual NPC dialogue action must open the registered submission UI");
+            int before = changes; panel.submitBtn.onClick.Invoke();
+            Assert(first.missionStatus == MissionStatu.已完成 && !state.missions.ContainsKey("mission_002") && state.completedMissions.ContainsKey("mission_002") && !panel.IsOpen && state.Bag[0].count == 2 && changes == before + 1, "Successful claim must record completion, publish list refresh, and close UI");
+            panel.SubmitMission(); missions.SubmitMission("mission_002");
+            Assert(!panel.IsOpen && state.Bag[0].count == 2, "Completed mission must not reopen or pay twice");
+
+            state.Bag[0].count = 10; state.quickBar[0] = item(10);
+            var pending = item(4); pending.prefab = null;
+            var second = accept("retry", new List<ItemData> { pending }); progress(); missions.SubmitMission("retry");
+            Assert(!panel.isAllCompleted, "Opening another mission must reset last completion flag");
+            Assert(!missions.CompleteMission("retry"), "Remaining rewards must block completion");
+            panel.submitBtn.onClick.Invoke();
+            Assert(panel.IsOpen && state.missions.ContainsKey("retry") && !state.completedMissions.ContainsKey("retry") && second.reward[0].count == 4 && Drops().Length == 0, "Failed spawn must keep mission and rewards pending after prior success");
+            pending.prefab = model; panel.submitBtn.onClick.Invoke();
+            var drop = Drops().Single();
+            Assert(drop.count == 4 && second.reward[0] == null && state.completedMissions.ContainsKey("retry") && !panel.IsOpen && drop.data.count == 4 && !ReferenceEquals(drop.data, pending), "Retry must drop only the remainder and finish the mission");
+            var offset = drop.transform.position - player.transform.position;
+            Assert(drop.transform.parent == null && Mathf.Abs(offset.x) <= .2f && Mathf.Abs(offset.z) <= .2f && offset.y == 0, "Drop offset must follow the requested X/Z range");
+            Assert(drop.GetComponent<SphereCollider>().isTrigger && drop.GetComponent<Rigidbody>().isKinematic && !drop.GetComponent<Rigidbody>().useGravity, "Spawn must configure pickup physics");
+
+            state.Bag[0].count = 8; state.quickBar[0].count = 9;
+            var third = accept("partial", new List<ItemData> { null, item(4), item(3), null }); progress(); missions.SubmitMission("partial");
+            bool reentered = true;
+            Action<List<ItemData>> reentrant = list => { reentered = panel.GrantRewards(); };
+            player.Subscribe(GameEvents.OnItemsChanged, reentrant); panel.submitBtn.onClick.Invoke(); player.UnSubscribe(GameEvents.OnItemsChanged, reentrant);
+            Assert(!reentered && state.Bag[0].count == 10 && state.quickBar[0].count == 10 && Drops().Sum(d => d.count) == 8 && third.reward.TrueForAll(i => i == null), "Partial inventory acceptance, duplicate IDs, null slots and callback reentry must preserve exact totals");
+            Assert(panel.GrantRewards() && Drops().Sum(d => d.count) == 8, "Repeated payout must not duplicate drops");
+            foreach (var other in Drops().Where(d => d != drop)) other.transform.position = Vector3.one * 100;
+
+            var collectorConfig = ScriptableObject.CreateInstance<MissionSO>(); collectorConfig.missionID = "collector";
+            collectorConfig.requireMents = new List<MisssionRequireEntry> { new MisssionRequireEntry { type = RequirementType.收集物品, targetID = itemConfig.id, requireNum = 10 } };
+            collectorConfig.reward = new List<ItemSlotData>(); state.missions.Add("collector", new MissionData(collectorConfig));
+            Physics.simulationMode = SimulationMode.Script;
+            state.Bag[0].count = 9; state.quickBar[0].count = 9;
+            Physics.SyncTransforms(); Physics.Simulate(.02f);
+            Assert(drop.count == 2 && drop.data.count == 2 && state.Bag[0].count == 10 && state.quickBar[0].count == 10 && state.missions["collector"].currentNums[0] == 2, "Real trigger pickup must fill both containers and report actual collected amount");
+            playerGo.transform.position = Vector3.right * 10; Physics.SyncTransforms(); Physics.Simulate(.02f);
+            playerGo.transform.position = Vector3.zero; Physics.SyncTransforms(); Physics.Simulate(.02f);
+            Assert(drop.count == 2, "Full inventory must leave the drop intact");
+            playerGo.transform.position = Vector3.right * 10; Physics.SyncTransforms(); Physics.Simulate(.02f);
+            state.Bag[0].count = 8; playerGo.transform.position = Vector3.zero; Physics.SyncTransforms(); Physics.Simulate(.02f);
+            Assert(!drop.gameObject.activeSelf && drop.count == 0 && state.Bag[0].count == 10 && state.missions["collector"].currentNums[0] == 4, "Reentry after freeing space must collect once and deactivate the exhausted drop");
+
+            var empty = accept("empty", new List<ItemData> { null, new ItemData { count = 0 } }); progress(); missions.SubmitMission("empty"); panel.submitBtn.onClick.Invoke();
+            Assert(state.completedMissions.ContainsKey("empty") && !panel.IsOpen, "No valid rewards must still complete");
+            model.SetActive(false); var inactiveDrop = DropItem.Spawn(item(1), Vector3.right * 40);
+            Assert(inactiveDrop.gameObject.activeSelf && inactiveDrop.GetComponent<SphereCollider>().isTrigger, "Inactive template must generate an active configured drop");
+            Assert(DropItem.Spawn(null, Vector3.zero) == null && DropItem.Spawn(new ItemData { count = 1 }, Vector3.zero) == null, "Invalid visual must fail without consuming rewards");
+            File.WriteAllText("quest-chain-validation.txt", "PASS: Unity 6000.3.10f1 compilation and Play Mode using actual gameplay scripts and submission prefab. Mission acceptance, progress, configured NPC dialogue action, submission button, bag/quickbar payout, overflow placement, failed spawn retention and retry, completion records/event/UI close, consecutive tasks, repeat payout, duplicate reward IDs/null/zero slots, callback reentry, actual physics trigger pickup with CharacterController and child collider, partial/full inventory and reentry after freeing space, collection mission progress, active spawn from inactive template.");
+            EditorApplication.Exit(0);
+        }
+        catch (Exception e) { Debug.LogException(e); File.WriteAllText("quest-chain-validation.txt", "FAIL: " + e); EditorApplication.Exit(1); }
+    }
+}

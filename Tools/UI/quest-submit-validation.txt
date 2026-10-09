@@ -1,0 +1,1 @@
+PASS: native Unity compilation and prefab generation; required fields bound; ItemContainer/IContainerOwner and ItemSlot bindings; open/reopen/cancel/close; completed/incomplete state; 8 objectives and 12 rewards scroll; shrink and empty rewards. Actual UI rendered at 1920x1080. Submission finalization remains in SubmitMission; current GrantRewards implementation preserved.

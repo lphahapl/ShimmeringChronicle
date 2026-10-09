@@ -1,0 +1,4 @@
+Before fix: FAIL: System.Exception: Selected detail status stayed stale: 进行中; model=待交付; list=待交付
+  at QuestStatusValidation.Check () [0x0021b] in D:\unity_training\Practice\Temp\QuestSubmitUI\Assets\Editor\QuestStatusValidation.cs:38 
+After fix: PASS: actual mission progress event changes model and list status to 待交付, selected detail status also updates, and empty selection clears the detail status. Actual MissionsBar and QuestPanel prefab in isolated Unity Play Mode.
+Scope: actual MissionsBar, MissionManager and QuestPanel prefab in isolated Unity 6000.3.10f1 Play Mode. UI dependency script references remapped to existing DLLs in the fixture only.

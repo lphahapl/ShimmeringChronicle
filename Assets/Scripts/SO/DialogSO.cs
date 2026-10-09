@@ -55,4 +55,5 @@ public enum DialogActionType
     ReceiveMission,    // 接取任务
     ReportTalkProgressAndEnd, // 上报对话任务进度
     SubmitMission // 打开交任务面板
+
 }

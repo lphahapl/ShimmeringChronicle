@@ -11,6 +11,7 @@ public class MissionsBar : UIBase,IContainerOwner
     public TMP_Text missionType;
     public TMP_Text missionName;
     public TMP_Text missionDescription;
+    public TMP_Text missionStatusText;
     public List<GameObject> aims = new List<GameObject>();//Ä¿±ê
     public GameObject aimPrefab;
     public Transform aimsParent;
@@ -25,8 +26,8 @@ public class MissionsBar : UIBase,IContainerOwner
     public Transform rewardSlotsPos;
     public TMP_Text progressingNum;
     public TMP_Text completedNum;
-    public Button closeBtn;
-    public bool isUnFnishedMission = false;
+    public Button closeBtn; 
+    public bool isUnFnishedMission = true;
 
 
     protected override void Awake()
@@ -47,6 +48,7 @@ public class MissionsBar : UIBase,IContainerOwner
     {
         if (player == null || changed != player.Data) return;
         Refresh();
+        
     }
 
 
@@ -78,6 +80,7 @@ public class MissionsBar : UIBase,IContainerOwner
             missionType.text = "";
             missionName.text = "";
             missionDescription.text = "";
+            missionStatusText.text = "";
             foreach (var aim in aims) aim.SetActive(false);
             RefreshRewardSlots();
             return;
@@ -92,6 +95,7 @@ public class MissionsBar : UIBase,IContainerOwner
         missionType.text = data.SO.missionType.ToString();
         missionName.text = data.SO.missionName;
         missionDescription.text = data.SO.missionDescription;
+        missionStatusText.text = data.missionStatus.ToString();
 
         int count = data.SO.requireMents.Count;
         while (aims.Count < count)
