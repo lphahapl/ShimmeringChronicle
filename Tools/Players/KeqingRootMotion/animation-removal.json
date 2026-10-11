@@ -1,0 +1,31 @@
+{
+  "deleted_asset_guids": {
+    "b5eebf152d5a90842bdbd1a30384b8a2": "Assets\\Prefabs\\Player\\KeqingRootMotion\\Animations\\Attack1.anim",
+    "c771e67d7f5543e4aa581224fa8d8932": "Assets\\Prefabs\\Player\\KeqingRootMotion\\Animations\\Attack2.anim",
+    "df1ef0427fad85b4099733526c04d816": "Assets\\Prefabs\\Player\\KeqingRootMotion\\Animations\\Attack3.anim",
+    "9af9f3b8fa20a6a439e2f664a65297ee": "Assets\\Prefabs\\Player\\KeqingRootMotion\\Animations\\Idle.anim",
+    "b94acdf54ca17e240b78f79b97a3c057": "Assets\\Prefabs\\Player\\KeqingRootMotion\\Animations\\KeqingRootMotion.controller",
+    "66cf3eb8adb75164a8474fe00adf3de5": "Assets\\Prefabs\\Player\\KeqingRootMotion\\Animations\\Run.anim",
+    "f8c8e5c115c839948a0a210c65811521": "Assets\\Prefabs\\Player\\KeqingRootMotion\\Animations\\RunStart.anim",
+    "178b79632586f814a833db20ef6e19dd": "Assets\\Prefabs\\Player\\KeqingRootMotion\\Animations\\RunStop.anim",
+    "c17af6985af4756459c1e2d081efa7fd": "Assets\\Prefabs\\Player\\KeqingRootMotion\\Animations\\RunStopRight.anim",
+    "08d7dd413d5290b4d8b0094b020a9921": "Assets\\Prefabs\\Player\\KeqingRootMotion\\Animations\\TurnLeft.anim",
+    "8c48d0dff75c0374bb166e7e8339b9f1": "Assets\\Prefabs\\Player\\KeqingRootMotion\\Animations\\TurnRight.anim",
+    "9113fb7b21d045949ad73e698de70518": "Assets\\Prefabs\\Player\\KeqingRootMotion\\Animations\\Walk.anim",
+    "d3fd585477e1bd24e8deef0211468ef8": "Assets\\Prefabs\\Player\\KeqingRootMotion\\Animations\\WalkStart.anim",
+    "2833dc2898438554495eafdaa104262b": "Assets\\Prefabs\\Player\\KeqingRootMotion\\Animations\\WalkStop.anim",
+    "829282b3f13804d40924737dc02f63e8": "Assets\\Prefabs\\Player\\KeqingRootMotion\\Animations\\WalkStopRight.anim",
+    "30bb283407acb704fb99ba13b7d29297": "Assets\\Prefabs\\Player\\KeqingRootMotion\\Models\\Source\\刻晴_跳舞动作.blend"
+  },
+  "retained_model_hashes": {
+    "Assets\\Prefabs\\Player\\KeqingRootMotion\\Models\\KeqingRootMotionAvatar.asset": "23ffb7e4dd0159f75b0172bb9f22915d4b389b6d0523615700f96f2cf45b4448",
+    "Assets\\Prefabs\\Player\\KeqingRootMotion\\Models\\SwordBlade.asset": "f14d89ee20e809f38927a667fdbd920770ecb933740338253f7c93d2585978a3",
+    "Assets\\Prefabs\\Player\\KeqingRootMotion\\Models\\Source\\刻晴.blend": "b67272d4cc26c42544f2a58bec08085ff2c4e08cfd0304c349ed6af9d13b626f",
+    "Assets\\Prefabs\\Player\\KeqingRootMotion\\Models\\Source\\刻晴.fbx": "8e50c5509a915904425faf77a341423083f191265e8bbbace66b12081b823f77",
+    "Assets\\Prefabs\\Player\\KeqingRootMotion\\Models\\Source\\刻晴.pmx": "c2d2f2dd4e90023a0b59c6519968b5523bb5269b06bfd85cdb6dc9ee59413926"
+  },
+  "removed_clips": 14,
+  "removed_controller": 1,
+  "prefab_animator_and_motion_script_disabled": true,
+  "model_animation_import_disabled": true
+}

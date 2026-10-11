@@ -9,7 +9,6 @@ using UnityEngine;
 public class WeaponData : ItemData
 {
     public List<AttackData> combo = new List<AttackData>();
-
     public float stopDistance;
     public float attackBreak = 0.8f;
     /// <summary>
@@ -41,6 +40,8 @@ public class AttackData
     public float damagePerHit;
     public float radius;
     public float angle;
+    [Tooltip("武器削韧")]
+    public float poiseDamage;
     [Header("卡肉优先级")]
     public ETimePriority priority;
     [Header("卡肉时间缩放")]
@@ -63,6 +64,7 @@ public class AttackData
             radius       = radius,
             judgeOffset  = judgeOffset,
             angle = angle,
+            poiseDamage = poiseDamage,
             priority = priority,
             scale = scale,
             time = time

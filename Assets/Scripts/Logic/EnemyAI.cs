@@ -293,6 +293,7 @@ public class EnemyAI : MonoBehaviour
     /// </summary>
     private void ChangeAttackStatu()
     {
+        if (enemyObj) enemyObj.EndEff();
         if (isAttacking && comboIndex == 0)
             data.weaponData.attackBreak = data.WeaponSO.attackBreak;
 

@@ -1,0 +1,3 @@
+Walk original=1.500 m/s; equipped=1.500 m/s
+Chase original=3.500 m/s; equipped=3.500 m/s
+ALL PASSED: equipped test enemy supplies locomotion root motion to EnemyAI.

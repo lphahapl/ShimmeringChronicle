@@ -17,6 +17,7 @@ public class WeaponSO : ItemSO<WeaponData>
     /// </summary>
     protected override void FillExtra(WeaponData data)
     {
+        
         data.stopDistance = stopDistance;
         data.attackBreak = attackBreak;
         if (combo == null) return;

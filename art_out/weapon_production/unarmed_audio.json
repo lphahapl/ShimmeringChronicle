@@ -1,0 +1,22 @@
+[
+  {
+    "path": "Assets/Prefabs/Weapon/MossstoneFists/Audio/unarmed_swing.wav",
+    "duration": 0.28,
+    "sample_rate": 44100,
+    "channels": 1,
+    "peak_dbfs": -5.19,
+    "rms_dbfs": -20.14,
+    "source": "Original synthesized noise and oscillators; no external samples",
+    "status": "Validated and bound to WeaponSO.clip; animation playback event is being added by user"
+  },
+  {
+    "path": "Assets/Prefabs/Weapon/ReinforcedFists/Audio/unarmed_swing.wav",
+    "duration": 0.34,
+    "sample_rate": 44100,
+    "channels": 1,
+    "peak_dbfs": -5.19,
+    "rms_dbfs": -18.62,
+    "source": "Original synthesized noise and oscillators; no external samples",
+    "status": "Validated and bound to WeaponSO.clip; animation playback event is being added by user"
+  }
+]

@@ -10,6 +10,12 @@ public class PlayerData : BaseData
 { 
     public float runSpeed = 5f;
     public float turnSpeed = 720f;
+    [Tooltip("角色韧性")]
+    public float poise;
+    [Tooltip("角色每秒恢复韧性")]
+    public float poiseRecoveryPerSecond;
+    [Tooltip("角色韧性上次归零后，直接恢复满韧性时间")]
+    public float poiseRecoveryTime;
     /// <summary>这两个是容量，不是当前数量。列表长度 == 容量，空格是 null</summary>
     public int quickBarCapacity = 5;
     public int bagCapacity = 25;

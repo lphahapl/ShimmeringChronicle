@@ -1,0 +1,124 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
+using UnityEditor;
+using UnityEditor.Animations;
+using UnityEngine;
+
+// Copy into an isolated project's Assets/Editor alongside the current game scripts.
+public static class PlayerPoiseValidation
+{
+    const BindingFlags Private = BindingFlags.Instance | BindingFlags.NonPublic;
+    static readonly List<string> results = new List<string>();
+    static void Set(object target, string name, object value) => target.GetType().GetField(name, Private).SetValue(target, value);
+    static void Recover(PlayerObj player, float dt) => typeof(PlayerObj).GetMethod("RecoveryPoise", Private).Invoke(player, new object[] { dt });
+    static void Check(bool passed, string name)
+    {
+        if (!passed) throw new Exception(name);
+        results.Add("PASS " + name);
+    }
+    static bool Near(float a, float b) => Mathf.Abs(a - b) < 0.0001f;
+
+    public static void Run()
+    {
+        int exit = 0;
+        try
+        {
+            var config = ScriptableObject.CreateInstance<PlayerSO>();
+            config.initialHp = config.maxHp = 100f;
+            config.poise = 100f;
+            config.poiseRecoveryPerSecond = 10f;
+            config.poiseRecoveryTime = 3f;
+            config.quickBar = new List<ItemSlotData>();
+            config.Bag = new List<ItemSlotData>();
+            var go = new GameObject("PlayerPoiseTest");
+            var player = go.AddComponent<PlayerObj>();
+            Set(player, "config", config);
+            var data = player.Data;
+            Check(Near(player.poise, 100f) && Near(player.poiseRecoveryTime, 3f) && Near(data.poise, 100f), "lazy initialization keeps configured maximum separate from current poise");
+
+            var animator = go.AddComponent<Animator>();
+            var ac = AnimatorController.CreateAnimatorControllerAtPath("Assets/Test.controller");
+            ac.AddParameter("Hit", AnimatorControllerParameterType.Trigger);
+            for (int i = 1; i <= 3; i++) ac.AddParameter("Attack_0" + i, AnimatorControllerParameterType.Trigger);
+            ac.layers[0].stateMachine.AddState("Idle");
+            animator.runtimeAnimatorController = ac;
+            animator.Rebind();
+            var control = go.AddComponent<PlayerController>();
+            Set(control, "player", player);
+            Set(control, "data", data);
+            control.animator = animator;
+            Action<GameObject, float, GameObject> reaction = (victim, damage, attacker) => typeof(PlayerController).GetMethod("OnDamaged", Private).Invoke(control, new object[] { victim, damage, attacker });
+            control.Subscribe(GameEvents.Damaged, reaction);
+            int events = 0;
+            float eventPoise = -1;
+            Action<GameObject, float, GameObject> observe = (victim, damage, attacker) => { if (victim == go) { events++; eventPoise = player.poise; } };
+            player.Subscribe(GameEvents.Damaged, observe);
+            var combo = new WeaponData();
+            Set(control, "comboWeapon", combo);
+            Set(control, "comboIndex", 2);
+            Set(control, "pendingAttackIndex", 2);
+            player.TakeDamage(10f, null, 40f);
+            Check(Near(data.hp, 90f) && Near(player.poise, 60f) && Near(eventPoise, 60f) && Near(data.poise, 100f), "poise deducted before synchronous damage event");
+            Check((int)typeof(PlayerController).GetField("comboIndex", Private).GetValue(control) == 2 && ReferenceEquals(combo, typeof(PlayerController).GetField("comboWeapon", Private).GetValue(control)), "unbroken poise preserves the current attack combo");
+            Recover(player, 1f);
+            Check(Near(player.poise, 70f) && Near(player.poiseRecoveryTime, 2f), "continuous recovery uses supplied character delta time");
+            Recover(player, 0f);
+            Check(Near(player.poise, 70f) && Near(player.poiseRecoveryTime, 2f), "hit stop freezes both recovery and countdown");
+            player.TakeDamage(10f, null, 70f);
+            Check(Near(player.poise, 0f) && Near(eventPoise, 0f) && Near(player.poiseRecoveryTime, 3f), "breaking hit resets countdown and is visible immediately");
+            Check((int)typeof(PlayerController).GetField("comboIndex", Private).GetValue(control) == 0 && typeof(PlayerController).GetField("comboWeapon", Private).GetValue(control) == null, "breaking hit interrupts combo in the same callback");
+            Recover(player, 2f);
+            Check(Near(player.poise, 20f), "broken poise recovers continuously");
+            player.TakeDamage(1f, null, 5f);
+            Recover(player, 2f);
+            Check(Near(player.poise, 35f) && Near(player.poiseRecoveryTime, 1f), "new hit postpones full recovery relative to last hit");
+            Recover(player, 1f);
+            Check(Near(player.poise, 100f) && Near(player.poiseRecoveryTime, 0f), "timeout restores maximum poise");
+            Recover(player, 10f);
+            Check(Near(player.poise, 100f), "continuous recovery cannot exceed configured maximum");
+            player.TakeDamage(0f, null, 100f);
+            Check(Near(player.poise, 0f) && Near(eventPoise, 0f) && Near(data.hp, 79f), "zero HP damage can still break poise");
+            player.TakeDamage(-10f, null, -10f);
+            Check(Near(player.poise, 0f) && Near(data.hp, 79f), "negative damage cannot heal or add poise");
+            Recover(player, 3f);
+            IDamageable legacy = player;
+            legacy.TakeDamage(1f, null);
+            Check(Near(player.poise, 100f) && Near(data.hp, 78f), "existing two-argument damage interface remains usable");
+
+            // Exercise the real enemy weapon query and per-player collider deduplication.
+            go.layer = 8;
+            go.AddComponent<BoxCollider>();
+            var child = new GameObject("ExtraPlayerCollider");
+            child.layer = 8;
+            child.transform.SetParent(go.transform);
+            child.AddComponent<BoxCollider>();
+            var enemyGo = new GameObject("EnemyPoiseTest");
+            var enemy = enemyGo.AddComponent<EnemyObj>();
+            var weaponGo = new GameObject("EnemyWeaponTest");
+            var weapon = weaponGo.AddComponent<WeaponObj>();
+            weapon.showDebug = false;
+            weapon.weaponData = new WeaponData();
+            weapon.weaponData.combo.Add(new AttackData { damagePerHit = 10f, poiseDamage = 100f, radius = 2f, angle = 360f });
+            weapon.InitWeapon(enemyGo);
+            weapon.targetLayer = 1 << 8;
+            Physics.SyncTransforms();
+            int before = events;
+            weapon.EnemyCheckAttack(enemy, 0);
+            Check(Near(data.hp, 68f) && Near(player.poise, 0f) && events == before + 1, "enemy weapon applies HP and poise damage once across multiple player colliders");
+            player.TakeDamage(1000f, null, 100f);
+            before = events;
+            player.TakeDamage(10f, null, 10f);
+            Recover(player, 10f);
+            Check(player.IsDead && Near(data.hp, 0f) && Near(player.poise, 0f) && events == before, "dead player ignores further hits and recovery");
+            player.UnSubscribe(GameEvents.Damaged, observe);
+            control.UnSubscribe(GameEvents.Damaged, reaction);
+            results.Add("ALL PASSED");
+        }
+        catch (Exception e) { results.Add("FAIL " + e); exit = 1; }
+        File.WriteAllLines("validation.txt", results);
+        foreach (var line in results) Debug.Log(line);
+        EditorApplication.Exit(exit);
+    }
+}

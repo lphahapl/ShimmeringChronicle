@@ -1,0 +1,4 @@
+Walk original=1.500 m/s; equipped=0.000 m/s
+Chase original=3.500 m/s; equipped=0.000 m/s
+FAIL System.Exception: Equipped animation lost the original locomotion root motion
+  at TestEnemyChaseValidation.Run () [0x000df] in D:\unity_training\Practice\Temp\WeaponProduction\Assets\Editor\TestEnemyChaseValidation.cs:54 

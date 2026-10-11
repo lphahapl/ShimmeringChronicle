@@ -1,0 +1,200 @@
+{
+  "models": [
+    {
+      "id": "weapon_002",
+      "triangles": 1552,
+      "length": 0.95,
+      "tip": 0.755
+    },
+    {
+      "id": "weapon_003",
+      "triangles": 1860,
+      "length": 1.1,
+      "tip": 0.875
+    },
+    {
+      "id": "weapon_004",
+      "triangles": 1860,
+      "length": 1.1,
+      "tip": 0.87
+    },
+    {
+      "id": "EnemyWeapon_001",
+      "triangles": 748,
+      "length": 1.35,
+      "tip": 1.1
+    }
+  ],
+  "audio": [
+    {
+      "path": "weapon_002\\Audio\\attack_swing.wav",
+      "duration": 0.22,
+      "peak_dbfs": -5.19,
+      "source": "Original deterministic synthesis",
+      "start": 0,
+      "end": 0
+    },
+    {
+      "path": "weapon_003\\Audio\\attack_swing.wav",
+      "duration": 0.25,
+      "peak_dbfs": -5.19,
+      "source": "Original deterministic synthesis",
+      "start": 0,
+      "end": 0
+    },
+    {
+      "path": "weapon_004\\Audio\\attack_swing.wav",
+      "duration": 0.27,
+      "peak_dbfs": -5.19,
+      "source": "Original deterministic synthesis",
+      "start": 0,
+      "end": 0
+    },
+    {
+      "path": "EnemyWeapon_001\\Audio\\attack_swing.wav",
+      "duration": 0.25,
+      "peak_dbfs": -5.19,
+      "source": "Original deterministic synthesis",
+      "start": 0,
+      "end": 0
+    },
+    {
+      "path": "weapon_001\\Audio\\attack_swing.wav",
+      "duration": 0.055,
+      "peak_dbfs": -5.19,
+      "source": "Original deterministic synthesis",
+      "start": 0,
+      "end": 0
+    },
+    {
+      "path": "MossstoneBlade\\Audio\\attack_swing.wav",
+      "duration": 0.24,
+      "peak_dbfs": -5.19,
+      "source": "Original deterministic synthesis",
+      "start": 0,
+      "end": 0
+    },
+    {
+      "path": "ReinforcedBlade\\Audio\\attack_swing.wav",
+      "duration": 0.28,
+      "peak_dbfs": -5.19,
+      "source": "Original deterministic synthesis",
+      "start": 0,
+      "end": 0
+    },
+    {
+      "path": "FalconOath\\Audio\\attack_swing.wav",
+      "duration": 0.23,
+      "peak_dbfs": -5.19,
+      "source": "Original deterministic synthesis",
+      "start": 0,
+      "end": 0
+    },
+    {
+      "path": "ReinforcedBlade\\Audio\\ground_impact.wav",
+      "duration": 0.4,
+      "peak_dbfs": -5.19,
+      "source": "Original deterministic synthesis",
+      "start": 0,
+      "end": 0
+    }
+  ],
+  "spec": {
+    "weapon_002": {
+      "length": 0.95,
+      "tip": 0.755,
+      "color": [
+        1,
+        0.81,
+        0.39
+      ],
+      "life": 0.16,
+      "width": 0.12,
+      "sound": 0.22,
+      "volume": 0.6
+    },
+    "weapon_003": {
+      "length": 1.1,
+      "tip": 0.875,
+      "color": [
+        0.2,
+        0.79,
+        1
+      ],
+      "life": 0.2,
+      "width": 0.16,
+      "sound": 0.25,
+      "volume": 0.55
+    },
+    "weapon_004": {
+      "length": 1.1,
+      "tip": 0.87,
+      "color": [
+        0.68,
+        0.22,
+        1
+      ],
+      "life": 0.18,
+      "width": 0.14,
+      "sound": 0.27,
+      "volume": 0.65
+    },
+    "EnemyWeapon_001": {
+      "length": 1.35,
+      "tip": 1.1,
+      "color": [
+        1,
+        0.7,
+        0.3
+      ],
+      "life": 0.22,
+      "width": 0.2,
+      "sound": 0.25,
+      "volume": 0.65
+    },
+    "weapon_001": {
+      "color": [
+        1,
+        0.9,
+        0.63
+      ],
+      "life": 0.16,
+      "width": 0.12,
+      "sound": 0.055,
+      "volume": 0.6
+    },
+    "MossstoneBlade": {
+      "color": [
+        0.82,
+        0.72,
+        0.4
+      ],
+      "life": 0.2,
+      "width": 0.18,
+      "sound": 0.24,
+      "volume": 0.65
+    },
+    "ReinforcedBlade": {
+      "color": [
+        1,
+        0.66,
+        0.25
+      ],
+      "life": 0.22,
+      "width": 0.22,
+      "sound": 0.28,
+      "volume": 0.65
+    },
+    "FalconOath": {
+      "color": [
+        1,
+        0.82,
+        0.42
+      ],
+      "life": 0.16,
+      "width": 0.1,
+      "sound": 0.23,
+      "volume": 0.55
+    }
+  }
+}

@@ -1,0 +1,14 @@
+newmtl BlueLeather
+Kd 0.025 0.07 0.13
+Ks 0.6 0.6 0.6
+Ns 80
+
+newmtl FrostCrystal
+Kd 0.075 0.56 0.77
+Ks 0.6 0.6 0.6
+Ns 80
+
+newmtl Steel
+Kd 0.66 0.72 0.78
+Ks 0.6 0.6 0.6
+Ns 80

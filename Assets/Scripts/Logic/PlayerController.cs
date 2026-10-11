@@ -198,7 +198,8 @@ public class PlayerController : MonoBehaviour
     {
         if (victim != gameObject) return;   // 总线上有别人的受伤事件，只认自己
         if (IsDead) return;
-        Vector3 damageDir = attacker.transform.position - transform.position;
+        if (!player || player.Data.hp <= 0f || player.poise > 0f) return;
+        Vector3 damageDir = attacker ? attacker.transform.position - transform.position : Vector3.zero;
         damageDir.y = 0f; 
 
         if (damageDir.sqrMagnitude > 0.0001f)
@@ -364,6 +365,7 @@ public class PlayerController : MonoBehaviour
 
     void ResetCombo()
     {
+        if (player) player.EndEff();
         comboIndex = 0;
         pendingAttackIndex = -1;
         if (!animator) return;

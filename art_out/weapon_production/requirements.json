@@ -1,0 +1,97 @@
+{
+  "project": {
+    "unity_assets_root": "D:/unity_training/Practice/Assets/Prefabs/Weapon",
+    "style_guide": "以现有 Warrior、刻晴及隼翼誓约为参考，使用适合 Unity URP 的清晰游戏武器造型；铁卫练习剑采用钢、皮革和少量黄铜，霜华采用寒蓝银钢，紫电采用紫晶与深色钢。三张图保持统一的中性光照和浅灰背景。",
+    "global_negative": "不要人物、场景、界面、水印、透视、夸张不可制作的悬浮部件；不要将三视图画成三种武器"
+  },
+  "assets": [
+    {
+      "id": "weapon_002_orthographic",
+      "type": "texture",
+      "size": [
+        1536,
+        1024
+      ],
+      "count": 1,
+      "transparent": false,
+      "prompt": "铁卫练习剑：为均衡基础三连击设计实用单手直剑，银灰钢制双刃剑身、克制的黄铜护手和深棕皮革握柄。一个画面内展示正面、严格90度侧面、背面三视图，同一把剑、等比例、剑尖和剑柄末端对齐，完整轮廓留边。不要设计技能或附加元素伤害。",
+      "acceptance": [
+        "一张图同时包含正面、严格侧面、背面三张完整视图",
+        "三个视图的剑尖、护手和剑柄末端等比例且对齐",
+        "正背视图装饰位置一致，侧面能解释刃厚和护手厚度",
+        "钢、皮革和黄铜材质可区分，造型适合单手三连击",
+        "浅灰不透明背景，完整主体留边，无人物和水印"
+      ],
+      "unity": {
+        "folder": "weapon_002/Concepts",
+        "filename": "weapon_002_orthographic"
+      }
+    },
+    {
+      "id": "weapon_003_orthographic",
+      "type": "texture",
+      "size": [
+        1536,
+        1024
+      ],
+      "count": 1,
+      "transparent": false,
+      "prompt": "霜华：范围较大的寒蓝长剑，细长银钢剑身和清楚的中央棱线，寒蓝晶体装饰集中在护手、护手有克制的霜叶曲线，冰色仅为视觉主题。一个画面内展示正面、严格90度侧面、背面三视图，同一把剑、等比例、剑尖和剑柄末端对齐，完整轮廓留边，不要用光晕遮挡实体结构。",
+      "acceptance": [
+        "一张图同时包含正面、严格侧面、背面三张完整视图",
+        "三个视图的剑尖、护手和剑柄末端等比例且对齐",
+        "寒蓝长剑的实体结构明确，晶体装饰在三视图中一致",
+        "剑身和握柄完整，光晕不遮挡轮廓，无悬浮部件",
+        "浅灰不透明背景，完整主体留边，无人物和水印"
+      ],
+      "unity": {
+        "folder": "weapon_003/Concepts",
+        "filename": "weapon_003_orthographic"
+      }
+    },
+    {
+      "id": "weapon_004_orthographic",
+      "type": "texture",
+      "size": [
+        1536,
+        1024
+      ],
+      "count": 1,
+      "transparent": false,
+      "prompt": "紫电：高伤害紫晶长剑，深色钢制骨架、明确的双刃几何和嵌入式紫晶，轮廓比练习剑更锐利但保留可信的握柄、护手与实体连接。紫色仅为视觉主题。一个画面内展示正面、严格90度侧面、背面三视图，同一把剑、等比例、剑尖和剑柄末端对齐，完整轮廓留边，不要用闪电遮挡实体结构。",
+      "acceptance": [
+        "一张图同时包含正面、严格侧面、背面三张完整视图",
+        "三个视图的剑尖、护手和剑柄末端等比例且对齐",
+        "紫晶与钢制骨架具有可制作的连接，三视图结构一致",
+        "实体轮廓完整清晰，无遮挡结构的闪电和悬浮部件",
+        "浅灰不透明背景，完整主体留边，无人物和水印"
+      ],
+      "unity": {
+        "folder": "weapon_004/Concepts",
+        "filename": "weapon_004_orthographic"
+      }
+    },
+    {
+      "id": "enemy_weapon_001_orthographic",
+      "type": "texture",
+      "size": [
+        1536,
+        1024
+      ],
+      "count": 1,
+      "transparent": false,
+      "prompt": "A very thick rectangular steel slab blade for TestEnemy, whose body is a plain cube. Broad straight rectangular blade with a flat squared end and short bevels, thick rectangular block crossguard, stout square-section leather grip and cubic steel pommel. Clearly cubic, heavy, simple geometry rather than a slender traditional sword. FRONT / true SIDE / BACK orthographic views of the same weapon; side thickness about one third of blade width. Keep steel, muted brass and brown leather materials, neutral lighting, opaque grey background and full silhouettes with margins.",
+      "acceptance": [
+        "Three complete aligned front, true 90 degree side and back views",
+        "Same blade, guard, grip and pommel geometry and scale in all views",
+        "Broad rectangular blade, block guard and cubic pommel visibly match the cube enemy identity",
+        "True side view shows substantial blade thickness, about one third of front blade width; all steel, brass and leather parts physically connected",
+        "Opaque light grey background, full silhouette with margins, no characters or watermark"
+      ],
+      "unity": {
+        "folder": "EnemyWeapon_001/Concepts",
+        "filename": "enemy_weapon_001_orthographic"
+      }
+    }
+  ]
+}

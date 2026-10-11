@@ -2,6 +2,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using static UnityEngine.Rendering.STP;
 
 public class EnemyObj : MonoBehaviour,IDamageable
 {
@@ -19,6 +20,9 @@ public class EnemyObj : MonoBehaviour,IDamageable
     public ItemData HandingItem=>data.HandingItem;//手上的数据
 
     public CharacterTime hitStop;
+    public float poiseRecoveryPerSecond;
+    public float poise;
+    public float poiseRecoveryTime;
     public float dtFix => hitStop ? hitStop.DeltaTime : Time.deltaTime;
 
     public void TakeDamage(float damage, GameObject Attacker)
@@ -64,7 +68,7 @@ public class EnemyObj : MonoBehaviour,IDamageable
     // Update is called once per frame
     void Update()
     {
-        
+        RecoveryPoise();
     }
   
     private void InitHealthBar()
@@ -85,7 +89,9 @@ public class EnemyObj : MonoBehaviour,IDamageable
     {
         SO = config;
         data = config.CreateData();
-        
+        poiseRecoveryPerSecond = data.poiseRecoveryPerSecond;
+        poise=data.poise;
+        poiseRecoveryTime = data.poiseRecoveryTime;
         isDead = false;
         if (enemyAI != null) enemyAI.data = data;
         if (chcheColliders == null)
@@ -108,7 +114,7 @@ public class EnemyObj : MonoBehaviour,IDamageable
         animator.Rebind();
        
     }
-    // Reset animation state for a new life without moving the spawn transform.
+   
     
 
     private void OnHitStopRequested(GameObject victim, GameObject attacker, AttackData attack)
@@ -130,8 +136,10 @@ public class EnemyObj : MonoBehaviour,IDamageable
         {
             transform.rotation = Quaternion.LookRotation(damageDir, Vector3.up);
         }
-        if (animator != null)
+        //韧性不够再进入受击
+        if (animator != null&&poise<=0)
         {
+            EndEff();
             animator.SetTrigger("Hit");
         }
     }
@@ -153,6 +161,7 @@ public class EnemyObj : MonoBehaviour,IDamageable
         {
             col.enabled = false;
         }
+        EndEff();
         EnemyManager.Instance.Unregister(this);
         animator.SetTrigger("isDied");
 
@@ -167,6 +176,7 @@ public class EnemyObj : MonoBehaviour,IDamageable
     }
     private void OnDisable()
     {
+        EndEff();
         this.UnSubscribe(GameEvents.Damaged, OnDameged);
         this.UnSubscribe(GameEvents.HitStopRequested, OnHitStopRequested);
         this.UnSubscribe(GameEvents.Died, OnDie);
@@ -205,6 +215,7 @@ public class EnemyObj : MonoBehaviour,IDamageable
 
         foreach (var weapon in handingInstance.GetComponentsInChildren<WeaponObj>(true))
         {
+            if (weapon.effPos != null) weapon.effPos.gameObject.SetActive(false);
             weapon.SO = config;
             weapon.weaponData = weaponData;
             weapon.InitWeapon(gameObject);
@@ -212,7 +223,19 @@ public class EnemyObj : MonoBehaviour,IDamageable
         animator.runtimeAnimatorController = weaponData.overrideController;
         this.Publish<EnemyObj, ItemData>(GameEvents.OnEnemyChangedHandingItem, this, data.HandingItem);
     }
-
+    private void RecoveryPoise()
+    {
+        //自然恢复
+        poise += poiseRecoveryPerSecond * dtFix;
+        //恢复倒计时
+        poiseRecoveryTime-=dtFix;
+        if (poiseRecoveryTime <= 0 )
+        {
+            poise = data.poise;
+            poiseRecoveryTime=data.poiseRecoveryTime;
+        }
+        
+    }
     private void InitAI()
     {
 
@@ -226,5 +249,28 @@ public class EnemyObj : MonoBehaviour,IDamageable
         enemyAI.data = data;
         enemyAI.InitAgentParameters();
         enemyAI.ResetDetectionRange();
+    }
+    public void PlayHandingEffORAudioClip()
+    {
+        if (handingInstance == null) return;
+        var weapon = handingInstance.GetComponentInChildren<WeaponObj>(true);
+        if (weapon == null) return;
+        if (weapon.effPos != null)
+        {
+            foreach (var trail in weapon.effPos.GetComponentsInChildren<TrailRenderer>(true)) trail.Clear();
+            weapon.effPos.gameObject.SetActive(true);
+        }
+        else if (weapon.TryGetComponent<AudioSource>(out var audio))
+        {
+            audio.Play();
+        }
+    }
+
+    public void EndEff()
+    {
+        if (handingInstance == null) return;
+        var weapon = handingInstance.GetComponentInChildren<WeaponObj>(true);
+        if (weapon != null && weapon.effPos != null)
+            weapon.effPos.gameObject.SetActive(false);
     }
 }

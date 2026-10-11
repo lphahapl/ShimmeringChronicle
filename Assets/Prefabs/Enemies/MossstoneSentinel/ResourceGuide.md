@@ -1,6 +1,5 @@
 # 苔石守卫资源
 
-对应设计稿：`Tools/EnemyConcepts/MossstoneSentinel/MossstoneSentinel-concept-v3.png`。
 当前模型是用于游戏测试的分块低多边形版本，约 2.6 米高，根节点缩放为 1，脚底为原点。保留苔藓、石纹、青色晶核与黄铜装饰。
 
 ## 使用
@@ -40,8 +39,8 @@ Walk：1.5 秒移动 1.2 米，即 0.8 米/秒。Chase：1.1 秒移动 1.76 米�
 | 刀第 2 段 | 横斩 | 1.35 秒 | 0.80 秒 | 0.35 米 | 1.8 秒 |
 | 刀第 3 段 | 蓄力重劈 | 1.85 秒 | 1.19 秒 | 0.55 米 | 1.8 秒 |
 
-空手资源位于 `Assets/Prefabs/Items/MossstoneFists`，WeaponSO ID 为 `enemy_mossstone_fists`。
-长石刀资源位于 `Assets/Prefabs/Items/MossstoneBlade`，WeaponSO ID 为 `enemy_mossstone_blade`。
+空手资源位于 `Assets/Prefabs/Weapon/MossstoneFists`，WeaponSO ID 为 `enemy_mossstone_fists`。
+长石刀资源位于 `Assets/Prefabs/Weapon/MossstoneBlade`，WeaponSO ID 为 `enemy_mossstone_blade`。
 空手预制体没有可见网格，但带 WeaponObj，拥有完整的 WeaponData、攻击判定和覆盖控制器。
 每段动画用 PublishEnemyCombo(int) 发布命中，索引从 0 开始；结束前 0.1 秒用 ChangeAttackStatu 恢复攻击状态。Die 在 1.65 秒调用 Died。
 

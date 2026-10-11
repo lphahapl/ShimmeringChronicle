@@ -1,0 +1,38 @@
+using System;
+using System.IO;
+using System.Linq;
+using System.Collections.Generic;
+using UnityEditor;
+using UnityEngine;
+[InitializeOnLoad]
+public static class WeaponProductionMainCheck
+{
+ static WeaponProductionMainCheck(){EditorApplication.update+=Once;}
+ static void Once(){if(EditorApplication.isCompiling||EditorApplication.isUpdating)return;EditorApplication.update-=Once;Check();}
+ static void Check()
+ {
+  var report=new List<string>();
+  try
+  {
+   string[] ids={"weapon_002","weapon_003","weapon_004","EnemyWeapon_001","weapon_001","MossstoneBlade","ReinforcedBlade","FalconOath"};
+   foreach(string id in ids)
+   {
+    string root="Assets/Prefabs/Weapon/"+id+"/";var prefab=AssetDatabase.LoadAssetAtPath<GameObject>(root+id+".prefab");if(!prefab)throw new Exception(id+" prefab did not import");
+    var effect=prefab.transform.Find("TipPoint/AttackEffect");if(!effect||effect.gameObject.activeSelf||!effect.GetComponent<AudioSource>().clip)throw new Exception(id+" effect/audio reference invalid");
+    foreach(var renderer in prefab.GetComponentsInChildren<Renderer>(true))foreach(var material in renderer.sharedMaterials)
+    {
+     if(!material||!material.shader||!material.shader.isSupported||material.shader.name=="Hidden/InternalErrorShader")throw new Exception(id+" unsupported or missing material shader");
+    }
+    var weapon=prefab.GetComponentInChildren<WeaponObj>(true);if(!weapon||weapon.effPos!=effect)throw new Exception(id+" WeaponObj.effPos is not bound to its embedded effect");
+    var so=AssetDatabase.LoadAssetAtPath<WeaponSO>(root+id+".asset");if(so&&!so.prefab)throw new Exception(id+" weapon prefab reference invalid");
+    if(Array.IndexOf(ids,id)<3&&(!so.overrideController||!so.overrideController.runtimeAnimatorController))throw new Exception(id+" Warrior controller missing");
+    report.Add("PASS "+id+" main import, supported shaders, prefab references, default-off effect and audio");
+   }
+   foreach(string id in new[]{"MossstoneFists","ReinforcedFists"}){var prefab=AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Weapon/"+id+"/"+id+".prefab");var weapon=prefab.GetComponentInChildren<WeaponObj>(true);var audio=weapon.GetComponent<AudioSource>();if(weapon.effPos||!audio||!audio.clip||audio.playOnAwake)throw new Exception(id+" audio-only prefab configuration invalid");report.Add("PASS "+id+" audio-only prefab config");}
+   report.Add("ALL PASSED: current main project import; Keqing excluded.");
+  }
+  catch(Exception e){report.Add("FAIL "+e);}
+  File.WriteAllLines("Tools/Weapons/main-import-validation.txt",report);Debug.Log(string.Join("\n",report));
+  if(report.Any(line=>line.StartsWith("ALL PASSED")))AssetDatabase.DeleteAsset("Assets/Editor/WeaponProductionMainCheck.cs");
+ }
+}

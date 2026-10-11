@@ -5,6 +5,8 @@ public class WeaponObj : MonoBehaviour
 {
     public WeaponData weaponData;
     public WeaponSO SO;
+    public Transform effPos;
+
     public GameObject parent;
     public List<Collider> targets = new List<Collider>();
     public LayerMask targetLayer;
@@ -123,6 +125,8 @@ public class WeaponObj : MonoBehaviour
             
             float hpBefore = enemy.data.hp;
             enemy.TakeDamage(attack.damagePerHit, parent);
+            enemy.poise -=attack.poiseDamage;
+            //血量有变动才有卡肉
             if (enemy.data.hp < hpBefore)
                 PublishHitStop(enemy.gameObject, attack);
         }
@@ -185,7 +189,7 @@ public class WeaponObj : MonoBehaviour
             hitPlayers.Add(player);
             targets.Add(col);
             float hpBefore = player.Data.hp;
-            player.TakeDamage(attack.damagePerHit, parent);
+            player.TakeDamage(attack.damagePerHit, parent, attack.poiseDamage);
             if (player.Data.hp < hpBefore)
                 PublishHitStop(player.gameObject, attack);
         }

@@ -12,8 +12,8 @@ using Object = UnityEngine.Object;
 public static class BuildMossstoneSentinel
 {
     public const string Folder = "Assets/Prefabs/Enemies/MossstoneSentinel";
-    public const string Fists = "Assets/Prefabs/Items/MossstoneFists";
-    public const string Blade = "Assets/Prefabs/Items/MossstoneBlade";
+    public const string Fists = "Assets/Prefabs/Weapon/MossstoneFists";
+    public const string Blade = "Assets/Prefabs/Weapon/MossstoneBlade";
     static readonly List<AnimationClip> clips = new List<AnimationClip>();
     static readonly Dictionary<Transform, List<Part>> parts = new Dictionary<Transform, List<Part>>();
     static Material[] materials;
@@ -195,7 +195,7 @@ public static class BuildMossstoneSentinel
     }
     static AnimatorController Controller(AnimationClip idle,AnimationClip walk,AnimationClip chase,AnimationClip hit,AnimationClip die,AnimationClip a,AnimationClip b,AnimationClip placeholder)
     {
-        var c=AnimatorController.CreateAnimatorControllerAtPath(Folder+"/MossstoneSentinel.controller");
+        var c=AnimatorController.CreateAnimatorControllerAtPath(Folder+"/Animations/MossstoneSentinel.controller");
         c.AddParameter("isWalking",AnimatorControllerParameterType.Bool);c.AddParameter("isRunning",AnimatorControllerParameterType.Bool);
         foreach(var p in new[]{"Hit","isDied","Attack1","Attack2","Attack3"})c.AddParameter(p,AnimatorControllerParameterType.Trigger);
         var sm=c.layers[0].stateMachine;var states=new Dictionary<string,AnimatorState>();var names=new[]{"Idle","Walk","Chase","Hit","Die","Attack1","Attack2","Attack3"};var motions=new[]{idle,walk,chase,hit,die,a,b,placeholder};
@@ -209,7 +209,7 @@ public static class BuildMossstoneSentinel
     }
     static AnimatorOverrideController Override(AnimatorController controller,string folder,string name,AnimationClip a,AnimationClip b,AnimationClip third,AnimationClip[] replacements)
     {
-        var c=new AnimatorOverrideController(controller){name=name};c[a.name]=replacements[0];c[b.name]=replacements[1];c[third.name]=replacements[2];AssetDatabase.CreateAsset(c,folder+"/"+name+".overrideController");return c;
+        var c=new AnimatorOverrideController(controller){name=name};c[a.name]=replacements[0];c[b.name]=replacements[1];c[third.name]=replacements[2];AssetDatabase.CreateAsset(c,folder+"/Animations/"+name+".overrideController");return c;
     }
     static void BladeModel(Transform root)
     {
@@ -253,7 +253,7 @@ public static class BuildMossstoneSentinel
             var blade=ScriptableObject.CreateInstance<WeaponSO>();blade.name="MossstoneBlade";blade.id="enemy_mossstone_blade";blade.itemName="苔石守卫·长石刀";blade.description="冲撞、横斩、蓄力重劈。";blade.stopDistance=2.7f;blade.attackBreak=1.8f;blade.overrideController=bladeController;
             blade.combo.Add(new AttackData{damagePerHit=14,radius=1.6f,angle=90,judgeOffset=new Vector3(0,1,.75f)});blade.combo.Add(new AttackData{damagePerHit=20,radius=2.55f,angle=170,judgeOffset=new Vector3(0,1.1f,.75f)});blade.combo.Add(new AttackData{damagePerHit=30,radius=2.7f,angle=100,judgeOffset=new Vector3(0,.8f,1.1f)});AssetDatabase.CreateAsset(blade,Blade+"/MossstoneBlade.asset");blade.prefab=Weapon(blade,Blade,true);EditorUtility.SetDirty(blade);
             var so=ScriptableObject.CreateInstance<EnemySO>();so.name="MossstoneSentinel";so.enemyID="Enemy_MossstoneSentinel";so.targetName="苔石守卫";so.description="慢速石质守卫，默认空手二连击。";so.maxHp=260;so.initialHp=260;so.atk=20;so.speed=.8f;so.chaseSpeed=1.6f;so.turnSpeed=180;so.chaseDistance=18;so.hitStun=.65f;so.defaultWeaponSO=fists;AssetDatabase.CreateAsset(so,Folder+"/MossstoneSentinel.asset");
-            var root=PrefabUtility.LoadPrefabContents("Assets/Prefabs/TestEnemy/TestEnemy.prefab");
+            var root=PrefabUtility.LoadPrefabContents("Assets/Prefabs/Enemies/TestEnemy/TestEnemy.prefab");
             try
             {
                 root.name="MossstoneSentinel";root.layer=0;root.transform.SetPositionAndRotation(Vector3.zero,Quaternion.identity);root.transform.localScale=Vector3.one;

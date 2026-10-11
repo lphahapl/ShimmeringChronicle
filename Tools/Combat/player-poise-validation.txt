@@ -1,0 +1,17 @@
+PASS lazy initialization keeps configured maximum separate from current poise
+PASS poise deducted before synchronous damage event
+PASS unbroken poise preserves the current attack combo
+PASS continuous recovery uses supplied character delta time
+PASS hit stop freezes both recovery and countdown
+PASS breaking hit resets countdown and is visible immediately
+PASS breaking hit interrupts combo in the same callback
+PASS broken poise recovers continuously
+PASS new hit postpones full recovery relative to last hit
+PASS timeout restores maximum poise
+PASS continuous recovery cannot exceed configured maximum
+PASS zero HP damage can still break poise
+PASS negative damage cannot heal or add poise
+PASS existing two-argument damage interface remains usable
+PASS enemy weapon applies HP and poise damage once across multiple player colliders
+PASS dead player ignores further hits and recovery
+ALL PASSED

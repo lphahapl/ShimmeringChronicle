@@ -11,7 +11,12 @@ public class PlayerSO : BaseDataSO<PlayerData>
     public float runSpeed = 5f;
     [Tooltip("转身速度（度/秒）")]
     public float turnSpeed = 720f;
-    
+    [Tooltip("角色韧性")]
+    public float poise;
+    [Tooltip("角色每秒恢复韧性")]
+    public float poiseRecoveryPerSecond;
+    [Tooltip("角色韧性上次归零后，直接恢复满韧性时间")]
+    public float poiseRecoveryTime;
     [Tooltip("快捷栏格子数。要和 QuickBar 上配的格子数一致")]
     [Min(0)] public int quickBarCapacity = 5;
 
@@ -30,10 +35,11 @@ public class PlayerSO : BaseDataSO<PlayerData>
     {
         data.runSpeed=runSpeed;
         data.turnSpeed=turnSpeed;
-
+        data.poiseRecoveryPerSecond=poiseRecoveryPerSecond;
+        data.poiseRecoveryTime=poiseRecoveryTime;
         data.quickBarCapacity = quickBarCapacity;
         data.bagCapacity = bagCapacity;
-
+        data.poise=poise;
         // 初始背包存的是配置资产，这里现造运行时数据，并补足到容量（空格是 null）
         data.quickBar = quickBar.ToItemDataList
             

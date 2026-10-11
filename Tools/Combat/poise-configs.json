@@ -1,0 +1,129 @@
+[
+  {
+    "path": "Assets/Prefabs/Weapon/EnemyWeapon_001/EnemyWeapon_001.asset",
+    "kind": "weapon",
+    "poiseDamage": [
+      35,
+      65
+    ]
+  },
+  {
+    "path": "Assets/Prefabs/Weapon/MossstoneBlade/MossstoneBlade.asset",
+    "kind": "weapon",
+    "poiseDamage": [
+      30,
+      40,
+      70
+    ]
+  },
+  {
+    "path": "Assets/Prefabs/Weapon/MossstoneFists/MossstoneFists.asset",
+    "kind": "weapon",
+    "poiseDamage": [
+      45,
+      65
+    ]
+  },
+  {
+    "path": "Assets/Prefabs/Weapon/ReinforcedBlade/ReinforcedBlade.asset",
+    "kind": "weapon",
+    "poiseDamage": [
+      40,
+      55,
+      85
+    ]
+  },
+  {
+    "path": "Assets/Prefabs/Weapon/ReinforcedFists/ReinforcedFists.asset",
+    "kind": "weapon",
+    "poiseDamage": [
+      50,
+      80
+    ]
+  },
+  {
+    "path": "Assets/Prefabs/Weapon/weapon_001/weapon_001.asset",
+    "kind": "weapon",
+    "poiseDamage": [
+      30,
+      40,
+      70
+    ]
+  },
+  {
+    "path": "Assets/Prefabs/Weapon/weapon_002/weapon_002.asset",
+    "kind": "weapon",
+    "poiseDamage": [
+      20,
+      25,
+      40
+    ]
+  },
+  {
+    "path": "Assets/Prefabs/Weapon/weapon_003/weapon_003.asset",
+    "kind": "weapon",
+    "poiseDamage": [
+      40,
+      55,
+      90
+    ]
+  },
+  {
+    "path": "Assets/Prefabs/Weapon/weapon_004/weapon_004.asset",
+    "kind": "weapon",
+    "poiseDamage": [
+      50,
+      70,
+      110
+    ]
+  },
+  {
+    "path": "Assets/Prefabs/Enemies/MossstoneSentinel/MossstoneSentinel.asset",
+    "kind": "enemy",
+    "poise": 120,
+    "poiseRecoveryPerSecond": 10,
+    "poiseRecoveryTime": 4
+  },
+  {
+    "path": "Assets/Prefabs/Enemies/MossstoneSentinel/MossstoneSentinel_Blade.asset",
+    "kind": "enemy",
+    "poise": 120,
+    "poiseRecoveryPerSecond": 10,
+    "poiseRecoveryTime": 4
+  },
+  {
+    "path": "Assets/Prefabs/Enemies/ReinforcedSentinel/ReinforcedSentinel.asset",
+    "kind": "enemy",
+    "poise": 160,
+    "poiseRecoveryPerSecond": 12,
+    "poiseRecoveryTime": 4
+  },
+  {
+    "path": "Assets/Prefabs/Enemies/ReinforcedSentinel/ReinforcedSentinel_Blade.asset",
+    "kind": "enemy",
+    "poise": 160,
+    "poiseRecoveryPerSecond": 12,
+    "poiseRecoveryTime": 4
+  },
+  {
+    "path": "Assets/Prefabs/Enemies/TestEnemy/testenemy.asset",
+    "kind": "enemy",
+    "poise": 80,
+    "poiseRecoveryPerSecond": 8,
+    "poiseRecoveryTime": 3
+  },
+  {
+    "path": "Assets/Prefabs/Player/Warrior/SampleInventoryPlayer.asset",
+    "kind": "player",
+    "poise": 100,
+    "poiseRecoveryPerSecond": 10,
+    "poiseRecoveryTime": 3
+  },
+  {
+    "path": "Assets/Prefabs/Player/Warrior/TestPlayer1.asset",
+    "kind": "player",
+    "poise": 100,
+    "poiseRecoveryPerSecond": 10,
+    "poiseRecoveryTime": 3
+  }
+]

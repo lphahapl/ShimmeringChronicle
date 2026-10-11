@@ -1,0 +1,77 @@
+{
+  "assets": [
+    {
+      "id": "weapon_002_orthographic",
+      "path": "_candidates/weapon_002_orthographic/v1.png",
+      "iteration": 1,
+      "prompt_record": "prompts.md",
+      "generator": "built-in imagegen",
+      "size": [
+        1536,
+        1024
+      ],
+      "transparent": false,
+      "mechanical_validation": "checkimg.py passed size and alpha requirements",
+      "semantic_validation": "Five itemized criteria passed; see review.md",
+      "user_status": "image_approved; production_authorized; assets_exported; keqing_deferred"
+    },
+    {
+      "id": "weapon_003_orthographic",
+      "path": "_candidates/weapon_003_orthographic/v1.png",
+      "iteration": 1,
+      "prompt_record": "weapon_003_prompt.txt",
+      "generator": "built-in imagegen",
+      "size": [
+        1536,
+        1024
+      ],
+      "transparent": false,
+      "mechanical_validation": "checkimg.py passed size and alpha requirements",
+      "semantic_validation": "Five itemized criteria passed; see review.md",
+      "user_status": "image_approved; production_authorized; assets_exported; keqing_deferred"
+    },
+    {
+      "id": "weapon_004_orthographic",
+      "path": "_candidates/weapon_004_orthographic/v1.png",
+      "iteration": 1,
+      "prompt_record": "weapon_004_prompt.txt",
+      "generator": "built-in imagegen",
+      "size": [
+        1536,
+        1024
+      ],
+      "transparent": false,
+      "mechanical_validation": "checkimg.py passed size and alpha requirements",
+      "semantic_validation": "Five itemized criteria passed; see review.md",
+      "user_status": "image_approved; production_authorized; assets_exported; keqing_deferred"
+    },
+    {
+      "id": "enemy_weapon_001_orthographic",
+      "path": "_candidates/enemy_weapon_001_orthographic/v2.png",
+      "iteration": 2,
+      "prompt_record": "enemy_weapon_001_v2_prompt.txt",
+      "generator": "built-in imagegen",
+      "size": [
+        1536,
+        1024
+      ],
+      "transparent": false,
+      "mechanical_validation": "checkimg.py passed size and alpha requirements",
+      "semantic_validation": "Five itemized criteria passed; see review.md",
+      "user_status": "image_approved; production_authorized; assets_exported; keqing_deferred",
+      "history": [
+        {
+          "path": "_candidates/enemy_weapon_001_orthographic/v1.png",
+          "prompt_record": "enemy_weapon_001_prompt.txt",
+          "user_status": "rejected; requested chunky cubic shape fitting TestEnemy"
+        }
+      ]
+    }
+  ],
+  "weapon_effect_integration": "Embed inactive TipPoint/AttackEffect in weapon prefab; bind runtime WeaponData.eff to equipped child; animation events toggle visibility, no attack-time spawn/destroy",
+  "unarmed_audio": "Two generated WAVs imported by Unity and bound to WeaponSO.clip",
+  "production": "All four orthographic concepts approved; consolidated production_plan.md awaits user confirmation",
+  "production_plan": "production_plan.md",
+  "effects_audio_plan": "effects_audio_plan.md",
+  "production_scope": "Warrior and enemies only; Keqing deferred by user"
+}

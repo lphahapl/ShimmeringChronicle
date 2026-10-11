@@ -1,0 +1,68 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using UnityEditor;
+using UnityEngine;
+
+// Run against copies of the project configs, with original script .meta GUIDs.
+public static class PoiseConfigValidation
+{
+    public static void Run()
+    {
+        var results = new List<string>();
+        int exit = 0;
+        try
+        {
+            int players = 0, enemies = 0, weapons = 0, attacks = 0;
+            foreach (string guid in AssetDatabase.FindAssets("t:PlayerSO"))
+            {
+                string path = AssetDatabase.GUIDToAssetPath(guid);
+                var so = AssetDatabase.LoadAssetAtPath<PlayerSO>(path);
+                var data = so.CreateData();
+                if (so.poise <= 0f || so.poiseRecoveryPerSecond <= 0f || so.poiseRecoveryTime <= 0f ||
+                    data.poise != so.poise || data.poiseRecoveryPerSecond != so.poiseRecoveryPerSecond || data.poiseRecoveryTime != so.poiseRecoveryTime)
+                    throw new Exception("Invalid player config: " + path);
+                players++;
+                results.Add($"PASS {path}: {data.poise}, {data.poiseRecoveryPerSecond}/s, {data.poiseRecoveryTime}s");
+            }
+            foreach (string guid in AssetDatabase.FindAssets("t:EnemySO"))
+            {
+                string path = AssetDatabase.GUIDToAssetPath(guid);
+                var so = AssetDatabase.LoadAssetAtPath<EnemySO>(path);
+                var data = so.CreateData();
+                if (so.poise <= 0f || so.poiseRecoveryPerSecond <= 0f || so.poiseRecoveryTime <= 0f ||
+                    data.poise != so.poise || data.poiseRecoveryPerSecond != so.poiseRecoveryPerSecond || data.poiseRecoveryTime != so.poiseRecoveryTime)
+                    throw new Exception("Invalid enemy config: " + path);
+                enemies++;
+                results.Add($"PASS {path}: {data.poise}, {data.poiseRecoveryPerSecond}/s, {data.poiseRecoveryTime}s");
+            }
+            foreach (string guid in AssetDatabase.FindAssets("t:WeaponSO"))
+            {
+                string path = AssetDatabase.GUIDToAssetPath(guid);
+                var so = AssetDatabase.LoadAssetAtPath<WeaponSO>(path);
+                var data = so.CreateData();
+                var clone = (WeaponData)data.Clone();
+                if (data.combo.Count == 0 || data.combo.Count != so.combo.Count || clone.combo.Count != data.combo.Count)
+                    throw new Exception("Invalid combo: " + path);
+                foreach (var attack in data.combo)
+                {
+                    int i = attacks++;
+                    if (attack.poiseDamage <= 0f) throw new Exception("Missing poise damage: " + path + ": " + i);
+                }
+                for (int i = 0; i < data.combo.Count; i++)
+                    if (data.combo[i].poiseDamage != so.combo[i].poiseDamage || clone.combo[i].poiseDamage != data.combo[i].poiseDamage ||
+                        ReferenceEquals(data.combo[i], so.combo[i]) || ReferenceEquals(clone.combo[i], data.combo[i]))
+                        throw new Exception("Poise damage clone mismatch: " + path);
+                weapons++;
+                results.Add($"PASS {path}: all {data.combo.Count} attacks deserialize and clone poise damage");
+            }
+            if (players != 2 || enemies != 5 || weapons != 9 || attacks != 24)
+                throw new Exception($"Unexpected config counts: {players}, {enemies}, {weapons}, {attacks}");
+            results.Add($"ALL PASSED: {players} player configs, {enemies} enemy configs, {weapons} weapon configs, {attacks} attacks");
+        }
+        catch (Exception e) { results.Add("FAIL " + e); exit = 1; }
+        File.WriteAllLines("config-validation.txt", results);
+        foreach (var line in results) Debug.Log(line);
+        EditorApplication.Exit(exit);
+    }
+}

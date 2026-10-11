@@ -1,0 +1,5 @@
+PASS 362 exported files match recorded hashes
+PASS 292 asset GUID references resolve in this project and package cache
+PASS generated audio is mono 44.1 kHz
+PASS original Warrior and Keqing prefab hashes unchanged
+PASS no Keqing assets exported

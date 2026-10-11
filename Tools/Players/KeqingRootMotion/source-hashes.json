@@ -1,0 +1,17 @@
+{
+  "Assets/Prefabs/Player/KeqingRootMotion/Models/Source/刻晴.fbx": "8e50c5509a915904425faf77a341423083f191265e8bbbace66b12081b823f77",
+  "Assets/Prefabs/Player/KeqingRootMotion/Models/Source/刻晴.fbx.meta": "17a0481de697ced7eb30734fa1a9f7ac8949471a0d63587ad44ec7a13f80ad23",
+  "Assets/Prefabs/Weapon/weapon_001/Animations/1A.anim": "100ab086e953d2a8c71acbce85f604b6960914bac4bbc7cafdd845417e490b26",
+  "Assets/Prefabs/Weapon/weapon_001/Animations/2A.anim": "d84705d4ca9645e578e18d7c535e23cc429233ea56e8008a42092d7a3e993580",
+  "Assets/Prefabs/Weapon/weapon_001/Animations/3A.anim": "5ca5aabd89d5add5c3c2aa7bac13b579dc4a1d5c6cda828a2b73630e84e1d518",
+  "Assets/Prefabs/Player/Warrior/Animations/Dead1.anim": "8437d7a29ad37d5415e513a7ec3b2fed36c22c6f4a37a744440054109af8a9bc",
+  "Assets/Prefabs/Player/Warrior/Animations/HandingLayerZW.anim": "3a19ddd1f7ed83fb2719cc386ca9dd6db9f9c8b37eb3556a47854559b285a28d",
+  "Assets/Prefabs/Player/Warrior/Animations/Run.anim": "b75cdc6bb4499e3956b8ca2cd356a4435b54ae77384924aaf832b81d0d00faaf",
+  "Assets/Prefabs/Player/Warrior/Animations/Walk.anim": "f2794644bda9a470bc75e61d420005470246b966308236388dae8b516f166696",
+  "Assets/Prefabs/Player/Warrior/Animations/zw1 1.anim": "a3e6f33590c99e4124d28a03b7c561c5a973d3e1fe1405c24a616e323c13bbc9",
+  "Assets/Prefabs/Player/Warrior/Animations/zw2 1.anim": "6ceabd640756a44ef191e2cdd608937b442a21d15d9685dc62ff39a76a6beddd",
+  "Assets/Prefabs/Player/Warrior/Animations/zw3.anim": "50477ec52cc10423a9ca116d03dd7cc5d06406b3411a8ca31bc00266d3c8cae1",
+  "Assets/Prefabs/Player/Warrior/Animations/Character Warrior.controller": "9f23446b2c2b2719b4386980f8cc6d1eb19fa3ed9cd1408e98b9bb10ca9bf6c4",
+  "Assets/Prefabs/Player/Warrior/Animations/TEST.controller": "730c0c9dc2b6a9792fa27d8dff6dd5b5d28d177e5a41af7ccbad95a8ac2513a4",
+  "Assets/Prefabs/Player/Warrior/Animations/Body.controller": "cdb5856e0db1fc643d922c95ba9f5cde450ff1986e2c6d2df3980807837595e7"
+}

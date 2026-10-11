@@ -1,0 +1,11 @@
+PASS weapon_002 audio starts on enable, stops on hide, and starts again on reuse
+PASS weapon_003 audio starts on enable, stops on hide, and starts again on reuse
+PASS weapon_004 audio starts on enable, stops on hide, and starts again on reuse
+PASS EnemyWeapon_001 audio starts on enable, stops on hide, and starts again on reuse
+PASS weapon_001 audio starts on enable, stops on hide, and starts again on reuse
+PASS MossstoneBlade audio starts on enable, stops on hide, and starts again on reuse
+PASS ReinforcedBlade audio starts on enable, stops on hide, and starts again on reuse
+PASS FalconOath audio starts on enable, stops on hide, and starts again on reuse
+PASS MossstoneFists player/enemy events play the configured prefab AudioSource without SO audio fields
+PASS ReinforcedFists player/enemy events play the configured prefab AudioSource without SO audio fields
+ALL PASSED: actual Play Mode AudioSource lifecycle.

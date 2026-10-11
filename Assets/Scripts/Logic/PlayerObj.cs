@@ -26,6 +26,9 @@ public class PlayerObj : MonoBehaviour, IDamageable, IContainerOwner,ICanChangeH
     ItemContainer bag;
     ItemContainer quickBar;
     public CharacterTime hitStop;
+    public float poiseRecoveryPerSecond;
+    public float poise;
+    public float poiseRecoveryTime;
     public float dtFix => hitStop ? hitStop.DeltaTime : Time.deltaTime;
 
     public MissionSO t;
@@ -70,6 +73,9 @@ public class PlayerObj : MonoBehaviour, IDamageable, IContainerOwner,ICanChangeH
                     return null;
                 }
                 data = config.CreateData();
+                poise = data.poise;
+                poiseRecoveryPerSecond = data.poiseRecoveryPerSecond;
+                poiseRecoveryTime = data.poiseRecoveryTime;
             }
 
             return data;
@@ -175,11 +181,22 @@ public class PlayerObj : MonoBehaviour, IDamageable, IContainerOwner,ICanChangeH
 
     public void TakeDamage(float damage, GameObject attacker)
     {
-        if (damage <= 0f) return;
+        TakeDamage(damage, attacker, 0f);
+    }
+
+    public void TakeDamage(float damage, GameObject attacker, float poiseDamage)
+    {
+        damage = Mathf.Max(0f, damage);
+        poiseDamage = Mathf.Max(0f, poiseDamage);
+        if (damage <= 0f && poiseDamage <= 0f) return;
         if (IsDead) return;
 
         var d = Data;
         if (d == null) return;
+
+        // 先扣韧再通知受击，破韧的这一击即可打断动作。
+        poise = Mathf.Max(0f, poise - poiseDamage);
+        poiseRecoveryTime = d.poiseRecoveryTime;
 
         d.hp = Mathf.Max(0f, d.hp - damage);    // 减伤只需要下界保底
 
@@ -193,6 +210,18 @@ public class PlayerObj : MonoBehaviour, IDamageable, IContainerOwner,ICanChangeH
             this.Publish(GameEvents.Died, gameObject);
         }
     }
+
+    void Update() => RecoveryPoise(dtFix);
+
+    private void RecoveryPoise(float deltaTime)
+    {
+        if (IsDead || data == null) return;
+        poise = Mathf.Min(data.poise, poise + poiseRecoveryPerSecond * dtFix);
+        poise = Mathf.Clamp(poise,0, data.poise);
+        poiseRecoveryTime = Mathf.Max(0f, poiseRecoveryTime - dtFix);
+        if (poiseRecoveryTime <= 0f) poise = data.poise;
+    }
+
     [Min(0.1f)] public float interactionRange = 2f;
     public LayerMask interactionMask;
     readonly Collider[] interactionHits = new Collider[64];
@@ -333,10 +362,11 @@ public class PlayerObj : MonoBehaviour, IDamageable, IContainerOwner,ICanChangeH
         if (handPos == null || itemData.prefab == null) return false;
 
         HandingItem = Instantiate(itemData.prefab, handPos, false);
-        if(itemData is WeaponData)
+        if(itemData is WeaponData equippedWeapon)
         {
             foreach (var weapon in HandingItem.GetComponentsInChildren<WeaponObj>())
             {
+                if (weapon.effPos != null) weapon.effPos.gameObject.SetActive(false);
                 weapon.InitWeapon(gameObject);
                 weapon.weaponData = Data.GetWeaponData();
             }
@@ -344,5 +374,28 @@ public class PlayerObj : MonoBehaviour, IDamageable, IContainerOwner,ICanChangeH
         }
 
         return true;
+    }
+    public void PlayHandingEffORAudioClip()
+    {
+        if (HandingItem == null) return;
+        var weapon = HandingItem.GetComponentInChildren<WeaponObj>(true);
+        if (weapon == null) return;
+        if (weapon.effPos != null)
+        {
+            foreach (var trail in weapon.effPos.GetComponentsInChildren<TrailRenderer>(true)) trail.Clear();
+            weapon.effPos.gameObject.SetActive(true);
+        }
+        else if (weapon.TryGetComponent<AudioSource>(out var audio))
+        {
+            audio.Play();
+        }
+    }
+
+    public void EndEff()
+    {
+        if (HandingItem == null) return;
+        var weapon = HandingItem.GetComponentInChildren<WeaponObj>(true);
+        if (weapon != null && weapon.effPos != null)
+            weapon.effPos.gameObject.SetActive(false);
     }
 }

@@ -1,0 +1,14 @@
+PASS Attack1: wrist bend L=34.5 R=38.0 degrees; wrist local speed L=517 R=455 deg/s; mesh floor minimum=0.0000m; turn support slip=0.0000m; sword tip minimum=0.184m
+PASS Attack2: wrist bend L=17.4 R=38.0 degrees; wrist local speed L=288 R=518 deg/s; mesh floor minimum=0.0000m; turn support slip=0.0000m; sword tip minimum=0.175m
+PASS Attack3: wrist bend L=28.5 R=38.0 degrees; wrist local speed L=547 R=550 deg/s; mesh floor minimum=0.0000m; turn support slip=0.0000m; sword tip minimum=0.184m
+PASS Idle: wrist bend L=16.4 R=29.7 degrees; wrist local speed L=0 R=0 deg/s; mesh floor minimum=0.0000m; turn support slip=0.0000m; sword tip minimum=0.182m
+PASS Run: wrist bend L=29.3 R=27.8 degrees; wrist local speed L=103 R=114 deg/s; mesh floor minimum=0.0000m; turn support slip=0.0000m; sword tip minimum=0.132m
+PASS RunStart: wrist bend L=25.5 R=29.7 degrees; wrist local speed L=81 R=119 deg/s; mesh floor minimum=0.0000m; turn support slip=0.0000m; sword tip minimum=0.133m
+PASS RunStop: wrist bend L=22.0 R=29.0 degrees; wrist local speed L=89 R=90 deg/s; mesh floor minimum=0.0000m; turn support slip=0.0000m; sword tip minimum=0.188m
+PASS RunStopRight: wrist bend L=24.0 R=29.4 degrees; wrist local speed L=70 R=138 deg/s; mesh floor minimum=0.0000m; turn support slip=0.0000m; sword tip minimum=0.160m
+PASS TurnLeft: wrist bend L=16.4 R=29.7 degrees; wrist local speed L=0 R=0 deg/s; mesh floor minimum=0.0000m; turn support slip=0.0007m; sword tip minimum=0.169m
+PASS TurnRight: wrist bend L=16.4 R=29.7 degrees; wrist local speed L=0 R=0 deg/s; mesh floor minimum=0.0000m; turn support slip=0.0009m; sword tip minimum=0.169m
+PASS Walk: wrist bend L=17.0 R=30.0 degrees; wrist local speed L=74 R=61 deg/s; mesh floor minimum=0.0000m; turn support slip=0.0000m; sword tip minimum=0.398m
+PASS WalkStart: wrist bend L=16.4 R=29.7 degrees; wrist local speed L=75 R=91 deg/s; mesh floor minimum=0.0000m; turn support slip=0.0000m; sword tip minimum=0.187m
+PASS WalkStop: wrist bend L=16.0 R=30.0 degrees; wrist local speed L=64 R=103 deg/s; mesh floor minimum=0.0000m; turn support slip=0.0000m; sword tip minimum=0.193m
+PASS WalkStopRight: wrist bend L=16.4 R=29.2 degrees; wrist local speed L=77 R=128 deg/s; mesh floor minimum=0.0000m; turn support slip=0.0000m; sword tip minimum=0.193m

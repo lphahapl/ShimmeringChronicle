@@ -1,0 +1,181 @@
+PASS weapon_002 prefab imports
+PASS weapon_002 has a default-off embedded tip effect
+PASS weapon_002 has one-shot spatial audio
+PASS weapon_002 has a short trail lifetime
+PASS weapon_002 WeaponObj.effPos references its embedded effect transform
+PASS weapon_002 config points to its weapon prefab
+PASS weapon_002 creates independent attack data
+PASS weapon_002 mesh material reference resolves
+PASS weapon_002 mesh material reference resolves
+PASS weapon_002 mesh material reference resolves
+PASS weapon_002 mesh material reference resolves
+PASS weapon_002 mesh material reference resolves
+PASS weapon_003 prefab imports
+PASS weapon_003 has a default-off embedded tip effect
+PASS weapon_003 has one-shot spatial audio
+PASS weapon_003 has a short trail lifetime
+PASS weapon_003 WeaponObj.effPos references its embedded effect transform
+PASS weapon_003 config points to its weapon prefab
+PASS weapon_003 creates independent attack data
+PASS weapon_003 mesh material reference resolves
+PASS weapon_003 mesh material reference resolves
+PASS weapon_003 mesh material reference resolves
+PASS weapon_004 prefab imports
+PASS weapon_004 has a default-off embedded tip effect
+PASS weapon_004 has one-shot spatial audio
+PASS weapon_004 has a short trail lifetime
+PASS weapon_004 WeaponObj.effPos references its embedded effect transform
+PASS weapon_004 config points to its weapon prefab
+PASS weapon_004 creates independent attack data
+PASS weapon_004 mesh material reference resolves
+PASS weapon_004 mesh material reference resolves
+PASS weapon_004 mesh material reference resolves
+PASS weapon_004 mesh material reference resolves
+PASS EnemyWeapon_001 prefab imports
+PASS EnemyWeapon_001 has a default-off embedded tip effect
+PASS EnemyWeapon_001 has one-shot spatial audio
+PASS EnemyWeapon_001 has a short trail lifetime
+PASS EnemyWeapon_001 WeaponObj.effPos references its embedded effect transform
+PASS EnemyWeapon_001 config points to its weapon prefab
+PASS EnemyWeapon_001 creates independent attack data
+PASS EnemyWeapon_001 mesh material reference resolves
+PASS EnemyWeapon_001 mesh material reference resolves
+PASS EnemyWeapon_001 mesh material reference resolves
+PASS EnemyWeapon_001 mesh material reference resolves
+PASS EnemyWeapon_001 mesh material reference resolves
+PASS weapon_001 prefab imports
+PASS weapon_001 has a default-off embedded tip effect
+PASS weapon_001 has one-shot spatial audio
+PASS weapon_001 has a short trail lifetime
+PASS weapon_001 WeaponObj.effPos references its embedded effect transform
+PASS weapon_001 config points to its weapon prefab
+PASS weapon_001 creates independent attack data
+PASS weapon_001 mesh material reference resolves
+PASS MossstoneBlade prefab imports
+PASS MossstoneBlade has a default-off embedded tip effect
+PASS MossstoneBlade has one-shot spatial audio
+PASS MossstoneBlade has a short trail lifetime
+PASS MossstoneBlade WeaponObj.effPos references its embedded effect transform
+PASS MossstoneBlade config points to its weapon prefab
+PASS MossstoneBlade creates independent attack data
+PASS MossstoneBlade mesh material reference resolves
+PASS MossstoneBlade mesh material reference resolves
+PASS MossstoneBlade mesh material reference resolves
+PASS MossstoneBlade mesh material reference resolves
+PASS ReinforcedBlade prefab imports
+PASS ReinforcedBlade has a default-off embedded tip effect
+PASS ReinforcedBlade has one-shot spatial audio
+PASS ReinforcedBlade has a short trail lifetime
+PASS ReinforcedBlade WeaponObj.effPos references its embedded effect transform
+PASS ReinforcedBlade config points to its weapon prefab
+PASS ReinforcedBlade creates independent attack data
+PASS ReinforcedBlade mesh material reference resolves
+PASS ReinforcedBlade mesh material reference resolves
+PASS ReinforcedBlade mesh material reference resolves
+PASS ReinforcedBlade mesh material reference resolves
+PASS FalconOath prefab imports
+PASS FalconOath has a default-off embedded tip effect
+PASS FalconOath has one-shot spatial audio
+PASS FalconOath has a short trail lifetime
+PASS FalconOath WeaponObj.effPos references its embedded effect transform
+PASS FalconOath mesh material reference resolves
+PASS FalconOath mesh material reference resolves
+PASS FalconOath mesh material reference resolves
+PASS FalconOath mesh material reference resolves
+PASS FalconOath mesh material reference resolves
+PASS FalconOath mesh material reference resolves
+PASS MossstoneFists uses its prefab AudioSource without an effect
+PASS ReinforcedFists uses its prefab AudioSource without an effect
+PASS two players read separate prefab instance effect positions
+PASS opening one effect clears old trail positions and leaves the other owner off
+PASS player animation end hides its effect
+PASS interrupting the player combo hides an active effect
+PASS an unassigned WeaponObj.effPos does not auto-find or enable a child effect
+PASS enemy animation event uses its held prefab component, separate from other owners
+PASS enemy recycling closes its effect
+PASS weapon_002 has a Warrior controller
+PASS weapon_002 Idle exists
+PASS weapon_002 Idle blade stays above the floor (minimum 2.440 m)
+PASS weapon_002 Walk exists
+PASS weapon_002 Walk blade stays above the floor (minimum 2.440 m)
+PASS weapon_002 Run exists
+PASS weapon_002 Run blade stays above the floor (minimum 2.439 m)
+PASS weapon_002 Attack1 exists
+PASS weapon_002 Attack1 effect brackets the indexed hit
+PASS weapon_002 Attack1 blade stays above the floor (minimum 2.024 m)
+PASS weapon_002 Attack2 exists
+PASS weapon_002 Attack2 effect brackets the indexed hit
+PASS weapon_002 Attack2 blade stays above the floor (minimum 2.188 m)
+PASS weapon_002 Attack3 exists
+PASS weapon_002 Attack3 effect brackets the indexed hit
+PASS weapon_002 Attack3 blade stays above the floor (minimum 1.135 m)
+PASS weapon_002 actual Attack_01 state uses the new first attack
+PASS weapon_002 holding layer leaves the attacking wrist free
+PASS weapon_003 has a Warrior controller
+PASS weapon_003 Idle exists
+PASS weapon_003 Idle blade stays above the floor (minimum 2.540 m)
+PASS weapon_003 Walk exists
+PASS weapon_003 Walk blade stays above the floor (minimum 2.540 m)
+PASS weapon_003 Run exists
+PASS weapon_003 Run blade stays above the floor (minimum 2.540 m)
+PASS weapon_003 Attack1 exists
+PASS weapon_003 Attack1 effect brackets the indexed hit
+PASS weapon_003 Attack1 blade stays above the floor (minimum 2.049 m)
+PASS weapon_003 Attack2 exists
+PASS weapon_003 Attack2 effect brackets the indexed hit
+PASS weapon_003 Attack2 blade stays above the floor (minimum 2.231 m)
+PASS weapon_003 Attack3 exists
+PASS weapon_003 Attack3 effect brackets the indexed hit
+PASS weapon_003 Attack3 blade stays above the floor (minimum 1.052 m)
+PASS weapon_003 actual Attack_01 state uses the new first attack
+PASS weapon_003 holding layer leaves the attacking wrist free
+PASS weapon_004 has a Warrior controller
+PASS weapon_004 Idle exists
+PASS weapon_004 Idle blade stays above the floor (minimum 2.536 m)
+PASS weapon_004 Idle left hand stays at the lower grip (maximum gap 0.000 m)
+PASS weapon_004 Walk exists
+PASS weapon_004 Walk blade stays above the floor (minimum 2.536 m)
+PASS weapon_004 Walk left hand stays at the lower grip (maximum gap 0.000 m)
+PASS weapon_004 Run exists
+PASS weapon_004 Run blade stays above the floor (minimum 2.536 m)
+PASS weapon_004 Run left hand stays at the lower grip (maximum gap 0.000 m)
+PASS weapon_004 Attack1 exists
+PASS weapon_004 Attack1 effect brackets the indexed hit
+PASS weapon_004 Attack1 blade stays above the floor (minimum 2.120 m)
+PASS weapon_004 Attack1 left hand stays at the lower grip (maximum gap 0.009 m)
+PASS weapon_004 Attack2 exists
+PASS weapon_004 Attack2 effect brackets the indexed hit
+PASS weapon_004 Attack2 blade stays above the floor (minimum 2.233 m)
+PASS weapon_004 Attack2 left hand stays at the lower grip (maximum gap 0.000 m)
+PASS weapon_004 Attack3 exists
+PASS weapon_004 Attack3 effect brackets the indexed hit
+PASS weapon_004 Attack3 blade stays above the floor (minimum 1.086 m)
+PASS weapon_004 Attack3 left hand stays at the lower grip (maximum gap 0.016 m)
+PASS weapon_004 actual Attack_01 state uses the new first attack
+PASS weapon_004 holding layer leaves the attacking wrist free
+PASS CubeHeavyAttack1 has an effect or audio event
+PASS CubeHeavyAttack1 events are inside the clip
+PASS CubeHeavyAttack2 has an effect or audio event
+PASS CubeHeavyAttack2 events are inside the clip
+PASS Blade_Attack01_Charge has an effect or audio event
+PASS Blade_Attack01_Charge events are inside the clip
+PASS Blade_Attack02_Sweep has an effect or audio event
+PASS Blade_Attack02_Sweep events are inside the clip
+PASS Blade_Attack03_Cleave has an effect or audio event
+PASS Blade_Attack03_Cleave events are inside the clip
+PASS ReinforcedBlade_Attack01_Charge has an effect or audio event
+PASS ReinforcedBlade_Attack01_Charge events are inside the clip
+PASS ReinforcedBlade_Attack02_Sweep has an effect or audio event
+PASS ReinforcedBlade_Attack02_Sweep events are inside the clip
+PASS ReinforcedBlade_Attack03_GroundSlap has an effect or audio event
+PASS ReinforcedBlade_Attack03_GroundSlap events are inside the clip
+PASS Fists_Attack01_Punch has an effect or audio event
+PASS Fists_Attack01_Punch events are inside the clip
+PASS Fists_Attack02_Slam has an effect or audio event
+PASS Fists_Attack02_Slam events are inside the clip
+PASS ReinforcedFists_Attack01_Punch has an effect or audio event
+PASS ReinforcedFists_Attack01_Punch events are inside the clip
+PASS ReinforcedFists_Attack02_GroundSlap has an effect or audio event
+PASS ReinforcedFists_Attack02_GroundSlap events are inside the clip
+PASS cube enemy attack animates its visual body and hand without moving the navigation root
+ALL PASSED

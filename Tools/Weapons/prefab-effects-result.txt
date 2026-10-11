@@ -1,0 +1,1 @@
+ALL PASSED: WeaponObj.effPos bound on eight prefabs; AudioSource configured on both unarmed prefabs. SO/data have no effect/audio fields.

@@ -36,8 +36,8 @@ Walk 为 0.7 米/秒，Chase 为 1.6 米/秒。生命值 260。仍使用现有 E
 - 身体预制体：`Assets/Prefabs/Enemies/ReinforcedSentinel/ReinforcedSentinel.prefab`。
 - 默认空手配置：`ReinforcedSentinel.asset`，ID `Enemy_ReinforcedSentinel`。
 - 持刀配置：`ReinforcedSentinel_Blade.asset`，ID `Enemy_ReinforcedSentinel_Blade`。
-- 空手武器：`Assets/Prefabs/Items/ReinforcedFists`，ID `enemy_reinforced_fists`。
-- 长石刀：`Assets/Prefabs/Items/ReinforcedBlade`，ID `enemy_reinforced_blade`。
+- 空手武器：`Assets/Prefabs/Weapon/ReinforcedFists`，ID `enemy_reinforced_fists`。
+- 长石刀：`Assets/Prefabs/Weapon/ReinforcedBlade`，ID `enemy_reinforced_blade`。
 
 两套 EnemySO 共用强化守卫身体，默认武器不同。空手武器是带 WeaponObj 的空物体，有独立 WeaponData 和二连击配置。四个配置保留各自 GUID，Addressables 路径已更新，EnemySO / ItemSO 标签保留。
 
@@ -52,12 +52,12 @@ EnemyManager.Instance.SpawnEnemy("Enemy_ReinforcedSentinel_Blade", position, rot
 
 ## 检查与预览
 
-`Tools/Enemies/MossstoneSentinelV2/Previews/fists-two-hit.gif` 与 `blade-three-hit.gif` 是固定镜头的 Unity 原生模型完整连招预览，地面网格保持静止，便于观察根位移。`Mossstone-left-Reinforced-right.png` 左侧是原苔石守卫，右侧是强化守卫。PNG 展示蓄力、命中和后摇关键姿态。
+过程预览已在文件夹清理中移除，使用预制体或动画窗口查看最终动作。
 
 隔离 Unity 工程使用本项目真实 EnemyAI / EnemyObj 验证移动、两套连招事件顺序、命中后的攻击锁定、整套间隔、武器数据连接、死亡回收与重生。测试副本只移除了四条无用的 STP/ShaderGraph using，主工程游戏脚本没有修改。
 
 按 60 FPS 及所有事件/关键帧采样，检查手、前臂、刀身与头部/躯干的穿模，脚底与刀身的地面高度。额外检查砸地命中时的小臂高度、肘角、水平姿态、前伸距离、全程不侧身与小臂/手不穿地。肩甲/关节的连接处不属于此检测范围。平地测试通过；实际坡面和墙边效果仍需场景试玩。
 
-`reinforced-contact-result.txt` 记录小臂触地、弯肘与左拳前伸数据；`v2-play-result.txt` 记录 Play Mode 检查；`v1-preserved-result.txt` 记录原苔石守卫 100 个资源和 meta 文件的保留情况：99 个文件与前次快照一致，另一个控制器的外部编辑已原样保留。工具目录保留原 V2 命名用于追溯生成过程，不参与运行时编译。
+过程日志已清理；保留 `Tools/Enemies/ReinforcedSentinel` 中的生成和验证脚本，不参与运行时编译。
 
 本次错脚与位移修改只更新五段攻击动画和强化守卫待机动画，保留所有 GUID；预制体、SO 和主工程脚本保持原样。`stance-preserved-result.txt` 对照本次修改前的快照检查旧敌人全部 100 个资源/meta；`reinforced-stance-result.txt` 记录脚步、根位移和地面检查，`v2-play-timing.txt` 记录实际连招的根位移。

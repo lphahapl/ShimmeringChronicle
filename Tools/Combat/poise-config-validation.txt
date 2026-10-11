@@ -1,0 +1,17 @@
+PASS Assets/Prefabs/Player/Warrior/SampleInventoryPlayer.asset: 100, 10/s, 3s
+PASS Assets/Prefabs/Player/Warrior/TestPlayer1.asset: 100, 10/s, 3s
+PASS Assets/Prefabs/Enemies/TestEnemy/testenemy.asset: 80, 8/s, 3s
+PASS Assets/Prefabs/Enemies/MossstoneSentinel/MossstoneSentinel.asset: 120, 10/s, 4s
+PASS Assets/Prefabs/Enemies/MossstoneSentinel/MossstoneSentinel_Blade.asset: 120, 10/s, 4s
+PASS Assets/Prefabs/Enemies/ReinforcedSentinel/ReinforcedSentinel.asset: 160, 12/s, 4s
+PASS Assets/Prefabs/Enemies/ReinforcedSentinel/ReinforcedSentinel_Blade.asset: 160, 12/s, 4s
+PASS Assets/Prefabs/Weapon/EnemyWeapon_001/EnemyWeapon_001.asset: all 2 attacks deserialize and clone poise damage
+PASS Assets/Prefabs/Weapon/MossstoneBlade/MossstoneBlade.asset: all 3 attacks deserialize and clone poise damage
+PASS Assets/Prefabs/Weapon/MossstoneFists/MossstoneFists.asset: all 2 attacks deserialize and clone poise damage
+PASS Assets/Prefabs/Weapon/ReinforcedBlade/ReinforcedBlade.asset: all 3 attacks deserialize and clone poise damage
+PASS Assets/Prefabs/Weapon/ReinforcedFists/ReinforcedFists.asset: all 2 attacks deserialize and clone poise damage
+PASS Assets/Prefabs/Weapon/weapon_001/weapon_001.asset: all 3 attacks deserialize and clone poise damage
+PASS Assets/Prefabs/Weapon/weapon_002/weapon_002.asset: all 3 attacks deserialize and clone poise damage
+PASS Assets/Prefabs/Weapon/weapon_003/weapon_003.asset: all 3 attacks deserialize and clone poise damage
+PASS Assets/Prefabs/Weapon/weapon_004/weapon_004.asset: all 3 attacks deserialize and clone poise damage
+ALL PASSED: 2 player configs, 5 enemy configs, 9 weapon configs, 24 attacks

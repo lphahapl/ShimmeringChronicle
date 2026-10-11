@@ -8,8 +8,8 @@ using UnityEngine;
 [InitializeOnLoad]
 public static class FalconOathAssetBuilder
 {
-    const string Folder = "Assets/Art/Weapons/FalconOath";
-    const string ModelPath = Folder + "/FalconOath.obj";
+    const string Folder = "Assets/Prefabs/Weapon/FalconOath";
+    const string ModelPath = Folder + "/Models/FalconOath.obj";
     const string PrefabPath = Folder + "/FalconOath.prefab";
     static FalconOathAssetBuilder() { EditorApplication.delayCall += CreateIfMissing; }
     static void CreateIfMissing()
@@ -39,7 +39,7 @@ public static class FalconOathAssetBuilder
         var materials = new Material[names.Length];
         for (int i=0;i<names.Length;i++)
         {
-            string path = Folder + "/" + names[i] + ".mat";
+            string path = Folder + "/Materials/" + names[i] + ".mat";
             materials[i] = AssetDatabase.LoadAssetAtPath<Material>(path);
             if (!materials[i])
             {

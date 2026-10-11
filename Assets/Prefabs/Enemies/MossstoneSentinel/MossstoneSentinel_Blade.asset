@@ -22,6 +22,9 @@ MonoBehaviour:
   type: 0
   chaseSpeed: 1.6
   turnSpeed: 180
+  poise: 70
+  poiseRecoveryPerSecond: 10
+  poiseRecoveryTime: 4
   chaseDistance: 18
   hitStun: 0.65
   defaultWeaponSO: {fileID: 11400000, guid: dc4ccabadb3a5864ebb29bfba3bec31f, type: 2}

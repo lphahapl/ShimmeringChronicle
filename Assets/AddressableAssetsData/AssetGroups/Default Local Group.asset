@@ -16,7 +16,7 @@ MonoBehaviour:
   m_GUID: 95c00f75c86c50a4f9cbb89ea436824e
   m_SerializeEntries:
   - m_GUID: 03cd9ea3cdeb43b3b175856a7af78be2
-    m_Address: Assets/Configs/ItemSO/test_supply.asset
+    m_Address: Assets/Prefabs/Item/test_supply/test_supply.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - ItemSO
@@ -28,7 +28,7 @@ MonoBehaviour:
     - EnemySO
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1c83e6bd1ea158840ba53f958f9572d0
-    m_Address: Assets/Configs/EnemySO/testenemy.asset
+    m_Address: Assets/Prefabs/Enemies/TestEnemy/testenemy.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - EnemySO
@@ -40,7 +40,7 @@ MonoBehaviour:
     - EnemySO
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2437451df2784a6390dc6893d82e9287
-    m_Address: Assets/Configs/ItemSO/item_001.asset
+    m_Address: Assets/Prefabs/Item/item_001/item_001.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - ItemSO
@@ -52,7 +52,7 @@ MonoBehaviour:
     - EnemySO
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 495d61b51610d1540b03df357bf6cf8f
-    m_Address: Assets/Configs/ItemSO/weapon_001.asset
+    m_Address: Assets/Prefabs/Weapon/weapon_001/weapon_001.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - ItemSO
@@ -64,19 +64,19 @@ MonoBehaviour:
     - EnemySO
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6ccdc7195e73417d85cb878e3632048e
-    m_Address: Assets/Configs/ItemSO/test_quest_crystal.asset
+    m_Address: Assets/Prefabs/Item/test_quest_crystal/test_quest_crystal.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - ItemSO
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6d3c2834502946842a203ab15b9b4ebd
-    m_Address: Assets/Prefabs/Items/ReinforcedFists/ReinforcedFists.asset
+    m_Address: Assets/Prefabs/Weapon/ReinforcedFists/ReinforcedFists.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - ItemSO
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8274f4365b1c4b9a97c09bc971a1171e
-    m_Address: Assets/Configs/ItemSO/item_002.asset
+    m_Address: Assets/Prefabs/Item/item_002/item_002.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - ItemSO
@@ -88,25 +88,25 @@ MonoBehaviour:
     - MissionSO
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 98f42f4202324f9cb0418e6dc74c0902
-    m_Address: Assets/Configs/ItemSO/test_ore.asset
+    m_Address: Assets/Prefabs/Item/test_ore/test_ore.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - ItemSO
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b2a53e5d8996cec4ab1f5b43a6cfe4ce
-    m_Address: Assets/Prefabs/Items/MossstoneFists/MossstoneFists.asset
+    m_Address: Assets/Prefabs/Weapon/MossstoneFists/MossstoneFists.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - ItemSO
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b2fd1b7fe042753479ff0a872f8ea836
-    m_Address: Assets/Prefabs/Items/ReinforcedBlade/ReinforcedBlade.asset
+    m_Address: Assets/Prefabs/Weapon/ReinforcedBlade/ReinforcedBlade.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - ItemSO
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: bcd9ba2f58c94abb93b8e17bc5a4f704
-    m_Address: Assets/Configs/ItemSO/test_potion.asset
+    m_Address: Assets/Prefabs/Item/test_potion/test_potion.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - ItemSO
@@ -118,37 +118,37 @@ MonoBehaviour:
     - MissionSO
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d5d0d11aca224c59bcfabd865586a856
-    m_Address: Assets/Configs/ItemSO/weapon_002.asset
+    m_Address: Assets/Prefabs/Weapon/weapon_002/weapon_002.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - ItemSO
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: dc4ccabadb3a5864ebb29bfba3bec31f
-    m_Address: Assets/Prefabs/Items/MossstoneBlade/MossstoneBlade.asset
+    m_Address: Assets/Prefabs/Weapon/MossstoneBlade/MossstoneBlade.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - ItemSO
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e01407d1156e47ac8c642000254e8256
-    m_Address: Assets/Configs/ItemSO/weapon_003.asset
+    m_Address: Assets/Prefabs/Weapon/weapon_003/weapon_003.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - ItemSO
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e388228327f94c79ae60e2c8287eb085
-    m_Address: Assets/Configs/ItemSO/test_herb.asset
+    m_Address: Assets/Prefabs/Item/test_herb/test_herb.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - ItemSO
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f7f0d5ed58cd4adab16767cb5c2f8bac
-    m_Address: Assets/Configs/ItemSO/weapon_004.asset
+    m_Address: Assets/Prefabs/Weapon/weapon_004/weapon_004.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - ItemSO
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: fce45f032de246fa8c207f4f6f19f68a
-    m_Address: Assets/Configs/ItemSO/item_003.asset
+    m_Address: Assets/Prefabs/Item/item_003/item_003.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - ItemSO
