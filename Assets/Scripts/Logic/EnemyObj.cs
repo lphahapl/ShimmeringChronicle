@@ -223,8 +223,9 @@ public class EnemyObj : MonoBehaviour,IDamageable
     {
         //自然恢复
         poise += poiseRecoveryPerSecond * dtFix;
+        poise = Mathf.Clamp(poise, 0, data.poise);
         //恢复倒计时
-        poiseRecoveryTime-=dtFix;
+        poiseRecoveryTime -=dtFix;
         if (poiseRecoveryTime <= 0 )
         {
             poise = data.poise;

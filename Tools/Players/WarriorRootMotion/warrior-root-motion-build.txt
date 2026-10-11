@@ -1,0 +1,23 @@
+Walk_RootMotion stance-matched 2.447 m/s, cycle=2.365 m
+Run_RootMotion stance-matched 4.723 m/s, cycle=3.621 m
+Common Attack_03 advance=0.36 m; hits=1
+Common Attack_02 advance=0.26 m; hits=1
+Common Attack_01 advance=0.22 m; hits=1
+weapon_001 Attack_03 advance=0.6 m; hits=3
+weapon_001 Attack_02 advance=0.4 m; hits=2
+Run_RootMotion stance-matched 4.622 m/s, cycle=3.543 m
+weapon_002 Attack_03 advance=0.36 m; hits=1
+Walk_RootMotion stance-matched 2.447 m/s, cycle=2.365 m
+weapon_002 Attack_01 advance=0.22 m; hits=1
+weapon_002 Attack_02 advance=0.26 m; hits=1
+Run_RootMotion stance-matched 4.622 m/s, cycle=3.543 m
+weapon_003 Attack_03 advance=0.42 m; hits=1
+Walk_RootMotion stance-matched 2.447 m/s, cycle=2.365 m
+weapon_003 Attack_01 advance=0.26 m; hits=1
+weapon_003 Attack_02 advance=0.3 m; hits=1
+Run_RootMotion stance-matched 4.622 m/s, cycle=3.543 m
+weapon_004 Attack_03 advance=0.4 m; hits=1
+Walk_RootMotion stance-matched 2.447 m/s, cycle=2.365 m
+weapon_004 Attack_01 advance=0.2 m; hits=1
+weapon_004 Attack_02 advance=0.24 m; hits=1
+PASS copied 32 clips, 8 controllers, one independent Warrior prefab; originals read only.

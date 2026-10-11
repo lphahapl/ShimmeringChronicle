@@ -178,6 +178,7 @@ public class PlayerController : MonoBehaviour
         }
         RuntimeAnimatorController controller = weapon?.overrideController;
         if (!controller) controller = defaultAnimatorController;
+        controller = ResolveAnimatorController(controller);
         if (animator.runtimeAnimatorController == controller) return;
 
         comboIndex = 0;
@@ -313,7 +314,7 @@ public class PlayerController : MonoBehaviour
         if (pendingAttackIndex >= 0 || animator.IsInTransition(0)) return;
         int current = AttackIndex(animator.GetCurrentAnimatorStateInfo(0).shortNameHash);
         int next = current + 1;
-        if (current < 0 ) return;
+        if (current < 0 && !IsLocomotionState()) return;
         if (next >= ComboCount) return;
         comboWeapon = data.GetWeaponData();
         pendingAttackIndex = next;
@@ -392,6 +393,7 @@ public class PlayerController : MonoBehaviour
                    && !isTalking
                   
                    && moveDir.sqrMagnitude > 0.0001f;
+      
         animator.SetBool(IsWalkingHash, moving);
         animator.SetBool(IsRunningHash, moving && wantsRun);
 
@@ -415,6 +417,16 @@ public class PlayerController : MonoBehaviour
         Vector3 velocity = (moving ? moveDir * speed : Vector3.zero)
                          + Vector3.up * verticalVelocity;
 
+        MoveCharacter(velocity, dt);
+    }
+
+    protected virtual RuntimeAnimatorController ResolveAnimatorController(RuntimeAnimatorController controller)
+    {
+        return controller;
+    }
+
+    protected virtual void MoveCharacter(Vector3 velocity, float dt)
+    {
         characterController.Move(velocity * dt);
     }
 

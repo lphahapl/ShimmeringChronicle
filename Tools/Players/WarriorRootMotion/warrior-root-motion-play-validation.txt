@@ -1,0 +1,14 @@
+PASS copied player initializes inherited controller, player data, Animator and CharacterController
+PASS weapon switching resolves Character Warrior to its copied controller
+PASS weapon switching resolves sword to its copied controller
+PASS weapon switching resolves weapon_002_Warrior to its copied controller
+PASS weapon switching resolves weapon_003_Warrior to its copied controller
+PASS weapon switching resolves weapon_004_Warrior to its copied controller
+PASS root-motion player ignores the legacy horizontal velocity, avoiding double movement
+PASS OnAnimatorMove applies the root delta once via CharacterController: actual=2.413 animation=2.413 m
+PASS root-motion player stops at colliders instead of crossing the wall
+PASS dialogue blocks root displacement
+PASS CharacterTime freeze also stops root displacement
+PASS gravity is still handled through CharacterController ground collision
+PASS jump root moves the collision body upward and lands on the ground: peak=0.729 m
+ALL PASSED: actual Play Mode initialization, mapping, root-motion application, collision, dialogue, hit-stop and gravity.

@@ -1,0 +1,184 @@
+Avatar human=False valid=True
+CONTROLLER Assets/Prefabs/Player/Warrior/Animations/Character Warrior.controller
+CLIP Idle 1.966667 Assets/Prefabs/Player/Warrior/Animations/Warrior@Idle.FBX root=False
+CLIP Walk 0.9666666 Assets/Prefabs/Player/Warrior/Animations/Walk.anim root=False
+  0 left=(-0.144, 0.197, 0.481) right=(0.170, 0.268, -0.557) actor=(0.000, 0.000, 0.000)
+  1 left=(-0.149, 0.186, 0.355) right=(0.166, 0.326, -0.444) actor=(0.000, 0.000, 0.000)
+  2 left=(-0.152, 0.186, 0.108) right=(0.163, 0.421, -0.184) actor=(0.000, 0.000, 0.000)
+  3 left=(-0.157, 0.187, -0.132) right=(0.156, 0.470, 0.064) actor=(0.000, 0.000, 0.000)
+  4 left=(-0.164, 0.220, -0.349) right=(0.150, 0.425, 0.256) actor=(0.000, 0.000, 0.000)
+  5 left=(-0.165, 0.259, -0.514) right=(0.152, 0.291, 0.420) actor=(0.000, 0.000, 0.000)
+  6 left=(-0.170, 0.273, -0.551) right=(0.145, 0.190, 0.468) actor=(0.000, 0.000, 0.000)
+  7 left=(-0.167, 0.345, -0.404) right=(0.144, 0.190, 0.324) actor=(0.000, 0.000, 0.000)
+  8 left=(-0.165, 0.439, -0.164) right=(0.152, 0.190, 0.073) actor=(0.000, 0.000, 0.000)
+  9 left=(-0.157, 0.467, 0.053) right=(0.158, 0.193, -0.194) actor=(0.000, 0.000, 0.000)
+  10 left=(-0.152, 0.405, 0.234) right=(0.164, 0.225, -0.398) actor=(0.000, 0.000, 0.000)
+  11 left=(-0.153, 0.277, 0.400) right=(0.168, 0.257, -0.518) actor=(0.000, 0.000, 0.000)
+  12 left=(-0.144, 0.197, 0.481) right=(0.170, 0.268, -0.557) actor=(0.000, 0.000, 0.000)
+CLIP Run 0.7666667 Assets/Prefabs/Player/Warrior/Animations/Run.anim root=False
+  0 left=(-0.144, 0.189, 0.579) right=(0.144, 0.775, -0.949) actor=(0.000, 0.000, 0.000)
+  1 left=(-0.144, 0.186, 0.516) right=(0.140, 0.757, -0.792) actor=(0.000, 0.000, 0.000)
+  2 left=(-0.142, 0.182, 0.120) right=(0.143, 0.708, -0.398) actor=(0.000, 0.000, 0.000)
+  3 left=(-0.149, 0.207, -0.278) right=(0.143, 0.690, 0.060) actor=(0.000, 0.000, 0.000)
+  4 left=(-0.156, 0.316, -0.613) right=(0.140, 0.642, 0.355) actor=(0.000, 0.000, 0.000)
+  5 left=(-0.148, 0.730, -0.890) right=(0.143, 0.373, 0.516) actor=(0.000, 0.000, 0.000)
+  6 left=(-0.147, 0.770, -0.937) right=(0.149, 0.185, 0.582) actor=(0.000, 0.000, 0.000)
+  7 left=(-0.141, 0.719, -0.739) right=(0.144, 0.186, 0.453) actor=(0.000, 0.000, 0.000)
+  8 left=(-0.142, 0.644, -0.370) right=(0.141, 0.185, 0.142) actor=(0.000, 0.000, 0.000)
+  9 left=(-0.142, 0.577, 0.047) right=(0.144, 0.189, -0.190) actor=(0.000, 0.000, 0.000)
+  10 left=(-0.138, 0.518, 0.341) right=(0.158, 0.259, -0.513) actor=(0.000, 0.000, 0.000)
+  11 left=(-0.140, 0.324, 0.486) right=(0.148, 0.635, -0.854) actor=(0.000, 0.000, 0.000)
+  12 left=(-0.144, 0.189, 0.579) right=(0.144, 0.775, -0.949) actor=(0.000, 0.000, 0.000)
+CLIP Jump 1.466667 Assets/Prefabs/Player/Warrior/Animations/Warrior@Jump.FBX root=False
+CLIP zw1 1 1.466667 Assets/Prefabs/Player/Warrior/Animations/zw1 1.anim root=False
+CLIP zw2 1 1.466667 Assets/Prefabs/Player/Warrior/Animations/zw2 1.anim root=False
+CLIP zw3 1.466667 Assets/Prefabs/Player/Warrior/Animations/zw3.anim root=False
+CLIP Get_Hit 1.133333 Assets/Prefabs/Player/Warrior/Animations/Warrior@Get_Hit.FBX root=False
+CLIP Dead1 1.133333 Assets/Prefabs/Player/Warrior/Animations/Dead1.anim root=False
+CLIP 1A 1.466667 Assets/Prefabs/Weapon/weapon_001/Animations/1A.anim root=False
+CLIP BottleGrip_RightHand 1 Assets/Prefabs/Player/Warrior/Animations/Gestures/BottleGrip_RightHand.anim root=False
+CONTROLLER Assets/Prefabs/Weapon/weapon_001/Animations/sword.overrideController
+CLIP Idle 1.966667 Assets/Prefabs/Player/Warrior/Animations/Warrior@Idle.FBX root=False
+CLIP Walk 0.9666666 Assets/Prefabs/Player/Warrior/Animations/Walk.anim root=False
+  0 left=(-0.144, 0.197, 0.481) right=(0.170, 0.268, -0.557) actor=(0.000, 0.000, 0.000)
+  1 left=(-0.149, 0.186, 0.355) right=(0.166, 0.326, -0.444) actor=(0.000, 0.000, 0.000)
+  2 left=(-0.152, 0.186, 0.108) right=(0.163, 0.421, -0.184) actor=(0.000, 0.000, 0.000)
+  3 left=(-0.157, 0.187, -0.132) right=(0.156, 0.470, 0.064) actor=(0.000, 0.000, 0.000)
+  4 left=(-0.164, 0.220, -0.349) right=(0.150, 0.425, 0.256) actor=(0.000, 0.000, 0.000)
+  5 left=(-0.165, 0.259, -0.514) right=(0.152, 0.291, 0.420) actor=(0.000, 0.000, 0.000)
+  6 left=(-0.170, 0.273, -0.551) right=(0.145, 0.190, 0.468) actor=(0.000, 0.000, 0.000)
+  7 left=(-0.167, 0.345, -0.404) right=(0.144, 0.190, 0.324) actor=(0.000, 0.000, 0.000)
+  8 left=(-0.165, 0.439, -0.164) right=(0.152, 0.190, 0.073) actor=(0.000, 0.000, 0.000)
+  9 left=(-0.157, 0.467, 0.053) right=(0.158, 0.193, -0.194) actor=(0.000, 0.000, 0.000)
+  10 left=(-0.152, 0.405, 0.234) right=(0.164, 0.225, -0.398) actor=(0.000, 0.000, 0.000)
+  11 left=(-0.153, 0.277, 0.400) right=(0.168, 0.257, -0.518) actor=(0.000, 0.000, 0.000)
+  12 left=(-0.144, 0.197, 0.481) right=(0.170, 0.268, -0.557) actor=(0.000, 0.000, 0.000)
+CLIP Run 0.7666667 Assets/Prefabs/Player/Warrior/Animations/Run.anim root=False
+  0 left=(-0.144, 0.189, 0.579) right=(0.144, 0.775, -0.949) actor=(0.000, 0.000, 0.000)
+  1 left=(-0.144, 0.186, 0.516) right=(0.140, 0.757, -0.792) actor=(0.000, 0.000, 0.000)
+  2 left=(-0.142, 0.182, 0.120) right=(0.143, 0.708, -0.398) actor=(0.000, 0.000, 0.000)
+  3 left=(-0.149, 0.207, -0.278) right=(0.143, 0.690, 0.060) actor=(0.000, 0.000, 0.000)
+  4 left=(-0.156, 0.316, -0.613) right=(0.140, 0.642, 0.355) actor=(0.000, 0.000, 0.000)
+  5 left=(-0.148, 0.730, -0.890) right=(0.143, 0.373, 0.516) actor=(0.000, 0.000, 0.000)
+  6 left=(-0.147, 0.770, -0.937) right=(0.149, 0.185, 0.582) actor=(0.000, 0.000, 0.000)
+  7 left=(-0.141, 0.719, -0.739) right=(0.144, 0.186, 0.453) actor=(0.000, 0.000, 0.000)
+  8 left=(-0.142, 0.644, -0.370) right=(0.141, 0.185, 0.142) actor=(0.000, 0.000, 0.000)
+  9 left=(-0.142, 0.577, 0.047) right=(0.144, 0.189, -0.190) actor=(0.000, 0.000, 0.000)
+  10 left=(-0.138, 0.518, 0.341) right=(0.158, 0.259, -0.513) actor=(0.000, 0.000, 0.000)
+  11 left=(-0.140, 0.324, 0.486) right=(0.148, 0.635, -0.854) actor=(0.000, 0.000, 0.000)
+  12 left=(-0.144, 0.189, 0.579) right=(0.144, 0.775, -0.949) actor=(0.000, 0.000, 0.000)
+CLIP Jump 1.466667 Assets/Prefabs/Player/Warrior/Animations/Warrior@Jump.FBX root=False
+CLIP 1A 1.466667 Assets/Prefabs/Weapon/weapon_001/Animations/1A.anim root=False
+CLIP 2A 1.8 Assets/Prefabs/Weapon/weapon_001/Animations/2A.anim root=False
+CLIP 3A 3.3 Assets/Prefabs/Weapon/weapon_001/Animations/3A.anim root=False
+CLIP Get_Hit 1.133333 Assets/Prefabs/Player/Warrior/Animations/Warrior@Get_Hit.FBX root=False
+CLIP Dead1 1.133333 Assets/Prefabs/Player/Warrior/Animations/Dead1.anim root=False
+CLIP HandingLayerZW 1.966667 Assets/Prefabs/Player/Warrior/Animations/HandingLayerZW.anim root=False
+CONTROLLER Assets/Prefabs/Weapon/weapon_002/Animations/Warrior/weapon_002.overrideController
+CLIP Idle 2.6 Assets/Prefabs/Weapon/weapon_002/Animations/Warrior/Idle.anim root=False
+CLIP Walk 0.9666666 Assets/Prefabs/Weapon/weapon_002/Animations/Warrior/Walk.anim root=False
+  0 left=(-0.144, 0.197, 0.481) right=(0.170, 0.268, -0.557) actor=(0.000, 0.000, 0.000)
+  1 left=(-0.149, 0.187, 0.354) right=(0.165, 0.326, -0.444) actor=(0.000, 0.000, 0.000)
+  2 left=(-0.152, 0.185, 0.108) right=(0.163, 0.421, -0.184) actor=(0.000, 0.000, 0.000)
+  3 left=(-0.157, 0.186, -0.132) right=(0.156, 0.470, 0.064) actor=(0.000, 0.000, 0.000)
+  4 left=(-0.164, 0.220, -0.350) right=(0.150, 0.425, 0.256) actor=(0.000, 0.000, 0.000)
+  5 left=(-0.165, 0.259, -0.514) right=(0.152, 0.291, 0.420) actor=(0.000, 0.000, 0.000)
+  6 left=(-0.170, 0.273, -0.551) right=(0.145, 0.190, 0.468) actor=(0.000, 0.000, 0.000)
+  7 left=(-0.167, 0.345, -0.404) right=(0.145, 0.190, 0.324) actor=(0.000, 0.000, 0.000)
+  8 left=(-0.165, 0.439, -0.164) right=(0.152, 0.190, 0.073) actor=(0.000, 0.000, 0.000)
+  9 left=(-0.157, 0.467, 0.053) right=(0.157, 0.193, -0.195) actor=(0.000, 0.000, 0.000)
+  10 left=(-0.152, 0.405, 0.234) right=(0.164, 0.225, -0.398) actor=(0.000, 0.000, 0.000)
+  11 left=(-0.153, 0.277, 0.400) right=(0.168, 0.257, -0.518) actor=(0.000, 0.000, 0.000)
+  12 left=(-0.144, 0.197, 0.481) right=(0.170, 0.268, -0.557) actor=(0.000, 0.000, 0.000)
+CLIP Run 0.7666667 Assets/Prefabs/Weapon/weapon_002/Animations/Warrior/Run.anim root=False
+  0 left=(-0.144, 0.189, 0.579) right=(0.144, 0.775, -0.949) actor=(0.000, 0.000, 0.000)
+  1 left=(-0.144, 0.187, 0.516) right=(0.140, 0.756, -0.792) actor=(0.000, 0.000, 0.000)
+  2 left=(-0.142, 0.182, 0.120) right=(0.142, 0.708, -0.399) actor=(0.000, 0.000, 0.000)
+  3 left=(-0.148, 0.207, -0.278) right=(0.143, 0.690, 0.060) actor=(0.000, 0.000, 0.000)
+  4 left=(-0.156, 0.315, -0.613) right=(0.140, 0.641, 0.355) actor=(0.000, 0.000, 0.000)
+  5 left=(-0.148, 0.730, -0.889) right=(0.143, 0.373, 0.516) actor=(0.000, 0.000, 0.000)
+  6 left=(-0.147, 0.770, -0.937) right=(0.149, 0.185, 0.582) actor=(0.000, 0.000, 0.000)
+  7 left=(-0.141, 0.719, -0.739) right=(0.144, 0.186, 0.453) actor=(0.000, 0.000, 0.000)
+  8 left=(-0.142, 0.643, -0.369) right=(0.141, 0.185, 0.142) actor=(0.000, 0.000, 0.000)
+  9 left=(-0.142, 0.577, 0.047) right=(0.144, 0.189, -0.190) actor=(0.000, 0.000, 0.000)
+  10 left=(-0.138, 0.518, 0.341) right=(0.158, 0.259, -0.514) actor=(0.000, 0.000, 0.000)
+  11 left=(-0.140, 0.324, 0.487) right=(0.148, 0.636, -0.855) actor=(0.000, 0.000, 0.000)
+  12 left=(-0.144, 0.189, 1.955) right=(0.144, 0.775, 0.426) actor=(0.000, 0.000, 0.000)
+CLIP Jump 1.466667 Assets/Prefabs/Player/Warrior/Animations/Warrior@Jump.FBX root=False
+CLIP Attack1 0.72 Assets/Prefabs/Weapon/weapon_002/Animations/Warrior/Attack1.anim root=False
+CLIP Attack2 0.8 Assets/Prefabs/Weapon/weapon_002/Animations/Warrior/Attack2.anim root=False
+CLIP Attack3 0.95 Assets/Prefabs/Weapon/weapon_002/Animations/Warrior/Attack3.anim root=False
+CLIP Get_Hit 1.133333 Assets/Prefabs/Player/Warrior/Animations/Warrior@Get_Hit.FBX root=False
+CLIP Dead1 1.133333 Assets/Prefabs/Player/Warrior/Animations/Dead1.anim root=False
+CONTROLLER Assets/Prefabs/Weapon/weapon_003/Animations/Warrior/weapon_003.overrideController
+CLIP Idle 2.6 Assets/Prefabs/Weapon/weapon_003/Animations/Warrior/Idle.anim root=False
+CLIP Walk 0.9666666 Assets/Prefabs/Weapon/weapon_003/Animations/Warrior/Walk.anim root=False
+  0 left=(-0.144, 0.197, 0.481) right=(0.170, 0.268, -0.557) actor=(0.000, 0.000, 0.000)
+  1 left=(-0.149, 0.187, 0.354) right=(0.165, 0.326, -0.444) actor=(0.000, 0.000, 0.000)
+  2 left=(-0.152, 0.185, 0.108) right=(0.163, 0.421, -0.184) actor=(0.000, 0.000, 0.000)
+  3 left=(-0.157, 0.186, -0.132) right=(0.156, 0.470, 0.064) actor=(0.000, 0.000, 0.000)
+  4 left=(-0.164, 0.220, -0.350) right=(0.150, 0.425, 0.256) actor=(0.000, 0.000, 0.000)
+  5 left=(-0.165, 0.259, -0.514) right=(0.152, 0.291, 0.420) actor=(0.000, 0.000, 0.000)
+  6 left=(-0.170, 0.273, -0.551) right=(0.145, 0.190, 0.468) actor=(0.000, 0.000, 0.000)
+  7 left=(-0.167, 0.345, -0.404) right=(0.145, 0.190, 0.324) actor=(0.000, 0.000, 0.000)
+  8 left=(-0.165, 0.439, -0.164) right=(0.152, 0.190, 0.073) actor=(0.000, 0.000, 0.000)
+  9 left=(-0.157, 0.467, 0.053) right=(0.157, 0.193, -0.195) actor=(0.000, 0.000, 0.000)
+  10 left=(-0.152, 0.405, 0.234) right=(0.164, 0.225, -0.398) actor=(0.000, 0.000, 0.000)
+  11 left=(-0.153, 0.277, 0.400) right=(0.168, 0.257, -0.518) actor=(0.000, 0.000, 0.000)
+  12 left=(-0.144, 0.197, 0.481) right=(0.170, 0.268, -0.557) actor=(0.000, 0.000, 0.000)
+CLIP Run 0.7666667 Assets/Prefabs/Weapon/weapon_003/Animations/Warrior/Run.anim root=False
+  0 left=(-0.144, 0.189, 0.579) right=(0.144, 0.775, -0.949) actor=(0.000, 0.000, 0.000)
+  1 left=(-0.144, 0.187, 0.516) right=(0.140, 0.756, -0.792) actor=(0.000, 0.000, 0.000)
+  2 left=(-0.142, 0.182, 0.120) right=(0.142, 0.708, -0.399) actor=(0.000, 0.000, 0.000)
+  3 left=(-0.148, 0.207, -0.278) right=(0.143, 0.690, 0.060) actor=(0.000, 0.000, 0.000)
+  4 left=(-0.156, 0.315, -0.613) right=(0.140, 0.641, 0.355) actor=(0.000, 0.000, 0.000)
+  5 left=(-0.148, 0.730, -0.889) right=(0.143, 0.373, 0.516) actor=(0.000, 0.000, 0.000)
+  6 left=(-0.147, 0.770, -0.937) right=(0.149, 0.185, 0.582) actor=(0.000, 0.000, 0.000)
+  7 left=(-0.141, 0.719, -0.739) right=(0.144, 0.186, 0.453) actor=(0.000, 0.000, 0.000)
+  8 left=(-0.142, 0.643, -0.369) right=(0.141, 0.185, 0.142) actor=(0.000, 0.000, 0.000)
+  9 left=(-0.142, 0.577, 0.047) right=(0.144, 0.189, -0.190) actor=(0.000, 0.000, 0.000)
+  10 left=(-0.138, 0.518, 0.341) right=(0.158, 0.259, -0.514) actor=(0.000, 0.000, 0.000)
+  11 left=(-0.140, 0.324, 0.487) right=(0.148, 0.636, -0.855) actor=(0.000, 0.000, 0.000)
+  12 left=(-0.144, 0.189, 1.955) right=(0.144, 0.775, 0.426) actor=(0.000, 0.000, 0.000)
+CLIP Jump 1.466667 Assets/Prefabs/Player/Warrior/Animations/Warrior@Jump.FBX root=False
+CLIP Attack1 0.85 Assets/Prefabs/Weapon/weapon_003/Animations/Warrior/Attack1.anim root=False
+CLIP Attack2 0.9 Assets/Prefabs/Weapon/weapon_003/Animations/Warrior/Attack2.anim root=False
+CLIP Attack3 1.1 Assets/Prefabs/Weapon/weapon_003/Animations/Warrior/Attack3.anim root=False
+CLIP Get_Hit 1.133333 Assets/Prefabs/Player/Warrior/Animations/Warrior@Get_Hit.FBX root=False
+CLIP Dead1 1.133333 Assets/Prefabs/Player/Warrior/Animations/Dead1.anim root=False
+CONTROLLER Assets/Prefabs/Weapon/weapon_004/Animations/Warrior/weapon_004.overrideController
+CLIP Idle 2.6 Assets/Prefabs/Weapon/weapon_004/Animations/Warrior/Idle.anim root=False
+CLIP Walk 0.9666666 Assets/Prefabs/Weapon/weapon_004/Animations/Warrior/Walk.anim root=False
+  0 left=(-0.144, 0.197, 0.481) right=(0.170, 0.268, -0.557) actor=(0.000, 0.000, 0.000)
+  1 left=(-0.149, 0.187, 0.354) right=(0.165, 0.326, -0.444) actor=(0.000, 0.000, 0.000)
+  2 left=(-0.152, 0.185, 0.108) right=(0.163, 0.421, -0.184) actor=(0.000, 0.000, 0.000)
+  3 left=(-0.157, 0.186, -0.132) right=(0.156, 0.470, 0.064) actor=(0.000, 0.000, 0.000)
+  4 left=(-0.164, 0.220, -0.350) right=(0.150, 0.425, 0.256) actor=(0.000, 0.000, 0.000)
+  5 left=(-0.165, 0.259, -0.514) right=(0.152, 0.291, 0.420) actor=(0.000, 0.000, 0.000)
+  6 left=(-0.170, 0.273, -0.551) right=(0.145, 0.190, 0.468) actor=(0.000, 0.000, 0.000)
+  7 left=(-0.167, 0.345, -0.404) right=(0.145, 0.190, 0.324) actor=(0.000, 0.000, 0.000)
+  8 left=(-0.165, 0.439, -0.164) right=(0.152, 0.190, 0.073) actor=(0.000, 0.000, 0.000)
+  9 left=(-0.157, 0.467, 0.053) right=(0.157, 0.193, -0.195) actor=(0.000, 0.000, 0.000)
+  10 left=(-0.152, 0.405, 0.234) right=(0.164, 0.225, -0.398) actor=(0.000, 0.000, 0.000)
+  11 left=(-0.153, 0.277, 0.400) right=(0.168, 0.257, -0.518) actor=(0.000, 0.000, 0.000)
+  12 left=(-0.144, 0.197, 0.481) right=(0.170, 0.268, -0.557) actor=(0.000, 0.000, 0.000)
+CLIP Run 0.7666667 Assets/Prefabs/Weapon/weapon_004/Animations/Warrior/Run.anim root=False
+  0 left=(-0.144, 0.189, 0.579) right=(0.144, 0.775, -0.949) actor=(0.000, 0.000, 0.000)
+  1 left=(-0.144, 0.187, 0.516) right=(0.140, 0.756, -0.792) actor=(0.000, 0.000, 0.000)
+  2 left=(-0.142, 0.182, 0.120) right=(0.142, 0.708, -0.399) actor=(0.000, 0.000, 0.000)
+  3 left=(-0.148, 0.207, -0.278) right=(0.143, 0.690, 0.060) actor=(0.000, 0.000, 0.000)
+  4 left=(-0.156, 0.315, -0.613) right=(0.140, 0.641, 0.355) actor=(0.000, 0.000, 0.000)
+  5 left=(-0.148, 0.730, -0.889) right=(0.143, 0.373, 0.516) actor=(0.000, 0.000, 0.000)
+  6 left=(-0.147, 0.770, -0.937) right=(0.149, 0.185, 0.582) actor=(0.000, 0.000, 0.000)
+  7 left=(-0.141, 0.719, -0.739) right=(0.144, 0.186, 0.453) actor=(0.000, 0.000, 0.000)
+  8 left=(-0.142, 0.643, -0.369) right=(0.141, 0.185, 0.142) actor=(0.000, 0.000, 0.000)
+  9 left=(-0.142, 0.577, 0.047) right=(0.144, 0.189, -0.190) actor=(0.000, 0.000, 0.000)
+  10 left=(-0.138, 0.518, 0.341) right=(0.158, 0.259, -0.514) actor=(0.000, 0.000, 0.000)
+  11 left=(-0.140, 0.324, 0.487) right=(0.148, 0.636, -0.855) actor=(0.000, 0.000, 0.000)
+  12 left=(-0.144, 0.189, 1.955) right=(0.144, 0.775, 0.426) actor=(0.000, 0.000, 0.000)
+CLIP Jump 1.466667 Assets/Prefabs/Player/Warrior/Animations/Warrior@Jump.FBX root=False
+CLIP Attack1 0.9 Assets/Prefabs/Weapon/weapon_004/Animations/Warrior/Attack1.anim root=False
+CLIP Attack2 1 Assets/Prefabs/Weapon/weapon_004/Animations/Warrior/Attack2.anim root=False
+CLIP Attack3 1.2 Assets/Prefabs/Weapon/weapon_004/Animations/Warrior/Attack3.anim root=False
+CLIP Get_Hit 1.133333 Assets/Prefabs/Player/Warrior/Animations/Warrior@Get_Hit.FBX root=False
+CLIP Dead1 1.133333 Assets/Prefabs/Player/Warrior/Animations/Dead1.anim root=False

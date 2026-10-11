@@ -1,0 +1,2 @@
+weapon_001 Attack_01 advance=0.25 m; hits=1
+Jump extracts 0.709 m vertical root motion; rig counter-offset preserves the original visible pose.

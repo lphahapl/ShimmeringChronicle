@@ -1,0 +1,98 @@
+PASS new prefab retains PlayerController compatibility and enables root motion
+PASS original prefab continues to use its original movement controller
+PASS Character Warrior actual Animator root motion Walk=2.413 m/s Run=4.814 m/s
+PASS Character Warrior idle stays in place
+PASS Warrior_Base_RootMotion jump lifts/lands the root: peak=0.709 final=0.000 m
+PASS Character Warrior Attack_01 advance=0.220 m without backward reset
+PASS Character Warrior Attack_02 advance=0.260 m without backward reset
+PASS Character Warrior Attack_03 advance=0.360 m without backward reset
+PASS Character Warrior slowing Animator also slows displacement
+PASS Character Warrior frozen Animator has no horizontal motion
+PASS Character Warrior uses copied clip Idle_RootMotion
+PASS Character Warrior uses copied clip Walk_RootMotion
+PASS Character Warrior uses copied clip Run_RootMotion
+PASS Character Warrior uses copied clip Jump_RootMotion
+PASS Character Warrior uses copied clip zw1 1_RootMotion
+PASS Character Warrior uses copied clip zw2 1_RootMotion
+PASS Character Warrior uses copied clip zw3_RootMotion
+PASS Character Warrior uses copied clip Get_Hit_RootMotion
+PASS Character Warrior uses copied clip Dead1_RootMotion
+PASS Character Warrior uses copied clip 1A_RootMotion
+PASS Character Warrior uses copied clip BottleGrip_RightHand_RootMotion
+PASS sword actual Animator root motion Walk=2.413 m/s Run=4.814 m/s
+PASS sword idle stays in place
+PASS weapon_001_RootMotion jump lifts/lands the root: peak=0.709 final=0.000 m
+PASS sword Attack_01 advance=0.250 m without backward reset
+PASS sword Attack_02 advance=0.400 m without backward reset
+PASS sword Attack_03 advance=0.600 m without backward reset
+PASS sword slowing Animator also slows displacement
+PASS sword frozen Animator has no horizontal motion
+PASS sword uses copied clip Idle_RootMotion
+PASS sword uses copied clip Walk_RootMotion
+PASS sword uses copied clip Run_RootMotion
+PASS sword uses copied clip Jump_RootMotion
+PASS sword uses copied clip 1A_RootMotion
+PASS sword uses copied clip 2A_RootMotion
+PASS sword uses copied clip 3A_RootMotion
+PASS sword uses copied clip Get_Hit_RootMotion
+PASS sword uses copied clip Dead1_RootMotion
+PASS sword uses copied clip 1A_RootMotion
+PASS sword uses copied clip HandingLayerZW_RootMotion
+PASS weapon_002_Warrior actual Animator root motion Walk=2.413 m/s Run=4.697 m/s
+PASS weapon_002_Warrior idle stays in place
+PASS weapon_002_RootMotion jump lifts/lands the root: peak=0.709 final=0.000 m
+PASS weapon_002_Warrior Attack_01 advance=0.220 m without backward reset
+PASS weapon_002_Warrior Attack_02 advance=0.260 m without backward reset
+PASS weapon_002_Warrior Attack_03 advance=0.360 m without backward reset
+PASS weapon_002_Warrior slowing Animator also slows displacement
+PASS weapon_002_Warrior frozen Animator has no horizontal motion
+PASS weapon_002_Warrior uses copied clip Idle_RootMotion
+PASS weapon_002_Warrior uses copied clip Walk_RootMotion
+PASS weapon_002_Warrior uses copied clip Run_RootMotion
+PASS weapon_002_Warrior uses copied clip Jump_RootMotion
+PASS weapon_002_Warrior uses copied clip Attack1_RootMotion
+PASS weapon_002_Warrior uses copied clip Attack2_RootMotion
+PASS weapon_002_Warrior uses copied clip Attack3_RootMotion
+PASS weapon_002_Warrior uses copied clip Get_Hit_RootMotion
+PASS weapon_002_Warrior uses copied clip Dead1_RootMotion
+PASS weapon_002_Warrior uses copied clip Idle_RootMotion
+PASS weapon_002_Warrior uses copied clip Idle_RootMotion
+PASS weapon_003_Warrior actual Animator root motion Walk=2.413 m/s Run=4.697 m/s
+PASS weapon_003_Warrior idle stays in place
+PASS weapon_003_RootMotion jump lifts/lands the root: peak=0.709 final=0.000 m
+PASS weapon_003_Warrior Attack_01 advance=0.260 m without backward reset
+PASS weapon_003_Warrior Attack_02 advance=0.300 m without backward reset
+PASS weapon_003_Warrior Attack_03 advance=0.420 m without backward reset
+PASS weapon_003_Warrior slowing Animator also slows displacement
+PASS weapon_003_Warrior frozen Animator has no horizontal motion
+PASS weapon_003_Warrior uses copied clip Idle_RootMotion
+PASS weapon_003_Warrior uses copied clip Walk_RootMotion
+PASS weapon_003_Warrior uses copied clip Run_RootMotion
+PASS weapon_003_Warrior uses copied clip Jump_RootMotion
+PASS weapon_003_Warrior uses copied clip Attack1_RootMotion
+PASS weapon_003_Warrior uses copied clip Attack2_RootMotion
+PASS weapon_003_Warrior uses copied clip Attack3_RootMotion
+PASS weapon_003_Warrior uses copied clip Get_Hit_RootMotion
+PASS weapon_003_Warrior uses copied clip Dead1_RootMotion
+PASS weapon_003_Warrior uses copied clip Idle_RootMotion
+PASS weapon_003_Warrior uses copied clip Idle_RootMotion
+PASS weapon_004_Warrior actual Animator root motion Walk=2.413 m/s Run=4.697 m/s
+PASS weapon_004_Warrior idle stays in place
+PASS weapon_004_RootMotion jump lifts/lands the root: peak=0.709 final=0.000 m
+PASS weapon_004_Warrior Attack_01 advance=0.200 m without backward reset
+PASS weapon_004_Warrior Attack_02 advance=0.240 m without backward reset
+PASS weapon_004_Warrior Attack_03 advance=0.400 m without backward reset
+PASS weapon_004_Warrior slowing Animator also slows displacement
+PASS weapon_004_Warrior frozen Animator has no horizontal motion
+PASS weapon_004_Warrior uses copied clip Idle_RootMotion
+PASS weapon_004_Warrior uses copied clip Walk_RootMotion
+PASS weapon_004_Warrior uses copied clip Run_RootMotion
+PASS weapon_004_Warrior uses copied clip Jump_RootMotion
+PASS weapon_004_Warrior uses copied clip Attack1_RootMotion
+PASS weapon_004_Warrior uses copied clip Attack2_RootMotion
+PASS weapon_004_Warrior uses copied clip Attack3_RootMotion
+PASS weapon_004_Warrior uses copied clip Get_Hit_RootMotion
+PASS weapon_004_Warrior uses copied clip Dead1_RootMotion
+PASS weapon_004_Warrior uses copied clip Idle_RootMotion
+PASS weapon_004_Warrior uses copied clip Idle_RootMotion
+ALL PASSED: copied clips/controllers, root motion, idle, attacks, slow/frozen movement.

@@ -1,0 +1,1 @@
+PASS: all 575 original Warrior/weapon files retain their pre-task hashes. Export writes only the new RootMotion folder.
