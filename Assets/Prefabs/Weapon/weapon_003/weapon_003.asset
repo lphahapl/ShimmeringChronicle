@@ -49,7 +49,7 @@ MonoBehaviour:
     eff: {fileID: 1158994281337082736, guid: 7dba7d2c1d25e424d98d9db5a25781f6, type: 3}
     judgeOffset: {x: 0, y: 1, z: 0.45}
     angle: 110
-  overrideController: {fileID: 22100000, guid: af13b85aa00811c44b73688a84ac281f, type: 2}
+  overrideController: {fileID: 22100000, guid: 29252a04c90d06e4d9ed18e655cdc931, type: 2}
 
 
 

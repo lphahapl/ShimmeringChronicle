@@ -1,0 +1,117 @@
+PASS formal player initializes with the scene mission override
+PASS weapon_001 selection directly uses its root-motion override through runtime ItemData
+PASS weapon_002 selection directly uses its root-motion override through runtime ItemData
+PASS weapon_003 selection directly uses its root-motion override through runtime ItemData
+PASS weapon_004 selection directly uses its root-motion override through runtime ItemData
+PASS empty hand restores the root-motion default
+PASS Warrior_Base_RootMotion walk moves CC exactly once: 3.110 m
+PASS Warrior_Base_RootMotion run uses animation displacement: 5.864 m
+PASS Warrior_Base_RootMotion idle stays in place
+PASS Warrior_Base_RootMotion Attack_01 keeps forward root motion: 0.220
+PASS Warrior_Base_RootMotion Attack_02 keeps forward root motion: 0.260
+PASS Warrior_Base_RootMotion Attack_03 keeps forward root motion: 0.360
+PASS Warrior_Base_RootMotion jump lifts the collider and lands, peak=0.709
+PASS Warrior_Base_RootMotion hit recoil moves CC and recovery holds the new position: -1.194
+PASS Warrior_Base_RootMotion uses copied clip Idle_RootMotion
+PASS Warrior_Base_RootMotion uses copied clip Walk_RootMotion
+PASS Warrior_Base_RootMotion uses copied clip Run_RootMotion
+PASS Warrior_Base_RootMotion uses copied clip Jump_RootMotion
+PASS Warrior_Base_RootMotion uses copied clip zw1 1_RootMotion
+PASS Warrior_Base_RootMotion uses copied clip zw2 1_RootMotion
+PASS Warrior_Base_RootMotion uses copied clip zw3_RootMotion
+PASS Warrior_Base_RootMotion uses copied clip Get_Hit_RootMotion
+PASS Warrior_Base_RootMotion uses copied clip Dead1_RootMotion
+PASS Warrior_Base_RootMotion uses copied clip 1A_RootMotion
+PASS Warrior_Base_RootMotion uses copied clip BottleGrip_RightHand_RootMotion
+PASS weapon_001_RootMotion walk moves CC exactly once: 3.110 m
+PASS weapon_001_RootMotion run uses animation displacement: 5.864 m
+PASS weapon_001_RootMotion idle stays in place
+PASS weapon_001_RootMotion Attack_01 keeps forward root motion: 0.250
+PASS weapon_001_RootMotion Attack_02 keeps forward root motion: 0.400
+PASS weapon_001_RootMotion Attack_03 keeps forward root motion: 2.684
+PASS weapon_001_RootMotion jump lifts the collider and lands, peak=0.709
+PASS weapon_001_RootMotion hit recoil moves CC and recovery holds the new position: -1.194
+PASS weapon_001_RootMotion uses copied clip Idle_RootMotion
+PASS weapon_001_RootMotion uses copied clip Walk_RootMotion
+PASS weapon_001_RootMotion uses copied clip Run_RootMotion
+PASS weapon_001_RootMotion uses copied clip Jump_RootMotion
+PASS weapon_001_RootMotion uses copied clip 1A_RootMotion
+PASS weapon_001_RootMotion uses copied clip 2A_RootMotion
+PASS weapon_001_RootMotion uses copied clip 3A_RootMotion
+PASS weapon_001_RootMotion uses copied clip Get_Hit_RootMotion
+PASS weapon_001_RootMotion uses copied clip Dead1_RootMotion
+PASS weapon_001_RootMotion uses copied clip 1A_RootMotion
+PASS weapon_001_RootMotion uses copied clip HandingLayerZW_RootMotion
+PASS weapon_002_RootMotion walk moves CC exactly once: 3.110 m
+PASS weapon_002_RootMotion run uses animation displacement: 5.729 m
+PASS weapon_002_RootMotion idle stays in place
+PASS weapon_002_RootMotion Attack_01 keeps forward root motion: 0.220
+PASS weapon_002_RootMotion Attack_02 keeps forward root motion: 0.260
+PASS weapon_002_RootMotion Attack_03 keeps forward root motion: 0.360
+PASS weapon_002_RootMotion jump lifts the collider and lands, peak=0.709
+PASS weapon_002_RootMotion hit recoil moves CC and recovery holds the new position: -1.194
+PASS weapon_002_RootMotion uses copied clip Idle_RootMotion
+PASS weapon_002_RootMotion uses copied clip Walk_RootMotion
+PASS weapon_002_RootMotion uses copied clip Run_RootMotion
+PASS weapon_002_RootMotion uses copied clip Jump_RootMotion
+PASS weapon_002_RootMotion uses copied clip Attack1_RootMotion
+PASS weapon_002_RootMotion uses copied clip Attack2_RootMotion
+PASS weapon_002_RootMotion uses copied clip Attack3_RootMotion
+PASS weapon_002_RootMotion uses copied clip Get_Hit_RootMotion
+PASS weapon_002_RootMotion uses copied clip Dead1_RootMotion
+PASS weapon_002_RootMotion uses copied clip Idle_RootMotion
+PASS weapon_002_RootMotion uses copied clip Idle_RootMotion
+PASS weapon_003_RootMotion walk moves CC exactly once: 3.110 m
+PASS weapon_003_RootMotion run uses animation displacement: 5.729 m
+PASS weapon_003_RootMotion idle stays in place
+PASS weapon_003_RootMotion Attack_01 keeps forward root motion: 0.260
+PASS weapon_003_RootMotion Attack_02 keeps forward root motion: 0.300
+PASS weapon_003_RootMotion Attack_03 keeps forward root motion: 0.420
+PASS weapon_003_RootMotion jump lifts the collider and lands, peak=0.709
+PASS weapon_003_RootMotion hit recoil moves CC and recovery holds the new position: -1.194
+PASS weapon_003_RootMotion uses copied clip Idle_RootMotion
+PASS weapon_003_RootMotion uses copied clip Walk_RootMotion
+PASS weapon_003_RootMotion uses copied clip Run_RootMotion
+PASS weapon_003_RootMotion uses copied clip Jump_RootMotion
+PASS weapon_003_RootMotion uses copied clip Attack1_RootMotion
+PASS weapon_003_RootMotion uses copied clip Attack2_RootMotion
+PASS weapon_003_RootMotion uses copied clip Attack3_RootMotion
+PASS weapon_003_RootMotion uses copied clip Get_Hit_RootMotion
+PASS weapon_003_RootMotion uses copied clip Dead1_RootMotion
+PASS weapon_003_RootMotion uses copied clip Idle_RootMotion
+PASS weapon_003_RootMotion uses copied clip Idle_RootMotion
+PASS weapon_004_RootMotion walk moves CC exactly once: 3.110 m
+PASS weapon_004_RootMotion run uses animation displacement: 5.729 m
+PASS weapon_004_RootMotion idle stays in place
+PASS weapon_004_RootMotion Attack_01 keeps forward root motion: 0.200
+PASS weapon_004_RootMotion Attack_02 keeps forward root motion: 0.240
+PASS weapon_004_RootMotion Attack_03 keeps forward root motion: 0.400
+PASS weapon_004_RootMotion jump lifts the collider and lands, peak=0.709
+PASS weapon_004_RootMotion hit recoil moves CC and recovery holds the new position: -1.194
+PASS weapon_004_RootMotion uses copied clip Idle_RootMotion
+PASS weapon_004_RootMotion uses copied clip Walk_RootMotion
+PASS weapon_004_RootMotion uses copied clip Run_RootMotion
+PASS weapon_004_RootMotion uses copied clip Jump_RootMotion
+PASS weapon_004_RootMotion uses copied clip Attack1_RootMotion
+PASS weapon_004_RootMotion uses copied clip Attack2_RootMotion
+PASS weapon_004_RootMotion uses copied clip Attack3_RootMotion
+PASS weapon_004_RootMotion uses copied clip Get_Hit_RootMotion
+PASS weapon_004_RootMotion uses copied clip Dead1_RootMotion
+PASS weapon_004_RootMotion uses copied clip Idle_RootMotion
+PASS weapon_004_RootMotion uses copied clip Idle_RootMotion
+PASS standing third attack publishes all three damage events
+PASS sword recovery has no backward rig snap, target=Idle max=0.0003
+PASS third attack smoothly recovers directly into Idle
+PASS movement intentionally cancels the final swing into Run
+PASS sword recovery has no backward rig snap, target=Run max=0.0000
+PASS third attack smoothly recovers directly into Run
+PASS movement intentionally cancels the final swing into Walk
+PASS sword recovery has no backward rig snap, target=Walk max=0.0000
+PASS third attack smoothly recovers directly into Walk
+PASS hit recovery does not spring forward to its original position, max=0.0003
+PASS CC blocks root motion at a wall
+PASS dialogue blocks horizontal root motion
+PASS hit-stop freezes displacement
+PASS gravity respects ground collision
+PASS death blocks horizontal displacement
+ALL PASSED: production prefab, actual weapon selection, walk/run/attacks/jump, collisions, dialogue, hit-stop and gravity.

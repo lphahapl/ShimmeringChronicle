@@ -1,0 +1,26 @@
+Sword third attack 3.3 -> 1.7 s; damage events remain 0.4 / 0.73333335 / 1.4 s; forward travel now belongs to root, final=2.684 m.
+Smoothed loop seam and root velocity, stride unchanged: Assets/Prefabs/Player/Warrior/RootMotion/Animations/Common/Run_RootMotion.anim
+Smoothed loop seam and root velocity, stride unchanged: Assets/Prefabs/Player/Warrior/RootMotion/Animations/Common/Walk_RootMotion.anim
+Smoothed loop seam and root velocity, stride unchanged: Assets/Prefabs/Player/Warrior/RootMotion/Animations/weapon_002/Run_RootMotion.anim
+Smoothed loop seam and root velocity, stride unchanged: Assets/Prefabs/Player/Warrior/RootMotion/Animations/weapon_002/Walk_RootMotion.anim
+Smoothed loop seam and root velocity, stride unchanged: Assets/Prefabs/Player/Warrior/RootMotion/Animations/weapon_003/Run_RootMotion.anim
+Smoothed loop seam and root velocity, stride unchanged: Assets/Prefabs/Player/Warrior/RootMotion/Animations/weapon_003/Walk_RootMotion.anim
+Smoothed loop seam and root velocity, stride unchanged: Assets/Prefabs/Player/Warrior/RootMotion/Animations/weapon_004/Run_RootMotion.anim
+Smoothed loop seam and root velocity, stride unchanged: Assets/Prefabs/Player/Warrior/RootMotion/Animations/weapon_004/Walk_RootMotion.anim
+1.25x Walk/Run; 0.12 s movement blends; 0.10 s combo blends; 0.16 s recovery: Warrior_Base_RootMotion
+1.25x Walk/Run; 0.12 s movement blends; 0.10 s combo blends; 0.16 s recovery: weapon_002_Base_RootMotion
+1.25x Walk/Run; 0.12 s movement blends; 0.10 s combo blends; 0.16 s recovery: weapon_003_Base_RootMotion
+1.25x Walk/Run; 0.12 s movement blends; 0.10 s combo blends; 0.16 s recovery: weapon_004_Base_RootMotion
+1.25x Walk/Run; 0.12 s movement blends; 0.10 s combo blends; 0.16 s recovery: Warrior_Base_RootMotion
+1.25x Walk/Run; 0.12 s movement blends; 0.10 s combo blends; 0.16 s recovery: weapon_002_Base_RootMotion
+1.25x Walk/Run; 0.12 s movement blends; 0.10 s combo blends; 0.16 s recovery: weapon_003_Base_RootMotion
+1.25x Walk/Run; 0.12 s movement blends; 0.10 s combo blends; 0.16 s recovery: weapon_004_Base_RootMotion
+Hit 1.133 -> 0.567 s; recoil belongs to root so recovery does not spring to the original position, recoil=1.234 m.
+1.25x Walk/Run; 0.12 s movement blends; 0.10 s combo blends; 0.16 s recovery: Warrior_Base_RootMotion
+1.25x Walk/Run; 0.12 s movement blends; 0.10 s combo blends; 0.16 s recovery: weapon_002_Base_RootMotion
+1.25x Walk/Run; 0.12 s movement blends; 0.10 s combo blends; 0.16 s recovery: weapon_003_Base_RootMotion
+1.25x Walk/Run; 0.12 s movement blends; 0.10 s combo blends; 0.16 s recovery: weapon_004_Base_RootMotion
+1.25x Walk/Run; 0.12 s movement blends; 0.10 s combo blends; 0.16 s recovery: Warrior_Base_RootMotion
+1.25x Walk/Run; 0.12 s movement blends; 0.10 s combo blends; 0.16 s recovery: weapon_002_Base_RootMotion
+1.25x Walk/Run; 0.12 s movement blends; 0.10 s combo blends; 0.16 s recovery: weapon_003_Base_RootMotion
+1.25x Walk/Run; 0.12 s movement blends; 0.10 s combo blends; 0.16 s recovery: weapon_004_Base_RootMotion

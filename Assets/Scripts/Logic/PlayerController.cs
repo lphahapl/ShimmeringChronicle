@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
@@ -58,8 +59,6 @@ public class PlayerController : MonoBehaviour
     AnimatorStateInfo stateInfo;
 
     public Camera playerCamera;
-    private float walkSpeed = 2f;
-    private float runSpeed = 5f;
     private float turnSpeed = 720f;
     [Tooltip("重力（负值），只用来把角色压在地面上")]
     public float gravity = -20f;
@@ -79,6 +78,7 @@ public class PlayerController : MonoBehaviour
     Vector3 moveDir;          
     bool wantsRun;            // 想走还是想跑
     float verticalVelocity;   // 竖直速度，重力用
+    Vector3 gravityStep;
     int comboIndex;           // 连招进度
 
   
@@ -178,7 +178,6 @@ public class PlayerController : MonoBehaviour
         }
         RuntimeAnimatorController controller = weapon?.overrideController;
         if (!controller) controller = defaultAnimatorController;
-        controller = ResolveAnimatorController(controller);
         if (animator.runtimeAnimatorController == controller) return;
 
         comboIndex = 0;
@@ -413,21 +412,16 @@ public class PlayerController : MonoBehaviour
         if (characterController.isGrounded && verticalVelocity < 0f) verticalVelocity = -2f;
         verticalVelocity += gravity * dt;
 
-        float speed = (moving && wantsRun) ? runSpeed : walkSpeed;
-        Vector3 velocity = (moving ? moveDir * speed : Vector3.zero)
-                         + Vector3.up * verticalVelocity;
+        
+        Vector3 velocity = Vector3.up * verticalVelocity;
 
-        MoveCharacter(velocity, dt);
+        ApplyGravity(velocity, dt);
     }
 
-    protected virtual RuntimeAnimatorController ResolveAnimatorController(RuntimeAnimatorController controller)
+    protected virtual void ApplyGravity(Vector3 velocity, float dt)
     {
-        return controller;
-    }
-
-    protected virtual void MoveCharacter(Vector3 velocity, float dt)
-    {
-        characterController.Move(velocity * dt);
+        // 与动画位移一起交给 CC，避免一帧中重复移动。
+        gravityStep = Vector3.up * velocity.y * dt;
     }
 
     void UpdateComboReset()
@@ -468,8 +462,6 @@ public class PlayerController : MonoBehaviour
     }
     private void InitSpeed()
     {
-        walkSpeed = data.speed;
-        runSpeed=data.runSpeed;
         turnSpeed = data.turnSpeed;
     }
     public void DestorySelf()
@@ -484,5 +476,26 @@ public class PlayerController : MonoBehaviour
         if (manager == null) return true;
 
         return !manager.HasOpenPanel;
+    }
+    protected virtual void OnAnimatorMove()
+    {
+        if (!animator || !characterController ||
+            !characterController.enabled) return;
+
+        bool jumping = animator.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Jump") ||
+            (animator.IsInTransition(0) && animator.GetNextAnimatorStateInfo(0).IsName("Base Layer.Jump"));
+        Vector3 movement = animator.deltaPosition;
+        if (!jumping) movement.y = 0f;
+        if (IsDead || isTalking) movement = Vector3.zero;
+        // 跳跃动画已经包含高度，期间不叠加重力；结束后恢复重力。
+        if(jumping && !IsDead && !isTalking)
+        {
+            characterController.Move(movement);
+        }
+        else
+        {
+            characterController.Move(movement +gravityStep);
+        }
+        
     }
 }

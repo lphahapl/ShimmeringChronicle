@@ -18,7 +18,7 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 06f243b516dc48beb35fa6d4bc08ba24, type: 3}
   stackCount: 1
   prefab: {fileID: 6224495756377181913, guid: 057d364a27bb43419b28d7e76634b6b4, type: 3}
-  overrideController: {fileID: 22100000, guid: 020d5b0f2714a9742841e858f9938ab5, type: 2}
+  overrideController: {fileID: 22100000, guid: 43e5f5d7bfc48854883ed7a0bb18b898, type: 2}
   combo:
   - damagePerHit: 20
     radius: 3.5

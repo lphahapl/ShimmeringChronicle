@@ -1,0 +1,81 @@
+PASS weapon_001 idle -> walk settles in Walk: Walk
+PASS weapon_001 walk -> run settles in Run: Run
+PASS weapon_001 run -> walk settles in Walk: Walk
+PASS weapon_001 walk -> idle settles in Idle: Idle
+PASS weapon_001 idle -> run settles in Run: Run
+PASS weapon_001 run -> idle settles in Idle: Idle
+PASS weapon_001 rapid movement -> idle settles in Idle: Idle
+PASS weapon_001 idle -> attack settles in Attack_01: Attack_01
+PASS weapon_001 single attack -> idle settles in Idle: Idle
+PASS weapon_001 input reaches all three combo stages: Attack_01,Attack_02,Attack_03
+PASS weapon_001 combo -> idle settles in Idle: Idle
+PASS weapon_001 movement cancels third attack settles in Walk: Walk
+PASS weapon_001 movement cancels third attack settles in Run: Run
+PASS weapon_001 jump -> idle settles in Idle: Idle
+PASS weapon_001 trigger enters hit from Idle settles in Hit: Hit
+PASS weapon_001 hit recovery settles in Idle: Idle
+PASS weapon_001 trigger enters hit from Walk settles in Hit: Hit
+PASS weapon_001 hit recovery settles in Walk: Walk
+PASS weapon_001 trigger enters hit from Run settles in Hit: Hit
+PASS weapon_001 hit recovery settles in Run: Run
+PASS weapon_002 idle -> walk settles in Walk: Walk
+PASS weapon_002 walk -> run settles in Run: Run
+PASS weapon_002 run -> walk settles in Walk: Walk
+PASS weapon_002 walk -> idle settles in Idle: Idle
+PASS weapon_002 idle -> run settles in Run: Run
+PASS weapon_002 run -> idle settles in Idle: Idle
+PASS weapon_002 rapid movement -> idle settles in Idle: Idle
+PASS weapon_002 idle -> attack settles in Attack_01: Attack_01
+PASS weapon_002 single attack -> idle settles in Idle: Idle
+PASS weapon_002 input reaches all three combo stages: Attack_01,Attack_02,Attack_03
+PASS weapon_002 combo -> idle settles in Idle: Idle
+PASS weapon_002 movement cancels third attack settles in Walk: Walk
+PASS weapon_002 movement cancels third attack settles in Run: Run
+PASS weapon_002 jump -> idle settles in Idle: Idle
+PASS weapon_002 trigger enters hit from Idle settles in Hit: Hit
+PASS weapon_002 hit recovery settles in Idle: Idle
+PASS weapon_002 trigger enters hit from Walk settles in Hit: Hit
+PASS weapon_002 hit recovery settles in Walk: Walk
+PASS weapon_002 trigger enters hit from Run settles in Hit: Hit
+PASS weapon_002 hit recovery settles in Run: Run
+PASS weapon_003 idle -> walk settles in Walk: Walk
+PASS weapon_003 walk -> run settles in Run: Run
+PASS weapon_003 run -> walk settles in Walk: Walk
+PASS weapon_003 walk -> idle settles in Idle: Idle
+PASS weapon_003 idle -> run settles in Run: Run
+PASS weapon_003 run -> idle settles in Idle: Idle
+PASS weapon_003 rapid movement -> idle settles in Idle: Idle
+PASS weapon_003 idle -> attack settles in Attack_01: Attack_01
+PASS weapon_003 single attack -> idle settles in Idle: Idle
+PASS weapon_003 input reaches all three combo stages: Attack_01,Attack_02,Attack_03
+PASS weapon_003 combo -> idle settles in Idle: Idle
+PASS weapon_003 movement cancels third attack settles in Walk: Walk
+PASS weapon_003 movement cancels third attack settles in Run: Run
+PASS weapon_003 jump -> idle settles in Idle: Idle
+PASS weapon_003 trigger enters hit from Idle settles in Hit: Hit
+PASS weapon_003 hit recovery settles in Idle: Idle
+PASS weapon_003 trigger enters hit from Walk settles in Hit: Hit
+PASS weapon_003 hit recovery settles in Walk: Walk
+PASS weapon_003 trigger enters hit from Run settles in Hit: Hit
+PASS weapon_003 hit recovery settles in Run: Run
+PASS weapon_004 idle -> walk settles in Walk: Walk
+PASS weapon_004 walk -> run settles in Run: Run
+PASS weapon_004 run -> walk settles in Walk: Walk
+PASS weapon_004 walk -> idle settles in Idle: Idle
+PASS weapon_004 idle -> run settles in Run: Run
+PASS weapon_004 run -> idle settles in Idle: Idle
+PASS weapon_004 rapid movement -> idle settles in Idle: Idle
+PASS weapon_004 idle -> attack settles in Attack_01: Attack_01
+PASS weapon_004 single attack -> idle settles in Idle: Idle
+PASS weapon_004 input reaches all three combo stages: Attack_01,Attack_02,Attack_03
+PASS weapon_004 combo -> idle settles in Idle: Idle
+PASS weapon_004 movement cancels third attack settles in Walk: Walk
+PASS weapon_004 movement cancels third attack settles in Run: Run
+PASS weapon_004 jump -> idle settles in Idle: Idle
+PASS weapon_004 trigger enters hit from Idle settles in Hit: Hit
+PASS weapon_004 hit recovery settles in Idle: Idle
+PASS weapon_004 trigger enters hit from Walk settles in Hit: Hit
+PASS weapon_004 hit recovery settles in Walk: Walk
+PASS weapon_004 trigger enters hit from Run settles in Hit: Hit
+PASS weapon_004 hit recovery settles in Run: Run
+RESULT: 0 failures; production input and automatic transition paths.

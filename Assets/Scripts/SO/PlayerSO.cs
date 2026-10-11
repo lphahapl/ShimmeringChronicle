@@ -7,8 +7,8 @@ public class PlayerSO : BaseDataSO<PlayerData>
 {
    
   
-    [Tooltip("跑步速度（米/秒）")]
-    public float runSpeed = 5f;
+    [Tooltip("跑步速度倍率")]
+    public float runSpeed = 1f;
     [Tooltip("转身速度（度/秒）")]
     public float turnSpeed = 720f;
     [Tooltip("角色韧性")]
