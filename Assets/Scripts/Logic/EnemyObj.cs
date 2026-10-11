@@ -139,7 +139,6 @@ public class EnemyObj : MonoBehaviour,IDamageable
         //韧性不够再进入受击
         if (animator != null&&poise<=0)
         {
-            EndEff();
             animator.SetTrigger("Hit");
         }
     }
@@ -161,7 +160,6 @@ public class EnemyObj : MonoBehaviour,IDamageable
         {
             col.enabled = false;
         }
-        EndEff();
         EnemyManager.Instance.Unregister(this);
         animator.SetTrigger("isDied");
 
@@ -176,7 +174,6 @@ public class EnemyObj : MonoBehaviour,IDamageable
     }
     private void OnDisable()
     {
-        EndEff();
         this.UnSubscribe(GameEvents.Damaged, OnDameged);
         this.UnSubscribe(GameEvents.HitStopRequested, OnHitStopRequested);
         this.UnSubscribe(GameEvents.Died, OnDie);
@@ -215,7 +212,6 @@ public class EnemyObj : MonoBehaviour,IDamageable
 
         foreach (var weapon in handingInstance.GetComponentsInChildren<WeaponObj>(true))
         {
-            if (weapon.effPos != null) weapon.effPos.gameObject.SetActive(false);
             weapon.SO = config;
             weapon.weaponData = weaponData;
             weapon.InitWeapon(gameObject);
@@ -249,28 +245,5 @@ public class EnemyObj : MonoBehaviour,IDamageable
         enemyAI.data = data;
         enemyAI.InitAgentParameters();
         enemyAI.ResetDetectionRange();
-    }
-    public void PlayHandingEffORAudioClip()
-    {
-        if (handingInstance == null) return;
-        var weapon = handingInstance.GetComponentInChildren<WeaponObj>(true);
-        if (weapon == null) return;
-        if (weapon.effPos != null)
-        {
-            foreach (var trail in weapon.effPos.GetComponentsInChildren<TrailRenderer>(true)) trail.Clear();
-            weapon.effPos.gameObject.SetActive(true);
-        }
-        else if (weapon.TryGetComponent<AudioSource>(out var audio))
-        {
-            audio.Play();
-        }
-    }
-
-    public void EndEff()
-    {
-        if (handingInstance == null) return;
-        var weapon = handingInstance.GetComponentInChildren<WeaponObj>(true);
-        if (weapon != null && weapon.effPos != null)
-            weapon.effPos.gameObject.SetActive(false);
     }
 }

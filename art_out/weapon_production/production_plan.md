@@ -13,20 +13,20 @@
 
 伤害、削韧、卡肉沿用当前四份 WeaponSO。新方案会按实际武器长度调整半径、角度、偏移、停止距离和攻击间隔；具体逐段数值、命中时间、效果窗口以及理由见 weapon_002_plan.md、weapon_003_plan.md、weapon_004_plan.md、enemy_weapon_001_plan.md。
 
-玩家三把剑本轮只交付 Warrior 动作及覆盖控制器；紫电包括双手待机、走路、跑步和三段攻击。用户最新指示暂缓刻晴，未向主工程导入刻晴动作，也未替换原 Warrior 或刻晴预制体。
+玩家三把剑本轮只交付 Warrior 动作及覆盖控制器；紫电包括双手待机、走路、跑步和三段攻击。刻晴动画已按后续要求移除，等待重做；原 Warrior 预制体未替换。
 
 ## 已有资源补齐
 
-测试剑、苔石长石刀、强化长石刀、隼翼誓约补尖端效果及声音；苔石和强化空手只补声音。强化第三招是左掌拍地；按后续指示统一使用现有特效显隐事件，取消独立拍地事件。所有路径拖尾跟随真实武器尖端，挥空时只播放挥动声。
+测试剑、苔石长石刀、强化长石刀、隼翼誓约补尖端效果及声音；苔石和强化空手只补声音。强化第三招是左掌拍地；按后续指示统一从 AttackData 在伤害检测时播放，取消独立拍地事件。所有路径拖尾跟随真实武器尖端，挥空时只播放挥动声。
 
-两个空手 WAV 已生成，并绑定到空手预制体的 AudioSource.clip，通过现有动画事件播放。隼翼尚未有战斗配置：本轮补齐其 prefab 的默认关闭效果节点、独立 eff 资源和声音，并交付扫动预览；不声称其已进入背包战斗链路。
+两个空手 WAV 已生成，绑定在 AttackData.audioClip，伤害检测时播放。隼翼尚未有 WeaponSO：保留剑尖位置、独立特效和音频资源，待添加战斗配置后绑定 combo。
 
 详细表现、已有事件时间、音量和音频规格见 effects_audio_plan.md。
 
 ## 接入与验收
 
-按用户最新要求，特效预制体直接挂在武器 TipPoint/AttackEffect，平时关闭，动画事件仅通过 SetActive 控制显隐。WeaponObj.effPos 在预制体上绑定效果子物体；动画事件读取手上实例的 WeaponObj，启用其 effPos，无效果时播放该物体的 AudioSource。WeaponSO 和 WeaponData 中的 eff/clip 字段已按后续指示移除。相关绑定及播放/结束代码已补齐，攻击时不生成或销毁效果。无需 WeaponAttackEffects。音频长度与显示窗口匹配，隐藏即关闭效果和其声音。
+按最新设计，WeaponSO.combo 中每段 AttackData 配置 eff 与 audioClip，运行时 Clone 保留资源引用。WeaponObj.effPos 绑定 TipPoint，作为剑尖位置；伤害检测时播放音频、实例化跟随剑尖的特效，开启后 0.35 秒自动销毁。空手 eff 留空，音频使用武器位置。旧预挂实例、AudioSource、PlayHandingEffORAudioClip / EndEff 动画事件与回调已移除。weapon_001 的三段已绑定从用户参考音频加工的 SwordSlash_01/02/03，长度为 0.16/0.20/0.18 秒。
 
 按各武器目录存放模型、配置、动画/重写控制器、效果、声音和材质；替换时保留已有 GUID。制作后检查实际渲染动作、握持尺寸、根运动、数据范围、播放/结束/切换/回收全链路及多人声音，再交付预览和验证记录。制作时先读取用户最新代码和动画事件，避免覆盖其同期工作。
 
-当前状态：已按用户制作授权完成资源导出。隔离工程原生资源/动作/实例绑定检查及实际 Play Mode 音频开关验证通过；主编辑器当前尚未刷新，刷新后会自动运行主工程引用与 URP 材质检查，成功后删除临时检查脚本。
+当前状态：AttackData 绑定已导出。隔离工程已用最终导出资源通过 SO/CreateData/Clone 引用检查和实际 Play Mode 玩家、敌人伤害触发与自动销毁检查。动画曲线和现有战斗参数保留。最新记录为 Tools/Weapons/attack-data-binding-validation.txt 与 attack-data-play-validation.txt。

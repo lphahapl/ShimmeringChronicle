@@ -27,6 +27,8 @@ MonoBehaviour:
     priority: 50
     scale: 0.12
     time: 0.04
+    audioClip: {fileID: 8300000, guid: 2f1795fd46799664fbfbeb19f71ae21f, type: 3}
+    eff: {fileID: 0}
     judgeOffset: {x: 0, y: 1, z: 0.65}
   - damagePerHit: 20
     poiseDamage: 65
@@ -35,6 +37,8 @@ MonoBehaviour:
     priority: 50
     scale: 0.06
     time: 0.075
+    audioClip: {fileID: 8300000, guid: 2f1795fd46799664fbfbeb19f71ae21f, type: 3}
+    eff: {fileID: 0}
     judgeOffset: {x: 0, y: 0.8, z: 0.85}
   stopDistance: 1.7
   attackBreak: 1.5

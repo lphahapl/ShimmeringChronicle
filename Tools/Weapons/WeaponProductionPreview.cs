@@ -43,14 +43,20 @@ public static class WeaponProductionPreview
     static void Finish(){preview.Cleanup();Object.DestroyImmediate(actor);foreach(var s in skins)Object.DestroyImmediate(s.Item2);}
     static void SampleWithEffect(AnimationClip clip,float time)
     {
+        var weapon=actor.GetComponentInChildren<WeaponObj>(true);
         var effect=actor.GetComponentsInChildren<Transform>(true).FirstOrDefault(t=>t.name=="AttackEffect");
+        var hit=AnimationUtility.GetAnimationEvents(clip).LastOrDefault(e=>(e.functionName=="PublishPlayerCombo"||e.functionName=="PublishEnemyCombo")&&e.time<=time);
+        if(!effect&&weapon&&weapon.effPos&&weapon.SO&&weapon.SO.combo.Count>0)
+        {
+            var attack=weapon.SO.combo[Mathf.Clamp(hit!=null?hit.intParameter:0,0,weapon.SO.combo.Count-1)];
+            if(attack.eff){effect=Object.Instantiate(attack.eff,weapon.effPos,false).transform;effect.name="AttackEffect";}
+        }
         if(!effect){clip.SampleAnimation(actor,time);return;}
-        var events=AnimationUtility.GetAnimationEvents(clip);var start=events.FirstOrDefault(e=>e.functionName=="PlayHandingEffORAudioClip");var end=events.FirstOrDefault(e=>e.functionName=="EndEff");
-        bool active=start!=null&&end!=null&&time>=start.time&&time<=end.time;effect.gameObject.SetActive(active);
+        bool active=hit!=null&&time<=hit.time+.35f;effect.gameObject.SetActive(active);
         if(active)
         {
             var trail=effect.GetComponent<TrailRenderer>();trail.Clear();
-            float from=Mathf.Max(start.time,time-trail.time);
+            float from=Mathf.Max(hit.time,time-trail.time);
             for(int n=0;n<=20;n++){clip.SampleAnimation(actor,Mathf.Lerp(from,time,n/20f));trail.AddPosition(effect.position);}
             foreach(var particles in effect.GetComponentsInChildren<ParticleSystem>())particles.Simulate(.035f,true,true);
         }
@@ -125,7 +131,7 @@ public static class WeaponProductionPreview
         for(int index=0;index<WeaponAssetProduction.Names.Length;index++)
         {
             string id=WeaponAssetProduction.Names[index];Setup(Object.Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>(WeaponAssetProduction.Root+id+"/"+id+".prefab")),false);
-            var effect=actor.transform.Find("TipPoint/AttackEffect");effect.gameObject.SetActive(true);var trail=effect.GetComponent<TrailRenderer>();trail.Clear();
+            var effect=Object.Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>(WeaponAssetProduction.Root+id+"/Effects/AttackEffect.prefab"),actor.transform.Find("TipPoint"),false).transform;effect.gameObject.SetActive(true);var trail=effect.GetComponent<TrailRenderer>();trail.Clear();
             var tip=actor.transform.Find("TipPoint");var alignment=Quaternion.FromToRotation(tip.localPosition.normalized,Vector3.up);float radius=tip.localPosition.magnitude*actor.transform.lossyScale.x;
             for(int frame=0;frame<=40;frame++){actor.transform.rotation=Quaternion.AngleAxis(Mathf.Lerp(-65,45,frame/40f),Vector3.forward)*alignment;trail.AddPosition(effect.position);}
             foreach(var particles in effect.GetComponentsInChildren<ParticleSystem>())particles.Simulate(.04f,true,true);

@@ -101,7 +101,7 @@ public class WeaponObj : MonoBehaviour
         {
             Debug.Log($"[WeaponObj] 触发范围检测: Combo[{index}], 半径={attack.radius}m, 角度={attack.angle}°, 伤害={attack.damagePerHit}");
         }
-
+        HandleEffAndAudio(attack);
         GetAttackTransform(attack, out Vector3 judgePos, out Quaternion facing, out Vector3 forward);
         float angle = attack.angle;
         float minDot = Mathf.Cos(angle * 0.5f * Mathf.Deg2Rad);
@@ -124,6 +124,7 @@ public class WeaponObj : MonoBehaviour
             targets.Add(col);
             
             float hpBefore = enemy.data.hp;
+            
             enemy.TakeDamage(attack.damagePerHit, parent);
             enemy.poise -=attack.poiseDamage;
             //血量有变动才有卡肉
@@ -166,7 +167,7 @@ public class WeaponObj : MonoBehaviour
         {
             Debug.Log($"[WeaponObj] 触发范围检测: Combo[{index}], 半径={attack.radius}m, 角度={attack.angle}°, 伤害={attack.damagePerHit}");
         }
-
+        HandleEffAndAudio(attack);
         GetAttackTransform(attack, out Vector3 judgePos, out Quaternion facing, out Vector3 forward);
         float angle = attack.angle;
         float minDot = Mathf.Cos(angle * 0.5f * Mathf.Deg2Rad);
@@ -436,5 +437,18 @@ public class WeaponObj : MonoBehaviour
     private void OnDisable()
     {
         UnsubscribeComboEvents();
+    }
+    private void HandleEffAndAudio(AttackData attack)
+    {
+        Transform position = effPos != null ? effPos : transform;
+        if (attack.audioClip != null)
+            //播放该段音频
+            AudioManager.Instance.PlaySFXAtPoint(attack.audioClip, position.position);
+        if (attack.eff != null)
+        {
+            GameObject effect = Instantiate(attack.eff, position.position, position.rotation, position);
+            effect.SetActive(true);
+            Destroy(effect, 0.35f);
+        }
     }
 }

@@ -1,0 +1,11 @@
+PASS weapon_001: tip anchor, no duplicate AudioSource, SO/CreateData/Clone resources
+PASS weapon_002: tip anchor, no duplicate AudioSource, SO/CreateData/Clone resources
+PASS weapon_003: tip anchor, no duplicate AudioSource, SO/CreateData/Clone resources
+PASS weapon_004: tip anchor, no duplicate AudioSource, SO/CreateData/Clone resources
+PASS EnemyWeapon_001: tip anchor, no duplicate AudioSource, SO/CreateData/Clone resources
+PASS MossstoneBlade: tip anchor, no duplicate AudioSource, SO/CreateData/Clone resources
+PASS ReinforcedBlade: tip anchor, no duplicate AudioSource, SO/CreateData/Clone resources
+PASS FalconOath: tip anchor, no duplicate AudioSource, SO/CreateData/Clone resources (FalconOath has no SO yet)
+PASS MossstoneFists: tip anchor, no duplicate AudioSource, SO/CreateData/Clone resources
+PASS ReinforcedFists: tip anchor, no duplicate AudioSource, SO/CreateData/Clone resources
+ALL PASSED: attack-data resource bindings and obsolete animation events.

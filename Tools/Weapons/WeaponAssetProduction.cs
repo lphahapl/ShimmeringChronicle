@@ -55,8 +55,6 @@ public static class WeaponAssetProduction
         var shape=ps.shape;shape.enabled=false;
         var fade=ps.colorOverLifetime;fade.enabled=true;var g=new Gradient();g.SetKeys(new[]{new GradientColorKey(color,0),new GradientColorKey(color,1)},new[]{new GradientAlphaKey(.8f,0),new GradientAlphaKey(0,1)});fade.color=g;
         var renderer=ps.GetComponent<ParticleSystemRenderer>();renderer.sharedMaterial=material;renderer.shadowCastingMode=UnityEngine.Rendering.ShadowCastingMode.Off;
-        var audio=go.AddComponent<AudioSource>();audio.playOnAwake=true;audio.loop=false;audio.spatialBlend=1;audio.dopplerLevel=0;audio.minDistance=2;audio.maxDistance=20;audio.volume=Volumes[index];audio.priority=140;
-        audio.clip=AssetDatabase.LoadAssetAtPath<AudioClip>(Root+id+"/Audio/attack_swing.wav");if(!audio.clip)throw new Exception("Missing generated audio "+id);
         go.SetActive(false);var result=PrefabUtility.SaveAsPrefabAsset(go,Root+id+"/Effects/AttackEffect.prefab");Object.DestroyImmediate(go);return result;
     }
     static Vector3 FindTip(GameObject root)
@@ -85,7 +83,7 @@ public static class WeaponAssetProduction
             var prior=tip.Find("AttackEffect");if(prior!=null)Object.DestroyImmediate(prior.gameObject);
             var effect=(GameObject)PrefabUtility.InstantiatePrefab(Effect(id,index),tip);effect.name="AttackEffect";effect.transform.localPosition=Vector3.zero;effect.SetActive(false);
             var weapons=root.GetComponentsInChildren<WeaponObj>(true);if(weapons.Length==0)weapons=new[]{root.AddComponent<WeaponObj>()};
-            foreach(var weapon in weapons)weapon.effPos=effect.transform;
+            foreach(var weapon in weapons)weapon.effPos=tip;
             var saved=PrefabUtility.SaveAsPrefabAsset(root,path);
         }
         finally{PrefabUtility.UnloadPrefabContents(root);}

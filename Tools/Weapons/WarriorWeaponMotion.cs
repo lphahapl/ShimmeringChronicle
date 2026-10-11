@@ -130,7 +130,7 @@ public static class WarriorWeaponMotion
         float[] starts=id=="weapon_002"?new[]{.14f,.17f,.20f}:id=="weapon_003"?new[]{.18f,.20f,.26f}:new[]{.20f,.24f,.30f};
         float[] ends=id=="weapon_002"?new[]{.39f,.43f,.52f}:id=="weapon_003"?new[]{.46f,.49f,.59f}:new[]{.49f,.55f,.68f};
         var guard=AssetDatabase.LoadAssetAtPath<AnimationClip>("Assets/Prefabs/Weapon/weapon_001/Animations/1A.anim");
-        for(int i=0;i<3;i++){hitTime=hits[i];clips["Attack"+(i+1)]=Bake(id,"Attack"+(i+1),durations[i],false,guard,new[]{new AnimationEvent{time=starts[i],functionName="PlayHandingEffORAudioClip"},new AnimationEvent{time=hits[i],functionName="PublishPlayerCombo",intParameter=i},new AnimationEvent{time=ends[i],functionName="EndEff"}});}
+        for(int i=0;i<3;i++){hitTime=hits[i];clips["Attack"+(i+1)]=Bake(id,"Attack"+(i+1),durations[i],false,guard,new[]{new AnimationEvent{time=hits[i],functionName="PublishPlayerCombo",intParameter=i}});}
         clips["Idle"]=Bake(id,"Idle",2.6f,true,guard,null);
         foreach(string name in new[]{"Walk","Run"}){var original=AssetDatabase.LoadAssetAtPath<AnimationClip>("Assets/Prefabs/Player/Warrior/Animations/"+name+".anim");clips[name]=Bake(id,name,original.length,true,original,null);}
         // The old holding layer includes the right wrist; that would override every new slash.

@@ -291387,22 +291387,8 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
-  - time: 0.18
-    functionName: PlayHandingEffORAudioClip
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
   - time: 0.32
     functionName: PublishPlayerCombo
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.46
-    functionName: EndEff
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

@@ -48,6 +48,11 @@ public class AttackData
     public float scale;
     [Header("卡肉时长")]
     public float time;
+    [Header("该段攻击音效")]
+    public AudioClip audioClip;
+    [Header("该段攻击特效")]
+    public GameObject eff;
+
     
     /// <summary>判定偏移</summary>
     public Vector3 judgeOffset;
@@ -67,7 +72,9 @@ public class AttackData
             poiseDamage = poiseDamage,
             priority = priority,
             scale = scale,
-            time = time
+            time = time,
+            audioClip = audioClip,
+            eff = eff
         };
     }
 }

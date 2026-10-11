@@ -1,1 +1,1 @@
-PENDING: configured prefabs were exported after the previous main-editor check. The next refresh will validate WeaponObj.effPos and prefab AudioSource references plus supported shaders. Isolated Unity resource/owner/motion checks and actual player/enemy audio-event Play Mode checks already passed.
+Superseded: current AttackData binding and final-resource Play Mode validation passed. See attack-data-binding-validation.txt and attack-data-play-validation.txt. Older prefab-audio checks do not describe the current design.

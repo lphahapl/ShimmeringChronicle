@@ -27,6 +27,8 @@ MonoBehaviour:
     priority: 50
     scale: 0.1
     time: 0.03
+    audioClip: {fileID: 8300000, guid: 5655258e9b1309f4888692a676084566, type: 3}
+    eff: {fileID: 7943969666195616305, guid: 3a0550cd1a1870c48945bde48a1d4551, type: 3}
     judgeOffset: {x: 0, y: 0, z: 0.2}
   - damagePerHit: 30
     radius: 3.5
@@ -35,6 +37,8 @@ MonoBehaviour:
     priority: 50
     scale: 0.1
     time: 0.04
+    audioClip: {fileID: 8300000, guid: ffbf89d143ffc3c43b383cd698c0462c, type: 3}
+    eff: {fileID: 7943969666195616305, guid: 3a0550cd1a1870c48945bde48a1d4551, type: 3}
     judgeOffset: {x: 0, y: 0, z: 0.2}
   - damagePerHit: 50
     radius: 4
@@ -43,8 +47,8 @@ MonoBehaviour:
     priority: 50
     scale: 0.08
     time: 0.08
+    audioClip: {fileID: 8300000, guid: 216484a972e8d544ab7e958d5e8f48a2, type: 3}
+    eff: {fileID: 7943969666195616305, guid: 3a0550cd1a1870c48945bde48a1d4551, type: 3}
     judgeOffset: {x: 0, y: 0, z: 1}
   stopDistance: 0
   attackBreak: 0.8
-
-

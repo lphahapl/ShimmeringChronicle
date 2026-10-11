@@ -54,7 +54,7 @@ public static class EnemyWeaponProduction
                 body.Add((t,cube.localPosition,cube.localRotation));grip.Add((t,hand.localPosition,q));
             }
             var clip=new AnimationClip{name="EnemyWeapon_001_Attack0"+(attack+1),frameRate=60};TransformCurves(clip,"foot/Cube",body);TransformCurves(clip,"foot/Cube/hand",grip);clip.EnsureQuaternionContinuity();
-            AnimationUtility.SetAnimationEvents(clip,new[]{new AnimationEvent{time=attack==0?.26f:.37f,functionName="PlayHandingEffORAudioClip"},new AnimationEvent{time=hit,functionName="PublishEnemyCombo",intParameter=attack},new AnimationEvent{time=attack==0?.53f:.73f,functionName="EndEff"},new AnimationEvent{time=duration-.03f,functionName="ChangeAttackStatu"}});
+            AnimationUtility.SetAnimationEvents(clip,new[]{new AnimationEvent{time=hit,functionName="PublishEnemyCombo",intParameter=attack},new AnimationEvent{time=duration-.03f,functionName="ChangeAttackStatu"}});
             WeaponAssetProduction.Save(clip,WeaponAssetProduction.Root+"EnemyWeapon_001/Animations/EnemyWeapon_001_Attack0"+(attack+1)+".anim");
         }
         var so=AssetDatabase.LoadAssetAtPath<WeaponSO>(WeaponAssetProduction.Root+"EnemyWeapon_001/EnemyWeapon_001.asset");
@@ -80,28 +80,9 @@ public static class EnemyWeaponProduction
         }
         controller.ApplyOverrides(overrides);EditorUtility.SetDirty(controller);Object.DestroyImmediate(actor);
     }
-    static void Windows(string id,string clipName,float start,float end)
-    {
-        var clip=AssetDatabase.LoadAssetAtPath<AnimationClip>(WeaponAssetProduction.Root+id+"/Animations/"+clipName+".anim");
-        var events=AnimationUtility.GetAnimationEvents(clip).Where(e=>e.functionName!="PlayHandingEffORAudioClip"&&e.functionName!="EndEff").ToList();
-        events.Add(new AnimationEvent{time=start,functionName="PlayHandingEffORAudioClip"});events.Add(new AnimationEvent{time=end,functionName="EndEff"});
-        AnimationUtility.SetAnimationEvents(clip,events.OrderBy(e=>e.time).ToArray());EditorUtility.SetDirty(clip);
-    }
-    static void AudioOnly(string id)
-    {
-        WeaponPrefabEffects.ConfigureAudioOnly(id);
-        foreach(string guid in AssetDatabase.FindAssets("t:AnimationClip",new[]{WeaponAssetProduction.Root+id+"/Animations"}))
-        {
-            var clip=AssetDatabase.LoadAssetAtPath<AnimationClip>(AssetDatabase.GUIDToAssetPath(guid));var events=AnimationUtility.GetAnimationEvents(clip).ToList();
-            if(!events.Any(e=>e.functionName=="PlayHandingEffORAudioClip")){var hit=events.FirstOrDefault(e=>e.functionName=="PublishEnemyCombo");if(hit==null)throw new Exception("Unarmed hit event missing "+clip.name);events.Add(new AnimationEvent{time=Mathf.Max(0,hit.time-.18f),functionName="PlayHandingEffORAudioClip"});AnimationUtility.SetAnimationEvents(clip,events.OrderBy(e=>e.time).ToArray());EditorUtility.SetDirty(clip);}
-        }
-    }
     public static void BuildAll()
     {
         CubeAttacks();
-        Windows("MossstoneBlade","Blade_Attack01_Charge",.72f,1f);Windows("MossstoneBlade","Blade_Attack02_Sweep",.59f,.95f);Windows("MossstoneBlade","Blade_Attack03_Cleave",.92f,1.36f);
-        Windows("ReinforcedBlade","ReinforcedBlade_Attack01_Charge",.80f,1.17f);Windows("ReinforcedBlade","ReinforcedBlade_Attack02_Sweep",.87f,1.34f);Windows("ReinforcedBlade","ReinforcedBlade_Attack03_GroundSlap",1.51f,1.80f);
-        AudioOnly("MossstoneFists");AudioOnly("ReinforcedFists");
     }
-    public static void Run(){try{BuildAll();AssetDatabase.SaveAssets();File.WriteAllText("enemy-result.txt","Built cube attacks, existing blade effect windows and unarmed audio events.");EditorApplication.Exit(0);}catch(Exception e){Debug.LogException(e);File.WriteAllText("enemy-result.txt","FAIL: "+e);EditorApplication.Exit(1);}}
+    public static void Run(){try{BuildAll();AssetDatabase.SaveAssets();File.WriteAllText("enemy-result.txt","Built cube attacks with damage events.");EditorApplication.Exit(0);}catch(Exception e){Debug.LogException(e);File.WriteAllText("enemy-result.txt","FAIL: "+e);EditorApplication.Exit(1);}}
 }

@@ -1,0 +1,9 @@
+PASS sword stage 0 emits exactly one sound/effect at its instance tip on damage detection, including a miss
+PASS sword stage 1 emits exactly one sound/effect at its instance tip on damage detection, including a miss
+PASS sword stage 2 emits exactly one sound/effect at its instance tip on damage detection, including a miss
+PASS unarmed attacks play audio without a tip anchor or effect
+PASS another enemy's attack cannot trigger this weapon's resources
+PASS the owning enemy's damage detection triggers its own effect
+PASS empty attack resources are optional
+PASS all temporary attack effects are destroyed automatically
+ALL PASSED: actual player/enemy damage-triggered effect and audio lifecycle.

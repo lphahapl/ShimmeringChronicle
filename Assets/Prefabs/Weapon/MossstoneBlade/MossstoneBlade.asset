@@ -27,6 +27,8 @@ MonoBehaviour:
     priority: 50
     scale: 0.12
     time: 0.04
+    audioClip: {fileID: 8300000, guid: f05b3596e989e974fb5514f5a82e657b, type: 3}
+    eff: {fileID: 4188968770557009748, guid: 879360c2157208644beff055c624c70a, type: 3}
     judgeOffset: {x: 0, y: 1, z: 0.75}
   - damagePerHit: 20
     poiseDamage: 40
@@ -35,6 +37,8 @@ MonoBehaviour:
     priority: 50
     scale: 0.1
     time: 0.05
+    audioClip: {fileID: 8300000, guid: f05b3596e989e974fb5514f5a82e657b, type: 3}
+    eff: {fileID: 4188968770557009748, guid: 879360c2157208644beff055c624c70a, type: 3}
     judgeOffset: {x: 0, y: 1.1, z: 0.75}
   - damagePerHit: 30
     poiseDamage: 70
@@ -43,6 +47,8 @@ MonoBehaviour:
     priority: 50
     scale: 0.05
     time: 0.085
+    audioClip: {fileID: 8300000, guid: f05b3596e989e974fb5514f5a82e657b, type: 3}
+    eff: {fileID: 4188968770557009748, guid: 879360c2157208644beff055c624c70a, type: 3}
     judgeOffset: {x: 0, y: 0.8, z: 1.1}
   stopDistance: 2.7
   attackBreak: 1.8

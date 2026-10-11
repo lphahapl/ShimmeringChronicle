@@ -366,7 +366,6 @@ public class PlayerObj : MonoBehaviour, IDamageable, IContainerOwner,ICanChangeH
         {
             foreach (var weapon in HandingItem.GetComponentsInChildren<WeaponObj>())
             {
-                if (weapon.effPos != null) weapon.effPos.gameObject.SetActive(false);
                 weapon.InitWeapon(gameObject);
                 weapon.weaponData = Data.GetWeaponData();
             }
@@ -374,28 +373,5 @@ public class PlayerObj : MonoBehaviour, IDamageable, IContainerOwner,ICanChangeH
         }
 
         return true;
-    }
-    public void PlayHandingEffORAudioClip()
-    {
-        if (HandingItem == null) return;
-        var weapon = HandingItem.GetComponentInChildren<WeaponObj>(true);
-        if (weapon == null) return;
-        if (weapon.effPos != null)
-        {
-            foreach (var trail in weapon.effPos.GetComponentsInChildren<TrailRenderer>(true)) trail.Clear();
-            weapon.effPos.gameObject.SetActive(true);
-        }
-        else if (weapon.TryGetComponent<AudioSource>(out var audio))
-        {
-            audio.Play();
-        }
-    }
-
-    public void EndEff()
-    {
-        if (HandingItem == null) return;
-        var weapon = HandingItem.GetComponentInChildren<WeaponObj>(true);
-        if (weapon != null && weapon.effPos != null)
-            weapon.effPos.gameObject.SetActive(false);
     }
 }

@@ -8,8 +8,8 @@ public static class FinalizeWeaponProduction
  {
   try
   {
-   WeaponAssetProduction.BuildAll();WarriorWeaponMotion.BuildAll();EnemyWeaponProduction.BuildAll();WeaponCombatConfiguration.Apply();AssetDatabase.SaveAssets();
-   if(!ValidateWeaponProduction.CheckAll())throw new Exception("Native weapon validation failed; see production-validation.txt");
+   WeaponAssetProduction.BuildAll();WarriorWeaponMotion.BuildAll();EnemyWeaponProduction.BuildAll();WeaponCombatConfiguration.Apply();AttackDataBindings.BindAll();AssetDatabase.SaveAssets();
+   if(!AttackDataBindings.CheckAll())throw new Exception("Native weapon validation failed; see attack-data-binding-validation.txt");
    WeaponProductionPreview.Run();
   }
   catch(Exception e){Debug.LogException(e);File.WriteAllText("final-build.txt","FAIL "+e);EditorApplication.Exit(1);}

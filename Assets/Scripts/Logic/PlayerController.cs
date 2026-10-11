@@ -76,11 +76,10 @@ public class PlayerController : MonoBehaviour
     /// <summary>当前是否处于死亡状态，外部查询用</summary>
     public bool IsDead { get; private set; }
 
-    // ---- 内部状态 ----
-    Vector3 moveDir;          // 本帧想走的方向，世界空间、xz 平面、已归一化
+    Vector3 moveDir;          
     bool wantsRun;            // 想走还是想跑
     float verticalVelocity;   // 竖直速度，重力用
-    int comboIndex;           // 连招进度：0 = 没在连招，1~3 = 已经出到第几段
+    int comboIndex;           // 连招进度
 
   
     int pendingAttackIndex = -1;
@@ -314,7 +313,7 @@ public class PlayerController : MonoBehaviour
         if (pendingAttackIndex >= 0 || animator.IsInTransition(0)) return;
         int current = AttackIndex(animator.GetCurrentAnimatorStateInfo(0).shortNameHash);
         int next = current + 1;
-        if (current < 0 && !IsLocomotionState()) return;
+        if (current < 0 ) return;
         if (next >= ComboCount) return;
         comboWeapon = data.GetWeaponData();
         pendingAttackIndex = next;
@@ -365,7 +364,6 @@ public class PlayerController : MonoBehaviour
 
     void ResetCombo()
     {
-        if (player) player.EndEff();
         comboIndex = 0;
         pendingAttackIndex = -1;
         if (!animator) return;
@@ -392,7 +390,7 @@ public class PlayerController : MonoBehaviour
         float dt = dtFix;
         bool moving = !IsDead
                    && !isTalking
-                   && IsLocomotionState()
+                  
                    && moveDir.sqrMagnitude > 0.0001f;
         animator.SetBool(IsWalkingHash, moving);
         animator.SetBool(IsRunningHash, moving && wantsRun);

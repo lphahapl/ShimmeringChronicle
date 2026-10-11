@@ -25,6 +25,8 @@ MonoBehaviour:
     priority: 50
     scale: 0.12
     time: 0.03
+    audioClip: {fileID: 8300000, guid: e8b50412da42ee744bff6ce6c66984a1, type: 3}
+    eff: {fileID: 1158994281337082736, guid: 7dba7d2c1d25e424d98d9db5a25781f6, type: 3}
     judgeOffset: {x: 0, y: 1, z: 0.35}
     angle: 130
   - damagePerHit: 16
@@ -33,6 +35,8 @@ MonoBehaviour:
     priority: 50
     scale: 0.1
     time: 0.045
+    audioClip: {fileID: 8300000, guid: e8b50412da42ee744bff6ce6c66984a1, type: 3}
+    eff: {fileID: 1158994281337082736, guid: 7dba7d2c1d25e424d98d9db5a25781f6, type: 3}
     judgeOffset: {x: 0, y: 1, z: 0.35}
     angle: 160
   - damagePerHit: 24
@@ -41,6 +45,8 @@ MonoBehaviour:
     priority: 50
     scale: 0.08
     time: 0.065
+    audioClip: {fileID: 8300000, guid: e8b50412da42ee744bff6ce6c66984a1, type: 3}
+    eff: {fileID: 1158994281337082736, guid: 7dba7d2c1d25e424d98d9db5a25781f6, type: 3}
     judgeOffset: {x: 0, y: 1, z: 0.45}
     angle: 110
   overrideController: {fileID: 22100000, guid: af13b85aa00811c44b73688a84ac281f, type: 2}
