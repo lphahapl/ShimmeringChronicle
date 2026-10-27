@@ -1,501 +1,498 @@
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 
-
+// 只负责动作和动画。玩家数据、装备、死亡和对话由 PlayerObj 管。
+[DisallowMultipleComponent]
+[RequireComponent(typeof(PlayerObj), typeof(Animator), typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
 {
-   
-    const string IdleStateName   = "Idle";
-    const string WalkStateName   = "Walk";
-    const string RunStateName    = "Run";
-    const string JumpStateName   = "Jump";
-    const string Attack1StateName = "Attack_01";
-    const string Attack2StateName = "Attack_02";
-    const string Attack3StateName = "Attack_03";
-    const string HitStateName    = "Hit";
-    const string DeadStateName   = "Dead";
-
-    // ==================== Animator 参数 ====================
-    // 预先算成哈希，省掉每帧的字符串查找
-    static readonly int IsWalkingHash = Animator.StringToHash("IsWalking");
-    static readonly int IsRunningHash = Animator.StringToHash("IsRunning");
-    static readonly int JumpHash      = Animator.StringToHash("Jump");
-    static readonly int HitHash       = Animator.StringToHash("Hit");
-    static readonly int IsDeadHash    = Animator.StringToHash("IsDead");
-
-    // 三段连招按顺序触发：Attack_01 → Attack_02 → Attack_03
-    static readonly int[] AttackHashes =
-    {
-        Animator.StringToHash("Attack_01"),
-        Animator.StringToHash("Attack_02"),
-        Animator.StringToHash("Attack_03"),
-    };
-
-    static readonly int IdleStateHash   = Animator.StringToHash(IdleStateName);
-    static readonly int WalkStateHash   = Animator.StringToHash(WalkStateName);
-    static readonly int RunStateHash    = Animator.StringToHash(RunStateName);
-    static readonly int JumpStateHash   = Animator.StringToHash(JumpStateName);
-
-    // 哈希 -> 名字，只给调试显示用
-    static readonly Dictionary<int, string> StateNames = new Dictionary<int, string>
-    {
-        { IdleStateHash,    IdleStateName },
-        { WalkStateHash,    WalkStateName },
-        { RunStateHash,     RunStateName },
-        { JumpStateHash,    JumpStateName },
-        { Animator.StringToHash(Attack1StateName), Attack1StateName },
-        { Animator.StringToHash(Attack2StateName), Attack2StateName },
-        { Animator.StringToHash(Attack3StateName), Attack3StateName },
-        { Animator.StringToHash(HitStateName),     HitStateName },
-        { Animator.StringToHash(DeadStateName),    DeadStateName },
-    };
-
-    [Header("引用")]
     public CharacterController characterController;
     public Animator animator;
-    private int HandingLayerIndex;
-    AnimatorStateInfo stateInfo;
-
     public Camera playerCamera;
-    private float turnSpeed = 720f;
-    [Tooltip("重力（负值），只用来把角色压在地面上")]
     public float gravity = -20f;
-    PlayerObj player;              // 同一个物体上的数据持有者
-    PlayerData data;               // 只在 Awake 里取一次，之后用本地副本
-    public bool isCanAttack=true;
-    public bool isTalking;
-    public CharacterTime hitStop=>player.hitStop;
-    public float dtFix=>player.dtFix;
-    [Header("调试")]
-    [Tooltip("在屏幕左上角显示当前状态名，验证状态机用")]
     public bool showDebugHUD = true;
+    public bool readInput = true;
 
-    /// <summary>当前是否处于死亡状态，外部查询用</summary>
-    public bool IsDead { get; private set; }
+    [Header("移动和转身")]
+    public float maxSpeed = 2f;
+    public float acceleration = 2f;
+    public float turnSmoothTime = 0.12f;
+    public float standingTurnEnterAngle = 60f;
+    public float movingTurnEnterAngle = 100f;
+    public float turnExitAngle = 10f;
 
-    Vector3 moveDir;          
-    bool wantsRun;            // 想走还是想跑
-    float verticalVelocity;   // 竖直速度，重力用
-    Vector3 gravityStep;
-    int comboIndex;           // 连招进度
-
-  
-    int pendingAttackIndex = -1;
+    PlayerObj player;
+    PlayerInput playerInput;
     WeaponData comboWeapon;
-    int ComboCount => Mathf.Min(data?.GetWeaponData()?.combo?.Count ?? 0, AttackHashes.Length);
     RuntimeAnimatorController defaultAnimatorController;
+    int[] attackHashes = new int[0];
+    int nextComboIndex;
+    Vector3 targetDirection;
+    Vector3 gravityStep;
+    bool hasTarget;
+    bool isTurning;
+    float speed;
+    float verticalVelocity;
+    float inputTime;
+
+    public bool IsDead
+    {
+        get { return player != null && player.IsDead; }
+    }
+    public bool isTalking
+    {
+        get { return player != null && player.IsTalking; }
+    }
+    public bool isCanAttack
+    {
+        get { return player != null && player.CanAct; }
+    }
+    public float dtFix
+    {
+        get
+        {
+            if (player != null) return player.dtFix;
+            return Time.deltaTime;
+        }
+    }
+    int ComboCount
+    {
+        get
+        {
+            if (player == null) return 0;
+            WeaponData weapon = player.Data.GetWeaponData();
+            if (weapon == null || weapon.combo == null) return 0;
+            return Mathf.Min(weapon.combo.Count, attackHashes.Length);
+        }
+    }
 
     void Awake()
     {
-        if (!animator) animator = GetComponent<Animator>();
-        if (animator) defaultAnimatorController = animator.runtimeAnimatorController;
-        if (!characterController) characterController = GetComponent<CharacterController>();
-
-        if (!animator)
-            Debug.LogError("[PlayerController] 没找到 Animator，状态机驱动不了", this);
-        if (!characterController)
-            Debug.LogWarning("[PlayerController] 没找到 CharacterController，动画照常播但角色不会移动", this);
-        if (playerCamera == null)
-        {
-            playerCamera = Camera.main;
-        }
         player = GetComponent<PlayerObj>();
-        if (!player)
-        {
-            Debug.LogError("[PlayerController] 同一个物体上没有 PlayerObj，受伤/死亡事件收不到", this);
-            return;
-        }
-
-        data = player.Data;
-        if (data != null) InitSpeed();
-        else Debug.LogError("[PlayerController] 玩家数据为空，速度保持 Inspector 上的默认值", this);
-
-
-        HandingLayerIndex = animator ? animator.GetLayerIndex("HandingLayer") : -1;
+        if (animator == null) animator = GetComponent<Animator>();
+        if (characterController == null) characterController = GetComponent<CharacterController>();
+        if (playerCamera == null) playerCamera = Camera.main;
+        defaultAnimatorController = animator.runtimeAnimatorController;
+        animator.applyRootMotion = true;
+        animator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
+        playerInput = new PlayerInput(0.15f, 0.5f);
+        ConfigureAnimator();
     }
 
-    // 订阅/退订用 OnEnable/OnDisable 成对写。
-    // 用 Awake/OnDestroy 的话，物体被禁用期间仍然收事件；
-    // 而且 Awake 只跑一次、OnEnable 每次激活都跑，很容易订阅两次。
     void OnEnable()
     {
-        this.Subscribe(GameEvents.Damaged, OnDamaged);
-        this.Subscribe(GameEvents.HitStopRequested, OnHitStopRequested);
+        player.EquippedItemChanged += OnEquippedItemChanged;
+        player.Staggered += OnStaggered;
+        player.ActionLockChanged += OnActionLockChanged;
         this.Subscribe(GameEvents.Died, OnDied);
-        this.Subscribe(GameEvents.OnItemsChanged, OnItemsChanged);
-        this.Subscribe(GameEvents.OnSelectedSlotChanged, OnSelectedSlotChanged);
-        this.Subscribe(GameEvents.OnPlayerTalk, OnPlayerTalk);
         RefreshItemAnimator();
     }
 
     void OnDisable()
     {
-        ResetCombo();
-        comboWeapon = null;
-        this.UnSubscribe(GameEvents.Damaged, OnDamaged);
-        this.UnSubscribe(GameEvents.HitStopRequested, OnHitStopRequested);
+        if (player != null)
+        {
+            player.EquippedItemChanged -= OnEquippedItemChanged;
+            player.Staggered -= OnStaggered;
+            player.ActionLockChanged -= OnActionLockChanged;
+        }
         this.UnSubscribe(GameEvents.Died, OnDied);
-        this.UnSubscribe(GameEvents.OnItemsChanged, OnItemsChanged);
-        this.UnSubscribe(GameEvents.OnSelectedSlotChanged, OnSelectedSlotChanged);
-        this.UnSubscribe(GameEvents.OnPlayerTalk, OnPlayerTalk);
+        ClearInput();
     }
 
-    void OnPlayerTalk(PlayerObj talkingPlayer, bool talking)
+    void ConfigureAnimator()
     {
-        if (talkingPlayer != player) return;
-        isTalking = talking;
-        isCanAttack = CheckCanAttack();
-        if (isTalking) StopMove();
+        int comboCount = 0;
+        foreach (AnimatorControllerParameter parameter in animator.parameters)
+        {
+            if (parameter.type != AnimatorControllerParameterType.Trigger) continue;
+            if (!parameter.name.StartsWith("Combo")) continue;
+            int number;
+            if (int.TryParse(parameter.name.Substring(5), out number))
+                comboCount = Mathf.Max(comboCount, number);
+        }
+        attackHashes = new int[comboCount];
+        for (int i = 0; i < comboCount; i++)
+        {
+            string stateName = "Combo" + (i + 1);
+            attackHashes[i] = Animator.StringToHash(stateName);
+        }
     }
 
-    void OnItemsChanged(List<ItemData> changed)
+    void OnEquippedItemChanged(ItemData item)
     {
-        if (data == null || (!ReferenceEquals(changed, data.Bag) &&
-            !ReferenceEquals(changed, data.quickBar))) return;
-        RefreshItemAnimator();
-    }
-
-    void OnSelectedSlotChanged(ItemSlot slot)
-    {
-        // Resolve our own selection, even when another player publishes this event.
         RefreshItemAnimator();
     }
 
     void RefreshItemAnimator()
     {
-        
-        if (!animator || !player) return;
-        var weapon = player.isActiveAndEnabled ? player.SelectedItem : null;
-        if (data != null) data.HandingItem = weapon;
-        if (!ReferenceEquals(comboWeapon, data?.GetWeaponData()))
+        if (animator == null || player == null) return;
+        ClearInput();
+        RuntimeAnimatorController controller = defaultAnimatorController;
+        ItemData item = player.EquippedItem;
+        // 武器覆盖动画必须基于同一套通用状态机，旧状态机不再切入。
+        if (item != null && item.overrideController != null)
         {
-            bool wasAttacking = comboWeapon != null && (comboIndex > 0 || pendingAttackIndex >= 0);
-            ResetCombo();
-            comboWeapon = data?.GetWeaponData();
-            if (wasAttacking && !IsDead) animator.Play(IdleStateHash, 0, 0f);
+            if (item.overrideController.runtimeAnimatorController == defaultAnimatorController)
+                controller = item.overrideController;
         }
-        RuntimeAnimatorController controller = weapon?.overrideController;
-        if (!controller) controller = defaultAnimatorController;
-        if (animator.runtimeAnimatorController == controller) return;
-
-        comboIndex = 0;
-        for (int i = 0; i < AttackHashes.Length; i++)
-            animator.ResetTrigger(AttackHashes[i]);
-        animator.runtimeAnimatorController = controller;
-    }
- 
-    void OnHitStopRequested(GameObject victim, GameObject attacker, AttackData attack)
-    {
-        if (victim != gameObject && attacker != gameObject) return;
-        if (!player || !hitStop || attack == null || attack.time <= 0f) return;
-        hitStop.Apply(attack.priority, attack.scale, attack.time);
+        if (animator.runtimeAnimatorController != controller)
+            animator.runtimeAnimatorController = controller;
+        ConfigureAnimator();
+        if (!IsDead) PlayIdle();
     }
 
-    void OnDamaged(GameObject victim, float damage, GameObject attacker)
+    void PlayIdle()
     {
-        if (victim != gameObject) return;   // 总线上有别人的受伤事件，只认自己
-        if (IsDead) return;
-        if (!player || player.Data.hp <= 0f || player.poise > 0f) return;
-        Vector3 damageDir = attacker ? attacker.transform.position - transform.position : Vector3.zero;
-        damageDir.y = 0f; 
+        string stateName = "Base Layer.Locomotion.Idle_Wait_A";
+        if (animator.HasState(0, Animator.StringToHash(stateName))) animator.Play(stateName, 0, 0f);
+    }
 
-        if (damageDir.sqrMagnitude > 0.0001f)
+    public void ApplyInput(PlayerInput input, Vector3 referenceForward, float deltaTime, float time)
+    {
+        playerInput = input;
+        inputTime = time;
+        if (animator == null || input == null) return;
+        if (!player.CanAct)
         {
-            transform.rotation = Quaternion.LookRotation(damageDir, Vector3.up);
+            ClearInput();
+            return;
         }
-        // 这里只做「反应」：播受击动画。
-        //
-        // 伤害是别人已经施加完的事实，这里绝不能再施加一次 ——
-        // 一施加就又 Publish(Damaged)，绕回来又是这里，一路递归到爆栈。
-        ResetCombo();
+        Vector3 direction = GetInputDirection(input.MoveInput, referenceForward);
+        UpdateLocomotion(input, direction, deltaTime, time);
+    }
+
+    Vector3 GetInputDirection(Vector2 move, Vector3 referenceForward)
+    {
+        Vector3 forward = Vector3.ProjectOnPlane(referenceForward, Vector3.up);
+        if (forward.sqrMagnitude < 0.0001f) forward = Vector3.forward;
+        forward.Normalize();
+        Vector3 right = Vector3.Cross(Vector3.up, forward);
+        return Vector3.ClampMagnitude(forward * move.y + right * move.x, 1f);
+    }
+
+    void UpdateLocomotion(PlayerInput input, Vector3 direction, float deltaTime, float time)
+    {
+        if (IsState("Hit"))
+        {
+            ClearInput();
+            return;
+        }
+        if (input.HasMoveInput)
+        {
+            targetDirection = direction.normalized;
+            hasTarget = true;
+        }
+        float angle = 0f;
+        if (hasTarget) angle = Vector3.SignedAngle(transform.forward, targetDirection, Vector3.up);
+        bool dodging = IsTag("Dodge");
+        if (dodging) isTurning = false;
+        else if (isTurning)
+        {
+            if (Mathf.Abs(angle) <= turnExitAngle) isTurning = false;
+        }
+        else if (input.HasMoveInput)
+        {
+            float enterAngle = standingTurnEnterAngle;
+            if (speed > 0f) enterAngle = movingTurnEnterAngle;
+            if (Mathf.Abs(angle) >= enterAngle) isTurning = true;
+        }
+        if (isTurning)
+        {
+            // 转身保留下一段序号和有效缓存，只中止当前攻击。
+            int current = CurrentAttackIndex();
+            if (current >= 0 && ComboCount > 0) nextComboIndex = (current + 1) % ComboCount;
+            ResetAttackTriggers();
+            animator.SetBool("IsAttacking", false);
+        }
+        bool moving = input.HasMoveInput && !isTurning;
+        if (!moving) speed = 0f;
+        else if (dodging) speed = maxSpeed;
+        else speed = Mathf.MoveTowards(speed, maxSpeed, acceleration * deltaTime);
+        animator.SetBool("IsTurning", isTurning);
+        animator.SetBool("IsMove", moving);
+        animator.SetFloat("Speed", speed);
+        animator.SetFloat("Angle", angle);
+        animator.SetFloat("Turn", Mathf.Clamp(angle / 90f, -1f, 1f), turnSmoothTime, deltaTime);
+        if (!dodging && input.TryConsumeFlash(time))
+        {
+            isTurning = false;
+            hasTarget = false;
+            speed = 0f;
+            if (input.HasMoveInput) speed = maxSpeed;
+            animator.SetBool("IsTurning", false);
+            animator.SetBool("IsMove", input.HasMoveInput);
+            animator.SetFloat("Speed", speed);
+            float flashAngle = 0f;
+            if (input.HasMoveInput)
+                flashAngle = Vector3.SignedAngle(transform.forward, direction, Vector3.up);
+            animator.SetFloat("Angle", flashAngle);
+            animator.SetTrigger("IsFlash");
+        }
+        else if (!dodging) TryStartAttack();
+        if (!isTurning && !input.HasMoveInput) hasTarget = false;
+    }
+
+    void Update()
+    {
+        if (animator == null || characterController == null) return;
+        if (readInput)
+        {
+            playerInput.ReadInput(Time.time);
+            HandleInput();
+        }
+        if (characterController.isGrounded && verticalVelocity < 0f) verticalVelocity = -2f;
+        verticalVelocity += gravity * dtFix;
+        gravityStep = Vector3.up * verticalVelocity * dtFix;
+    }
+
+    // 按键已经由 PlayerInput 读好，这里处理操作请求和界面拦截。
+    void HandleInput()
+    {
+        UIManager manager = UIManager.Instance;
+        if (playerInput.BagPressed && manager != null) manager.Toggle<BagPanel>();
+        if (playerInput.MissionsPressed && manager != null) manager.Toggle<MissionsBar>();
+        if (player.IsDead)
+        {
+            ClearInput();
+            return;
+        }
+        if (player.IsTalking)
+        {
+            if (playerInput.ContinuePressed) this.Publish(GameEvents.OnPlayerContinue);
+            ClearInput();
+            return;
+        }
+        if (playerInput.InteractPressed) player.TryInteract();
+        if (player.IsTalking)
+        {
+            ClearInput();
+            return;
+        }
+        ReadQuickBarWheel();
+        bool blocked = ItemSlot.IsAnyDragging;
+        if (manager != null && manager.HasOpenPanel) blocked = true;
+        if (blocked)
+        {
+            ClearInput();
+            return;
+        }
+        if (playerInput.AttackPressed && !ItemSlot.IsPointerOverSlot(playerInput.PointerPosition))
+            playerInput.RecordComboInput(Time.time);
+#if UNITY_EDITOR
+        if (playerInput.DebugHitPressed) player.TakeDamage(50f, gameObject);
+        if (playerInput.DebugDiePressed) player.Die();
+#endif
+        Vector3 referenceForward = Vector3.forward;
+        if (playerCamera == null) playerCamera = Camera.main;
+        if (playerCamera != null) referenceForward = playerCamera.transform.forward;
+        ApplyInput(playerInput, referenceForward, dtFix, Time.time);
+    }
+
+    void ReadQuickBarWheel()
+    {
+        UIManager manager = UIManager.Instance;
+        if (manager == null || manager.BlocksQuickBarScroll) return;
+        float scroll = playerInput.ScrollValue;
+        if (Mathf.Approximately(scroll, 0f)) return;
+        QuickBar bar = manager.Get<QuickBar>();
+        if (bar == null || bar.quickSlots == null || bar.quickSlots.Count == 0) return;
+        int count = bar.quickSlots.Count;
+        int current = bar.quickSlots.IndexOf(player.SelectedSlot);
+        int next;
+        if (current < 0)
+        {
+            next = count - 1;
+            if (scroll > 0f) next = 0;
+        }
+        else
+        {
+            int step = 1;
+            if (scroll > 0f) step = -1;
+            next = (current + step + count) % count;
+        }
+        ItemSlot slot = bar.quickSlots[next];
+        if (slot != null) this.Publish(GameEvents.OnSlotSelectionRequested, slot);
+    }
+
+    void OnApplicationFocus(bool focus)
+    {
+        if (!focus) ClearInput();
+    }
+
+    public void Attack()
+    {
+        if (!player.CanAct || playerInput == null) return;
+        playerInput.RecordComboInput(Time.time);
+    }
+
+    public void TryStartAttack()
+    {
+        if (!player.CanAct || ComboCount == 0) return;
+        if (isTurning || IsTag("Dodge") || IsState("Hit")) return;
+        if (animator.GetBool("IsAttacking") || playerInput == null) return;
+        if (!playerInput.TryConsumeCombo(inputTime)) return;
+        if (nextComboIndex >= ComboCount) nextComboIndex = 0;
+        comboWeapon = player.Data.GetWeaponData();
+        animator.SetTrigger(attackHashes[nextComboIndex]);
+        nextComboIndex = (nextComboIndex + 1) % ComboCount;
+        animator.SetBool("IsAttacking", true);
+    }
+
+    // 保留源动画事件的方法名。这个事件只检查接招，不造成伤害。
+    public void TryComsumeCombo()
+    {
+        if (!player.CanAct || playerInput == null) return;
+        if (!IsTag("Attack") || IsTag("Dodge") || isTurning || animator.IsInTransition(0)) return;
+        if (nextComboIndex <= 0 || nextComboIndex >= ComboCount) return;
+        if (!playerInput.TryConsumeCombo(Time.time)) return;
+        animator.SetTrigger(attackHashes[nextComboIndex]);
+        nextComboIndex = (nextComboIndex + 1) % ComboCount;
+    }
+
+    public void PublishPlayerCombo(AnimationEvent animationEvent)
+    {
+        if (!player.CanAct || comboWeapon == null) return;
+        int index = AttackIndex(animationEvent.animatorStateInfo.shortNameHash);
+        if (index < 0 || index >= ComboCount) return;
+        player.PublishAttackHit(comboWeapon, index);
+    }
+
+    int AttackIndex(int hash)
+    {
+        for (int i = 0; i < attackHashes.Length; i++)
+            if (attackHashes[i] == hash) return i;
+        return -1;
+    }
+
+    int CurrentAttackIndex()
+    {
+        AnimatorStateInfo state = animator.GetCurrentAnimatorStateInfo(0);
+        if (animator.IsInTransition(0))
+        {
+            AnimatorStateInfo next = animator.GetNextAnimatorStateInfo(0);
+            if (AttackIndex(next.shortNameHash) >= 0) state = next;
+        }
+        return AttackIndex(state.shortNameHash);
+    }
+
+    bool IsTag(string tag)
+    {
+        if (animator.GetCurrentAnimatorStateInfo(0).IsTag(tag)) return true;
+        if (animator.IsInTransition(0) && animator.GetNextAnimatorStateInfo(0).IsTag(tag)) return true;
+        return false;
+    }
+
+    bool IsState(string state)
+    {
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName(state)) return true;
+        if (animator.IsInTransition(0) && animator.GetNextAnimatorStateInfo(0).IsName(state)) return true;
+        return false;
+    }
+
+    void ResetAttackTriggers()
+    {
+        if (animator == null) return;
+        foreach (int hash in attackHashes) animator.ResetTrigger(hash);
+    }
+
+    public void ClearAttack()
+    {
+        ResetAttackTriggers();
+        if (animator != null) animator.SetBool("IsAttacking", false);
+        if (playerInput != null) playerInput.ClearCombo();
+        nextComboIndex = 0;
         comboWeapon = null;
-        animator.SetTrigger(HitHash);
+    }
+
+    public void ClearInput()
+    {
+        if (playerInput != null) playerInput.Clear();
+        hasTarget = false;
+        isTurning = false;
+        speed = 0f;
+        ClearAttack();
+        if (animator == null) return;
+        animator.SetBool("IsTurning", false);
+        animator.SetBool("IsMove", false);
+        animator.SetFloat("Speed", 0f);
+        animator.SetFloat("Turn", 0f);
+        animator.ResetTrigger("IsFlash");
+    }
+
+    void OnStaggered(GameObject attacker)
+    {
+        ClearInput();
+        if (attacker != null)
+        {
+            Vector3 direction = attacker.transform.position - transform.position;
+            direction.y = 0f;
+            if (direction.sqrMagnitude > 0.0001f) transform.rotation = Quaternion.LookRotation(direction);
+        }
+        animator.SetTrigger("Hit");
+    }
+
+    void OnActionLockChanged(bool locked)
+    {
+        if (!locked) return;
+        ClearInput();
+        if (!IsDead) PlayIdle();
     }
 
     void OnDied(GameObject who)
     {
         if (who != gameObject) return;
-        Die();
+        ClearInput();
+        animator.SetBool("IsDead", true);
     }
 
-    void Update()
-    {
-        if (!animator) return;
-
-
-        stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-        UpdateComboReset();
-        ReadKeyboard();
-        UpdateLocomotion();
-    }
-
-    
-    void ReadKeyboard()
-    {
-        if (Input.GetKeyDown(KeyCode.Tab) && UIManager.Instance)
-            UIManager.Instance.Toggle<BagPanel>();
-        if (Input.GetKeyDown(KeyCode.V) && UIManager.Instance)
-            UIManager.Instance.Toggle<MissionsBar>();
-        if (isTalking)
-        {
-            if (Input.GetKeyDown(KeyCode.Space))
-                this.Publish(GameEvents.OnPlayerContinue);
-            return;
-        }
-
-        float h = Input.GetAxis("Horizontal");   // A/D
-        float v = Input.GetAxis("Vertical");     // W/S
-
-        Vector3 r = h * playerCamera.transform.right;
-        r.y = 0;
-        Vector3 f = v*playerCamera.transform.forward;
-        f.y = 0;
-        Vector3 dir = r + f;
-
-
-
-        if(!stateInfo.IsName("Base Layer.Hit"))
-        {
-            SetMove(dir, Input.GetKey(KeyCode.LeftShift));
-            
-        }
-        
-
-      
-        if (Input.GetKeyDown(KeyCode.F) && !IsDead) player?.TryInteract();
-        if (isTalking) return;
-        ReadQuickBarWheel();
-
-        isCanAttack = CheckCanAttack();
-        if (isCanAttack)
-        {
-            if (Input.GetMouseButtonDown(0) && !ItemSlot.IsPointerOverSlot(Input.mousePosition)) Attack();
-            if (Input.GetKeyDown(KeyCode.Space)) Jump();
-            if (Input.GetKeyDown(KeyCode.H)) TakeHit();
-            if (Input.GetKeyDown(KeyCode.L)) Die();
-        }
-    }
-    private void ReadQuickBarWheel()
-    {
-        var manager = UIManager.Instance;
-        if (player == null || manager == null) return;
-        float scroll = Input.GetAxis("Mouse ScrollWheel");
-        if (Mathf.Approximately(scroll, 0f)) return;
-        if (manager.BlocksQuickBarScroll) return;
-        var bar = manager.Get<QuickBar>();
-        if (bar == null || bar.quickSlots == null || bar.quickSlots.Count == 0) return;
-        int count = bar.quickSlots.Count;
-        int current = bar.quickSlots.IndexOf(player.SelectedSlot);
-        int next = current < 0 ? (scroll > 0f ? 0 : count - 1)
-            : (current + (scroll > 0f ? -1 : 1) + count) % count;
-        var slot = bar.quickSlots[next];
-        if (slot != null) this.Publish(GameEvents.OnSlotSelectionRequested, slot);
-    }
-
-    public void SetMove(Vector3 direction, bool run)
-    {
-        direction.y = 0f;
-        moveDir = direction.sqrMagnitude > 0.0001f ? direction.normalized : Vector3.zero;
-        wantsRun = run;
-    }
-
-    public void StopMove()
-    {
-        SetMove(Vector3.zero, false);
-    }
-
-
-    public void Attack()
-    {
-        if (IsDead || !animator || !CheckCanAttack() || ComboCount == 0) return;
-        if (pendingAttackIndex >= 0 || animator.IsInTransition(0)) return;
-        int current = AttackIndex(animator.GetCurrentAnimatorStateInfo(0).shortNameHash);
-        int next = current + 1;
-        if (current < 0 && !IsLocomotionState()) return;
-        if (next >= ComboCount) return;
-        comboWeapon = data.GetWeaponData();
-        pendingAttackIndex = next;
-        animator.SetTrigger(AttackHashes[next]);
-    }
-
-    public void Jump()
-    {
-        if (IsDead || isTalking) return;
-        animator.SetTrigger(JumpHash);
-    }
-
-   
     public void TakeHit()
     {
-        if (IsDead) return;
-        player.TakeDamage(50, this.gameObject);
+        player.TakeDamage(50f, gameObject);
     }
 
-   
     public void Die()
     {
-        if (IsDead) return;
-
-        ResetCombo();
-        comboWeapon = null;
-        IsDead = true;
-        StopMove();
-        animator.SetBool(IsDeadHash, true);
+        player.Die();
     }
 
-   
-    public void PublishPlayerCombo(AnimationEvent animationEvent)
+    public void DestorySelf()
     {
-        if (IsDead || !isActiveAndEnabled || data?.GetWeaponData() == null ||
-            !ReferenceEquals(comboWeapon, data.GetWeaponData())) return;
-        int index = AttackIndex(animationEvent.animatorStateInfo.shortNameHash);
-        if (index < 0 || index >= ComboCount) return;
-        this.Publish(GameEvents.OnPlayerCombo, index);
+        player.RemovePlayer();
     }
 
-    static int AttackIndex(int stateHash)
+    protected virtual void OnAnimatorMove()
     {
-        for (int i = 0; i < AttackHashes.Length; i++)
-            if (AttackHashes[i] == stateHash) return i;
-        return -1;
-    }
-
-    void ResetCombo()
-    {
-        comboIndex = 0;
-        pendingAttackIndex = -1;
-        if (!animator) return;
-        foreach (int hash in AttackHashes) animator.ResetTrigger(hash);
+        if (animator == null || characterController == null || !characterController.enabled) return;
+        Vector3 movement = animator.deltaPosition;
+        movement.y = 0f;
+        if (!player.CanAct) movement = Vector3.zero;
+        movement += gravityStep;
+        characterController.Move(movement);
+        if (player.CanAct && !IsState("Hit"))
+            transform.rotation *= animator.deltaRotation;
     }
 
     public string CurrentStateName
     {
         get
         {
-            if (!animator) return "(无 Animator)";
-
-            if (animator.IsInTransition(0))
-            {
-                return StateNameOf(animator.GetCurrentAnimatorStateInfo(0).shortNameHash)
-                     + " -> "
-                     + StateNameOf(animator.GetNextAnimatorStateInfo(0).shortNameHash);
-            }
-            return StateNameOf(animator.GetCurrentAnimatorStateInfo(0).shortNameHash);
+            if (animator == null) return "无 Animator";
+            AnimatorStateInfo state = animator.GetCurrentAnimatorStateInfo(0);
+            if (IsDead) return "Dead";
+            if (IsTag("Attack")) return "Combo" + (CurrentAttackIndex() + 1);
+            if (IsTag("Dodge")) return "Dodge";
+            if (IsTag("Turn")) return "Turn";
+            if (IsState("Hit")) return "Hit";
+            if (animator.GetBool("IsMove")) return "Move";
+            if (IsState("Idle_Wait_A")) return "Idle";
+            return "过渡中";
         }
-    }
-    void UpdateLocomotion()
-    {
-        float dt = dtFix;
-        bool moving = !IsDead
-                   && !isTalking
-                  
-                   && moveDir.sqrMagnitude > 0.0001f;
-      
-        animator.SetBool(IsWalkingHash, moving);
-        animator.SetBool(IsRunningHash, moving && wantsRun);
-
-        if (!characterController) return;
-
-        if (moving)
-        {
-            Quaternion target = Quaternion.LookRotation(moveDir, Vector3.up);
-            if (!stateInfo.IsName("Base Layer.Hit"))
-            {
-                transform.rotation = Quaternion.RotateTowards(
-                transform.rotation, target, turnSpeed * dt);
-
-            }
-           
-        }
-        if (characterController.isGrounded && verticalVelocity < 0f) verticalVelocity = -2f;
-        verticalVelocity += gravity * dt;
-
-        
-        Vector3 velocity = Vector3.up * verticalVelocity;
-
-        ApplyGravity(velocity, dt);
-    }
-
-    protected virtual void ApplyGravity(Vector3 velocity, float dt)
-    {
-        // 与动画位移一起交给 CC，避免一帧中重复移动。
-        gravityStep = Vector3.up * velocity.y * dt;
-    }
-
-    void UpdateComboReset()
-    {
-        var state = animator.GetCurrentAnimatorStateInfo(0);
-        int current = AttackIndex(state.shortNameHash);
-        if (current >= 0)
-        {
-            comboIndex = current + 1;
-            if (pendingAttackIndex == current) pendingAttackIndex = -1;
-        }
-        else if (!animator.IsInTransition(0) && (pendingAttackIndex < 0 || comboIndex > 0))
-        {
-            ResetCombo();
-        }
-    }
-
-    bool IsLocomotionState()
-    {
-        int h = animator.GetCurrentAnimatorStateInfo(0).shortNameHash;
-        return h == IdleStateHash || h == WalkStateHash
-            || h == RunStateHash  || h == JumpStateHash;
-    }
-
-    static string StateNameOf(int hash)
-    {
-        return StateNames.TryGetValue(hash, out string name) ? name : "未知(" + hash + ")";
     }
 
     void OnGUI()
     {
-        if (!showDebugHUD || !animator) return;
-
-        string dead = IsDead ? "  [已死亡]" : "";
-        GUI.Label(new Rect(10, 10, 600, 24), "当前状态: " + CurrentStateName + dead);
-        string speed = characterController ? characterController.velocity.magnitude.ToString("F2") : "无 CC";
-        GUI.Label(new Rect(10, 30, 600, 24), "连招: " + comboIndex + "/" + ComboCount + "   速度: " + speed);
-    }
-    private void InitSpeed()
-    {
-        turnSpeed = data.turnSpeed;
-    }
-    public void DestorySelf()
-    {
-        Destroy(this.gameObject);
-    }
-    private bool CheckCanAttack()
-    {
-        if (isTalking) return false;
-        if (ItemSlot.IsAnyDragging) return false;
-        var manager = UIManager.Instance;
-        if (manager == null) return true;
-
-        return !manager.HasOpenPanel;
-    }
-    protected virtual void OnAnimatorMove()
-    {
-        if (!animator || !characterController ||
-            !characterController.enabled) return;
-
-        bool jumping = animator.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Jump") ||
-            (animator.IsInTransition(0) && animator.GetNextAnimatorStateInfo(0).IsName("Base Layer.Jump"));
-        Vector3 movement = animator.deltaPosition;
-        if (!jumping) movement.y = 0f;
-        if (IsDead || isTalking) movement = Vector3.zero;
-        // 跳跃动画已经包含高度，期间不叠加重力；结束后恢复重力。
-        if(jumping && !IsDead && !isTalking)
-        {
-            characterController.Move(movement);
-        }
-        else
-        {
-            characterController.Move(movement +gravityStep);
-        }
-        
+        if (!showDebugHUD || animator == null) return;
+        GUI.Label(new Rect(10, 10, 650, 24), "当前状态: " + CurrentStateName);
+        GUI.Label(new Rect(10, 32, 650, 24), "下一段: " + (nextComboIndex + 1) + " / " + ComboCount);
     }
 }

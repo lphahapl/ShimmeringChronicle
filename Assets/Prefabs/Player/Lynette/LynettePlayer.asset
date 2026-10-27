@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c85c3e944602763418bbe5a2fdf0bfb4, type: 3}
+  m_Name: LynettePlayer
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerSO
+  targetName: "\u7433\u59AE\u7279"
+  description: "\u5171\u7528\u901A\u7528\u72B6\u6001\u673A\uFF0C\u4F7F\u7528\u6E90\u573A\u666F\u592A\u5200\u548C\u653B\u51FB\u52A8\u753B\u3002"
+  maxHp: 200
+  initialHp: 200
+  atk: 12
+  speed: 5
+  runSpeed: 10
+  turnSpeed: 720
+  poise: 200
+  poiseRecoveryPerSecond: 10
+  poiseRecoveryTime: 3
+  quickBarCapacity: 5
+  bagCapacity: 25
+  startingWeapon: {fileID: 11400000, guid: bb4ecd508382d834ca828517d4806d30, type: 2}
+  quickBar: []
+  Bag:
+  - config: {fileID: 11400000, guid: bb4ecd508382d834ca828517d4806d30, type: 2}
+    num: 1

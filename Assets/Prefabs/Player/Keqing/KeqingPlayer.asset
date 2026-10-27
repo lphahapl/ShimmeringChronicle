@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c85c3e944602763418bbe5a2fdf0bfb4, type: 3}
+  m_Name: KeqingPlayer
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerSO
+  targetName: "\u523B\u6674"
+  description: "\u4F7F\u7528\u8FC1\u5165\u72B6\u6001\u673A\u7684\u523B\u6674\uFF0C\u5F00\u5C40\u88C5\u5907\u80CC\u5305\u4E2D\u7684\u7A7A\u624B\u6B66\u5668\u3002"
+  maxHp: 200
+  initialHp: 200
+  atk: 12
+  speed: 5
+  runSpeed: 10
+  turnSpeed: 720
+  poise: 200
+  poiseRecoveryPerSecond: 10
+  poiseRecoveryTime: 3
+  quickBarCapacity: 5
+  bagCapacity: 25
+  startingWeapon: {fileID: 11400000, guid: dbfea322e2d8e6e40acfe99ace69198f, type: 2}
+  quickBar: []
+  Bag:
+  - config: {fileID: 11400000, guid: dbfea322e2d8e6e40acfe99ace69198f, type: 2}
+    num: 1

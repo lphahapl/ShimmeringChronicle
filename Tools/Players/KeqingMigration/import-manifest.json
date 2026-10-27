@@ -1,0 +1,277 @@
+{
+  "files": [
+    {
+      "source": "Assets\\Arts\\Models\\53 刻晴\\Animations\\Attack\\Keqing_Combo1.anim",
+      "target": "Assets\\Prefabs\\Player\\Keqing\\Imported\\Arts\\Models\\53 刻晴\\Animations\\Attack\\Keqing_Combo1.anim",
+      "source_sha256": "99d9e97cb28b0a7c13211efd36f09725e2d923aae2f1ccb2c549e1750557f1a0"
+    },
+    {
+      "source": "Assets\\Arts\\Models\\53 刻晴\\Animations\\Attack\\Keqing_Combo2.anim",
+      "target": "Assets\\Prefabs\\Player\\Keqing\\Imported\\Arts\\Models\\53 刻晴\\Animations\\Attack\\Keqing_Combo2.anim",
+      "source_sha256": "3dddc05f7f3a3e379f9ff87fbc364195f2c200ed96628d3094c86f82b0c44b37"
+    },
+    {
+      "source": "Assets\\Arts\\Models\\53 刻晴\\Animations\\Locomotion\\Keqing_RunF_Loop.anim",
+      "target": "Assets\\Prefabs\\Player\\Keqing\\Imported\\Arts\\Models\\53 刻晴\\Animations\\Locomotion\\Keqing_RunF_Loop.anim",
+      "source_sha256": "876ceefa0fa8892027b3685bb72131e4aaa742ecb03e5a71e9bbc4852ae93efa"
+    },
+    {
+      "source": "Assets\\Arts\\Models\\53 刻晴\\Animations\\Locomotion\\Keqing_TurnL90_Loop.anim",
+      "target": "Assets\\Prefabs\\Player\\Keqing\\Imported\\Arts\\Models\\53 刻晴\\Animations\\Locomotion\\Keqing_TurnL90_Loop.anim",
+      "source_sha256": "f58f48c4feb415d14dc07b761901f3787baa8da18b3da9e56628db9e4e34ffe8"
+    },
+    {
+      "source": "Assets\\Arts\\Models\\53 刻晴\\Animations\\Locomotion\\Keqing_TurnR90_Loop.anim",
+      "target": "Assets\\Prefabs\\Player\\Keqing\\Imported\\Arts\\Models\\53 刻晴\\Animations\\Locomotion\\Keqing_TurnR90_Loop.anim",
+      "source_sha256": "f496b673ec4dabe80dacf3f98143455a628855eefd227058845fbeeda6837107"
+    },
+    {
+      "source": "Assets\\Arts\\Models\\53 刻晴\\Animations\\Locomotion\\Keqing_WalkF_Loop.anim",
+      "target": "Assets\\Prefabs\\Player\\Keqing\\Imported\\Arts\\Models\\53 刻晴\\Animations\\Locomotion\\Keqing_WalkF_Loop.anim",
+      "source_sha256": "c235478da0888d890c0e043f2da8b34a36a1dbed818d8194fbdef2bc95e08129"
+    },
+    {
+      "source": "Assets\\Arts\\Models\\53 刻晴\\Animations\\Locomotion\\Lucy_Idle.anim",
+      "target": "Assets\\Prefabs\\Player\\Keqing\\Imported\\Arts\\Models\\53 刻晴\\Animations\\Locomotion\\Lucy_Idle.anim",
+      "source_sha256": "a9c8df6491e4af9f88ebe8c5195cb5bbb5fc5e2ba4c2b3ef563dcf9636bb8270"
+    },
+    {
+      "source": "Assets\\Arts\\Models\\53 刻晴\\Animations\\Locomotion\\Lucy_Slide_B_Root.anim",
+      "target": "Assets\\Prefabs\\Player\\Keqing\\Imported\\Arts\\Models\\53 刻晴\\Animations\\Locomotion\\Lucy_Slide_B_Root.anim",
+      "source_sha256": "ef799174821129fdc2be635a32645566abd775e3c21d97c9c9d6f8e3c602dfdc"
+    },
+    {
+      "source": "Assets\\Arts\\Models\\53 刻晴\\Animations\\Locomotion\\Lucy_Slide_F_Root.anim",
+      "target": "Assets\\Prefabs\\Player\\Keqing\\Imported\\Arts\\Models\\53 刻晴\\Animations\\Locomotion\\Lucy_Slide_F_Root.anim",
+      "source_sha256": "6b1f84a6d518b19194e3a432f51c5b1a916d73e3bc28022b98cdb6fa58a13a08"
+    },
+    {
+      "source": "Assets\\Arts\\Models\\53 刻晴\\Animations\\Locomotion\\Lucy_Slide_L_Root.anim",
+      "target": "Assets\\Prefabs\\Player\\Keqing\\Imported\\Arts\\Models\\53 刻晴\\Animations\\Locomotion\\Lucy_Slide_L_Root.anim",
+      "source_sha256": "04e2f7241491c8a26cd62d5bda450644667a1a35bbb3085dca144f77904c6fc8"
+    },
+    {
+      "source": "Assets\\Arts\\Models\\53 刻晴\\Animations\\Locomotion\\Lucy_Slide_R_Root.anim",
+      "target": "Assets\\Prefabs\\Player\\Keqing\\Imported\\Arts\\Models\\53 刻晴\\Animations\\Locomotion\\Lucy_Slide_R_Root.anim",
+      "source_sha256": "1b6d2b8379f2e8767b49c87c360e6a11419d30c06d5b36519704ad5d53a0e927"
+    },
+    {
+      "source": "Assets\\Arts\\Models\\53 刻晴\\Animations\\Locomotion\\Lucy_TurnL_180_Root_Loop.anim",
+      "target": "Assets\\Prefabs\\Player\\Keqing\\Imported\\Arts\\Models\\53 刻晴\\Animations\\Locomotion\\Lucy_TurnL_180_Root_Loop.anim",
+      "source_sha256": "9ae23ca33435879c6ea4ad47ced6c943451aec9e5271bbbe7e4d742c4a68b136"
+    },
+    {
+      "source": "Assets\\Arts\\Models\\53 刻晴\\Animations\\Locomotion\\Lucy_TurnR_180_Root_Loop.anim",
+      "target": "Assets\\Prefabs\\Player\\Keqing\\Imported\\Arts\\Models\\53 刻晴\\Animations\\Locomotion\\Lucy_TurnR_180_Root_Loop.anim",
+      "source_sha256": "b2358869e4c7bc86f1a4d89c03be6b3a15a2d9fcb23f8e3ea4d9be0e18492772"
+    },
+    {
+      "source": "Assets\\Arts\\Models\\53 刻晴\\Keqing_CLazyIdle.controller",
+      "target": "Assets\\Prefabs\\Player\\Keqing\\Imported\\Arts\\Models\\53 刻晴\\Keqing_CLazyIdle.controller",
+      "source_sha256": "a7a46ecc24391c92d8973062003933416b76260523e2c289e9977c4ea137de15"
+    },
+    {
+      "source": "Assets\\Arts\\Models\\53 刻晴\\Keqing_Humanoid.prefab",
+      "target": "Assets\\Prefabs\\Player\\Keqing\\Imported\\Arts\\Models\\53 刻晴\\Keqing_Humanoid.prefab",
+      "source_sha256": "b4aba4fa219716386831cd8dc3ec165879f8e3bed797fc080a482f268d522862"
+    },
+    {
+      "source": "Assets\\Arts\\Models\\53 刻晴\\Materials\\Keqing_0.men.mat",
+      "target": "Assets\\Prefabs\\Player\\Keqing\\Imported\\Arts\\Models\\53 刻晴\\Materials\\Keqing_0.men.mat",
+      "source_sha256": "4ed16869c6dfbb2679171a8ae2be63a9c0b49df19191fa47d73fa8626fab2eee"
+    },
+    {
+      "source": "Assets\\Arts\\Models\\53 刻晴\\Materials\\Keqing_1.men1.mat",
+      "target": "Assets\\Prefabs\\Player\\Keqing\\Imported\\Arts\\Models\\53 刻晴\\Materials\\Keqing_1.men1.mat",
+      "source_sha256": "c1bf16faeadfb9b462e05d019fea7068a7971f427761aed3f2625db4f488f749"
+    },
+    {
+      "source": "Assets\\Arts\\Models\\53 刻晴\\Materials\\Keqing_10._.mat",
+      "target": "Assets\\Prefabs\\Player\\Keqing\\Imported\\Arts\\Models\\53 刻晴\\Materials\\Keqing_10._.mat",
+      "source_sha256": "73128f914d3a9d10a5fa64e1fe628ec3259da5d60adc89b7340297f8f3ed8293"
+    },
+    {
+      "source": "Assets\\Arts\\Models\\53 刻晴\\Materials\\Keqing_11.fuku.mat",
+      "target": "Assets\\Prefabs\\Player\\Keqing\\Imported\\Arts\\Models\\53 刻晴\\Materials\\Keqing_11.fuku.mat",
+      "source_sha256": "456405ac387bb48b2ef4a2dad9129620ce10327a35255860613989e9b184af9d"
+    },
+    {
+      "source": "Assets\\Arts\\Models\\53 刻晴\\Materials\\Keqing_12.kaminome1.mat",
+      "target": "Assets\\Prefabs\\Player\\Keqing\\Imported\\Arts\\Models\\53 刻晴\\Materials\\Keqing_12.kaminome1.mat",
+      "source_sha256": "9aae544451f68a640d65e3cccee9cbab9feaf241a5f070c8fd74613fc8f15b6d"
+    },
+    {
+      "source": "Assets\\Arts\\Models\\53 刻晴\\Materials\\Keqing_13.kaminome_AL.mat",
+      "target": "Assets\\Prefabs\\Player\\Keqing\\Imported\\Arts\\Models\\53 刻晴\\Materials\\Keqing_13.kaminome_AL.mat",
+      "source_sha256": "a3395b54b77a993b18f95df2c3af4d1fcebc318740af3cd1071e4b6af4f0bfeb"
+    },
+    {
+      "source": "Assets\\Arts\\Models\\53 刻晴\\Materials\\Keqing_14.__.mat",
+      "target": "Assets\\Prefabs\\Player\\Keqing\\Imported\\Arts\\Models\\53 刻晴\\Materials\\Keqing_14.__.mat",
+      "source_sha256": "50359c7d6fd1a3e1fb3d5b002509eb7f4e62a4d055dcc5c11f2371469151fd74"
+    },
+    {
+      "source": "Assets\\Arts\\Models\\53 刻晴\\Materials\\Keqing_15.momo.mat",
+      "target": "Assets\\Prefabs\\Player\\Keqing\\Imported\\Arts\\Models\\53 刻晴\\Materials\\Keqing_15.momo.mat",
+      "source_sha256": "f45dd1c0348023a85edafc8ec5b00adb8b35a006adf5ce160b0deaba722dfdf8"
+    },
+    {
+      "source": "Assets\\Arts\\Models\\53 刻晴\\Materials\\Keqing_16.shinki.mat",
+      "target": "Assets\\Prefabs\\Player\\Keqing\\Imported\\Arts\\Models\\53 刻晴\\Materials\\Keqing_16.shinki.mat",
+      "source_sha256": "b60f31c487350625221a2fbe156e4474da2c501ed387c711815d5ed3ffef1c9d"
+    },
+    {
+      "source": "Assets\\Arts\\Models\\53 刻晴\\Materials\\Keqing_17.hada.mat",
+      "target": "Assets\\Prefabs\\Player\\Keqing\\Imported\\Arts\\Models\\53 刻晴\\Materials\\Keqing_17.hada.mat",
+      "source_sha256": "bcbf69c2a967fce0d3a75bcdd51645103111771bdf9adbf696f743f0d0876080"
+    },
+    {
+      "source": "Assets\\Arts\\Models\\53 刻晴\\Materials\\Keqing_18._.mat",
+      "target": "Assets\\Prefabs\\Player\\Keqing\\Imported\\Arts\\Models\\53 刻晴\\Materials\\Keqing_18._.mat",
+      "source_sha256": "69d1d919a11c550a2d98c4fb46b009f939a34ffc86d3c6a498bb5025eaf4e40b"
+    },
+    {
+      "source": "Assets\\Arts\\Models\\53 刻晴\\Materials\\Keqing_19.tere.mat",
+      "target": "Assets\\Prefabs\\Player\\Keqing\\Imported\\Arts\\Models\\53 刻晴\\Materials\\Keqing_19.tere.mat",
+      "source_sha256": "1d175b4b6b46ea1243c36b0c1060b5abba1ea70d12b0b50c671a2f273472ed46"
+    },
+    {
+      "source": "Assets\\Arts\\Models\\53 刻晴\\Materials\\Keqing_2.shirome.mat",
+      "target": "Assets\\Prefabs\\Player\\Keqing\\Imported\\Arts\\Models\\53 刻晴\\Materials\\Keqing_2.shirome.mat",
+      "source_sha256": "6024c27c9a7d2b0d28a50b0fc9d38a6e5572cdd0992a5906cfc9affcbf513a7b"
+    },
+    {
+      "source": "Assets\\Arts\\Models\\53 刻晴\\Materials\\Keqing_3.me.mat",
+      "target": "Assets\\Prefabs\\Player\\Keqing\\Imported\\Arts\\Models\\53 刻晴\\Materials\\Keqing_3.me.mat",
+      "source_sha256": "0c20677286690ada545f5ff4209fa73974798a486f1b4b78f398d1362eacec20"
+    },
+    {
+      "source": "Assets\\Arts\\Models\\53 刻晴\\Materials\\Keqing_4.matsuge.mat",
+      "target": "Assets\\Prefabs\\Player\\Keqing\\Imported\\Arts\\Models\\53 刻晴\\Materials\\Keqing_4.matsuge.mat",
+      "source_sha256": "4f20f569701342ab04f26891a7f7149405a5ea21007c4a43712a36dd268e5a68"
+    },
+    {
+      "source": "Assets\\Arts\\Models\\53 刻晴\\Materials\\Keqing_5.nijuu.mat",
+      "target": "Assets\\Prefabs\\Player\\Keqing\\Imported\\Arts\\Models\\53 刻晴\\Materials\\Keqing_5.nijuu.mat",
+      "source_sha256": "276f6cb4ced566b84fdd2f6eb0c720eab9c2444ebe668cf64e63e8e3ac9eb214"
+    },
+    {
+      "source": "Assets\\Arts\\Models\\53 刻晴\\Materials\\Keqing_6.mayu.mat",
+      "target": "Assets\\Prefabs\\Player\\Keqing\\Imported\\Arts\\Models\\53 刻晴\\Materials\\Keqing_6.mayu.mat",
+      "source_sha256": "e0f476f14facca5cd8795cef9be921796664d3f81865a335fe0677c879ccc2e2"
+    },
+    {
+      "source": "Assets\\Arts\\Models\\53 刻晴\\Materials\\Keqing_7.kouzetsu.mat",
+      "target": "Assets\\Prefabs\\Player\\Keqing\\Imported\\Arts\\Models\\53 刻晴\\Materials\\Keqing_7.kouzetsu.mat",
+      "source_sha256": "c67befee50b5a5736164b64688c5f2cc368fd9273992d23940bb9c2076c463f9"
+    },
+    {
+      "source": "Assets\\Arts\\Models\\53 刻晴\\Materials\\Keqing_8.meboshi.mat",
+      "target": "Assets\\Prefabs\\Player\\Keqing\\Imported\\Arts\\Models\\53 刻晴\\Materials\\Keqing_8.meboshi.mat",
+      "source_sha256": "6bf3e7efddf30a53a0d0246c1537c78af6d525d43a588935e9e87d2b2ec23348"
+    },
+    {
+      "source": "Assets\\Arts\\Models\\53 刻晴\\Materials\\Keqing_9._.mat",
+      "target": "Assets\\Prefabs\\Player\\Keqing\\Imported\\Arts\\Models\\53 刻晴\\Materials\\Keqing_9._.mat",
+      "source_sha256": "2019b3b016beaa1c462ff167734cda86f87ad0a0e9fa4cf92d4066d8f4004e30"
+    },
+    {
+      "source": "Assets\\Arts\\Models\\53 刻晴\\tex\\发.png",
+      "target": "Assets\\Prefabs\\Player\\Keqing\\Imported\\Arts\\Models\\53 刻晴\\tex\\发.png",
+      "source_sha256": "55fa0a7ac08df4d34516f18afefb69b369f414ead409a74e357bccbb80d237b6"
+    },
+    {
+      "source": "Assets\\Arts\\Models\\53 刻晴\\tex\\服.png",
+      "target": "Assets\\Prefabs\\Player\\Keqing\\Imported\\Arts\\Models\\53 刻晴\\tex\\服.png",
+      "source_sha256": "0c4281996c74e2b04c06227c4486b88deb04fb2104f04507ba12008f84df1d52"
+    },
+    {
+      "source": "Assets\\Arts\\Models\\53 刻晴\\tex\\肌.png",
+      "target": "Assets\\Prefabs\\Player\\Keqing\\Imported\\Arts\\Models\\53 刻晴\\tex\\肌.png",
+      "source_sha256": "643bab56e6a9a5066a271ae8b4fa2b18642aa3f92bda8374abf6af46156f2f8a"
+    },
+    {
+      "source": "Assets\\Arts\\Models\\53 刻晴\\tex\\表情.png",
+      "target": "Assets\\Prefabs\\Player\\Keqing\\Imported\\Arts\\Models\\53 刻晴\\tex\\表情.png",
+      "source_sha256": "99029281df36ca2db9f880f56c000c345f4f4bad770b85951c90cb7b60d002e6"
+    },
+    {
+      "source": "Assets\\Arts\\Models\\53 刻晴\\tex\\面.png",
+      "target": "Assets\\Prefabs\\Player\\Keqing\\Imported\\Arts\\Models\\53 刻晴\\tex\\面.png",
+      "source_sha256": "444ac18c32db73d15ecdbc19c63ccd6b933ec4d0fe649f71768f01f41526fc9f"
+    },
+    {
+      "source": "Assets\\Arts\\Models\\53 刻晴\\刻晴.fbx",
+      "target": "Assets\\Prefabs\\Player\\Keqing\\Imported\\Arts\\Models\\53 刻晴\\刻晴.fbx",
+      "source_sha256": "8e50c5509a915904425faf77a341423083f191265e8bbbace66b12081b823f77"
+    },
+    {
+      "source": "Assets\\Girl_GreatSword_AnimSet\\Animation\\Humanoid\\dead_01_inplace.fbx",
+      "target": "Assets\\Prefabs\\Player\\Keqing\\Imported\\Girl_GreatSword_AnimSet\\Animation\\Humanoid\\dead_01_inplace.fbx",
+      "source_sha256": "6bf4ef83667e4ae6c6ec298a2d38b003a1311174740c177583382ae7a3f953d3"
+    },
+    {
+      "source": "Assets\\Girl_GreatSword_AnimSet\\Animation\\Humanoid\\hit_head_front_inplace.fbx",
+      "target": "Assets\\Prefabs\\Player\\Keqing\\Imported\\Girl_GreatSword_AnimSet\\Animation\\Humanoid\\hit_head_front_inplace.fbx",
+      "source_sha256": "e264119e5bdb4f0fc9ad04f4836cd3cbe3536dde9ad1c03fa3916691a0272192"
+    },
+    {
+      "source": "Assets\\Girl_GreatSword_AnimSet\\Animation\\Humanoid\\idlexCV.fbx",
+      "target": "Assets\\Prefabs\\Player\\Keqing\\Imported\\Girl_GreatSword_AnimSet\\Animation\\Humanoid\\idlexCV.fbx",
+      "source_sha256": "bbfa5ee24b1cbe249fede1cd58994222a8ea6844d3211400b2ea7e442429e3f5"
+    },
+    {
+      "source": "Assets\\Scripts\\ClearAttackOnStateEnter.cs",
+      "target": "Assets\\Prefabs\\Player\\Keqing\\Imported\\Scripts\\ClearAttackOnStateEnter.cs",
+      "source_sha256": "5211bd5eca4082b5d6b8e9404ee206ccceefdf122b4375c89ec5d7c12a2a7631"
+    }
+  ],
+  "remapped_guids": {
+    "729ba4dd70f545146917f3d56483cfbe": "9c8e7e50fb0755db8396681a95a5b2ba",
+    "808cb53fe3ded97438dc2f425bf16452": "6d2887e301cd563ea725decf54e87e85",
+    "c0647b9c8e25b8a4f9782643108e92a0": "88373a6c6a85538fa2706a5813bf0e0e",
+    "ab76107f3310a8844a3c0cce8c824085": "823bc809fe055c2a9e993c126ad7259d",
+    "efacb9f5361bec6429ea1093b4f821a9": "a60606073b385d0c904260155a0b6f97",
+    "fc810abf79957e246bbcff92f8d71df6": "b4885ef694ac5c5bbd7458a3e93ee412",
+    "011ebbd4b24fba346b9a85e390575bf4": "bcc2c3122eb153ffaeef806a2e1a838f",
+    "fbc012536a9a5be4aae33ac097ea4caa": "b98c9ec0323d55e5b7b4310c464ccd7d",
+    "66227fd29c72fec4d897e084d591de78": "caf757611a6656ab842ba6d32f7ced02",
+    "63d2942a3d6acb945914ec6bd55ab296": "41b0dd0332ce521085a0bc36ad6256b9",
+    "4631d3bd04a87204dae0bdfa17a46a84": "b0579e4926e657bd9502a23549816d8c",
+    "90e222a22ae607348832b33aca824502": "309960d5106f52f0a26bb3605be01dc0",
+    "638b0d0226ebcb14f962b28f0f3c88dd": "7aa95a08d9a753cb9a341d9330348b86",
+    "5468407512ba9e9489b2da4ea202bc2a": "0dd49968f8f15b21b365cfe5a0e0b7c1",
+    "95de8b47e9efaf347bc3960acc2983fa": "832fa7aee1eb5796bece8b137db7c731",
+    "a1e19c182e5b06a429ca7949ac6efc5b": "3782a3157606532883538054fa808725",
+    "3d7d6c2b76d1c404ea895bcf1b69219b": "51b653b1c00a5b63b4d7d0857ac31d8c",
+    "999e8ffc6ee99f54b8a160cc1ff4f912": "48821a14f45e5dd885c82d3d61b51642",
+    "97a4ea3cb425a0d4ba864e4c67ba3069": "83c19d99160a514cbf6e11b6ea73f976",
+    "3760395abe81d9d45895793f29737a9a": "6c4bade1b88d575b9dcf2e0233cd9ec5",
+    "52cb1c3dec3e5d54fbc8cd50b0ecab12": "291982f91aa35dc39c9ca34ddee4b0cb",
+    "4946eead0850f3c4881871d890ebdbb7": "db55013a055255388b99888083dcea77",
+    "323c7c1a1b468004ca4ee80cb2956407": "766b7bcaa8205219ac042d5a43b2af3d",
+    "ce13539d6cb4f864a8dbd1994b8541d0": "e9e22ff2606a506e8f3159d6bdae6e75",
+    "a587f3c9d4d2eb847b62726dd4a95279": "3e14596468a25bb69f763f23eb57edaa",
+    "790ad9e38713bd84d97091285c71e75d": "a088b79b063059d0bcf54595a51b736a",
+    "c6d5422f77eddd8488d1ba1e7e186750": "2e463e1c2e2354cba2ff8102606b1a2f",
+    "98bf290cb4f3c2c438d44f507e8ed3ec": "1eb5a4a53b315d5ba7b5970ac270d444",
+    "826258fa5c580b846a72a79c232aebf0": "205cddaffc45512bb1777efd45e02ebf",
+    "39a24b7f63d2c084f9b8a68db1fb0711": "6beafe86065f5a968296ff9b98cc8552",
+    "a944d37dd1f8970488fe3cacf033004d": "9e7899ede0f55afeb8924f1473214ac1",
+    "0a6dc59ebcca05f48beb755b0f14bd1f": "cf06ed3cc19e5850b9d51e4d79bdcf47",
+    "0dc3e89c9d8b1f24482e774b1abb38c3": "fe08da7761015aac946d76ab882c7b97",
+    "1bb6a364930fb544481a5deb87ed92de": "6604271af647575ca188724687ff6467",
+    "d190c8a1992a7074fbb95ce8a7a1608c": "065a2395a3da5a8fbaf5192882f9d092",
+    "7613e2d1689c23741afdec20aaafbb99": "f7f40ea5813b576e88cbccb4aac981d5",
+    "206d8205a88722d4ebcae3a5b4817fc1": "468ef4a1b2ad5d52a5b83c2db6ad14c9",
+    "bf0a69bba976ee040b8f909a44d9df4e": "c8e5852917c250bb9dd33fff5e99ccf5",
+    "6f5d65bcf444f6a4c8a2f7e4a26097e0": "5dbd20d19fb55ab182fdd0b832242733",
+    "616e3372db42e0140be567c25e0f3ed9": "3df31ba055e75dd297e4e41273e4f08a",
+    "f87410c1657052c46829868357a61e12": "dbbfd03ddc195d229201ffd3b97bb131",
+    "2ee3b3d86a9091149b7e83f3ec2e2210": "a130fe6b14095bb3822133e2f7429ac0"
+  },
+  "external_guids": [
+    "933532a4fcc9baf4fa0491de14d08ed7",
+    "d0353a89b1f911e48b9e16bdc9f2e058"
+  ]
+}

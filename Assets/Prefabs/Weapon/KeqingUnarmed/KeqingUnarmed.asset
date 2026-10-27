@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ef66cb190b9b214daaecf638b5abe31, type: 3}
+  m_Name: KeqingUnarmed
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponSO
+  id: weapon_keqing_unarmed
+  itemName: "\u7A7A\u624B"
+  description: "\u523B\u6674\u7684\u7A7A\u624B\u683C\u6597\u3002\u4E24\u6BB5\u8FDE\u51FB\uFF0CShift
+    \u95EA\u907F\uFF1B\u5728\u80CC\u5305\u4E2D\u9009\u62E9\u5373\u53EF\u88C5\u5907\u3002"
+  icon: {fileID: 21300000, guid: b5758b1d088a30a4da3de1fb283655a0, type: 3}
+  stackCount: 1
+  prefab: {fileID: 1824072609789406170, guid: 056ff5d3868657249977f9e4ebb16583, type: 3}
+  overrideController: {fileID: 22100000, guid: 91a44913d5e5a3d4fb6c7c1ce7c5491a, type: 2}
+  combo:
+  - damagePerHit: 14
+    radius: 1.4
+    angle: 110
+    poiseDamage: 35
+    priority: 50
+    scale: 0.08
+    time: 0.045
+    audioClip: {fileID: 0}
+    eff: {fileID: 0}
+    judgeOffset: {x: 0, y: 0.9, z: 0.65}
+  - damagePerHit: 20
+    radius: 1.55
+    angle: 110
+    poiseDamage: 55
+    priority: 50
+    scale: 0.08
+    time: 0.045
+    audioClip: {fileID: 0}
+    eff: {fileID: 0}
+    judgeOffset: {x: 0, y: 0.9, z: 0.65}
+  stopDistance: 1.4
+  attackBreak: 0.8

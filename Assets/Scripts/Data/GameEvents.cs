@@ -49,7 +49,7 @@ public static class GameEvents
     public static readonly EventKey<ItemSlot> OnSlotSelectionRequested = new EventKey<ItemSlot>();
     public static readonly EventKey<ItemSlot> OnSelectedSlotChanged = new EventKey<ItemSlot>();
     public static readonly EventKey<ChestWindow> OnChestWindowHoverChanged = new EventKey<ChestWindow>();
-    public static readonly EventKey<int>OnPlayerCombo=new EventKey<int>();
+    public static readonly EventKey<PlayerObj,int>OnPlayerCombo=new EventKey<PlayerObj,int>();
     public static readonly EventKey<EnemyObj,int>OnEnemyCombo=new EventKey<EnemyObj,int>();
     public static readonly EventKey<EnemyObj,ItemData>OnEnemyChangedHandingItem=new EventKey<EnemyObj, ItemData>();//敌人切换手持物品或者初始化时调用
     /// <summary>

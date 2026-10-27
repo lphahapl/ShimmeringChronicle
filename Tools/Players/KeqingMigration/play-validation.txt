@@ -1,0 +1,18 @@
+PASS: 使用通用状态机
+PASS: 背包空手武器开局装备且共用运行数据
+PASS: 空手伤害判定对象已创建
+PASS: 根运动实际推动角色
+PASS: CharacterController 阻挡墙体穿透
+PASS: 转身动画根旋转改变朝向
+PASS: 闪避请求进入 Dodge 状态
+PASS: 第一段命中事件一次，实际 1
+PASS: 输入缓存接第二段且命中一次，实际 1
+PASS: 韧性未破时不中断动作
+PASS: 破韧通知一次并播放受击动画
+PASS: 受击表现不重复扣血
+PASS: 对话统一锁定动作并清空缓存
+PASS: 对话期间无水平位移
+PASS: 换武器后旧攻击事件失效
+PASS: 玩家和动作脚本死亡状态一致
+PASS: 死亡可打断动作并进入 Dead
+PASS: 运行期间没有 Error 或 Exception，实际 0

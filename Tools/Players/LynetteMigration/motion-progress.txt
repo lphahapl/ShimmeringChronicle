@@ -1,0 +1,1 @@
+stage=7 elapsed=0.6327572 frame=2040 hits=1,1,1

@@ -51,7 +51,7 @@ public class WeaponObj : MonoBehaviour
         if (ownerEnemy != null)
             this.Subscribe<EnemyObj, int>(GameEvents.OnEnemyCombo, EnemyCheckAttack);
         else if (parent.GetComponent<PlayerObj>() != null)
-            this.Subscribe<int>(GameEvents.OnPlayerCombo, CheckAttack);
+            this.Subscribe<PlayerObj, int>(GameEvents.OnPlayerCombo, OnPlayerAttackHit);
     }
 
     private void OnEnable()
@@ -61,7 +61,7 @@ public class WeaponObj : MonoBehaviour
 
     private void UnsubscribeComboEvents()
     {
-        this.UnSubscribe<int>(GameEvents.OnPlayerCombo, CheckAttack);
+        this.UnSubscribe<PlayerObj, int>(GameEvents.OnPlayerCombo, OnPlayerAttackHit);
         this.UnSubscribe<EnemyObj, int>(GameEvents.OnEnemyCombo, EnemyCheckAttack);
     }
 
@@ -79,6 +79,12 @@ public class WeaponObj : MonoBehaviour
     }
 
     // One call represents one hit. Multiple colliders on an enemy deal damage once.
+    void OnPlayerAttackHit(PlayerObj attacker, int index)
+    {
+        if (attacker == null || parent != attacker.gameObject || !attacker.CanAct) return;
+        CheckAttack(index);
+    }
+
     public virtual void CheckAttack(int index)
     {
         targets ??= new List<Collider>();

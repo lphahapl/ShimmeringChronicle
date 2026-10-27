@@ -1,0 +1,14 @@
+PASS: SampleScene 使用刻晴玩家
+PASS: 空手武器可通过物品表查询
+PASS: 背包空手图标显示正确
+PASS: 背包空手格子可以选择装备
+PASS: 背包界面绑定刻晴数据
+PASS: 刻晴材质与当前渲染管线兼容
+INFO: player=(-5.29, 7.30, -6.84) camera=(-4.79, 9.20, -9.95) pitch=9.999998
+INFO: mesh=U_Char_0 bounds=Center: (-5.29, 8.46, -6.95), Extents: (0.38, 0.46, 0.36)
+INFO: mesh=U_Char_1 bounds=Center: (-5.23, 8.71, -6.80), Extents: (0.05, 0.02, 0.04)
+INFO: mesh=U_Char_2 bounds=Center: (-5.26, 8.06, -6.80), Extents: (0.49, 0.78, 0.41)
+INFO: mesh=U_Char_3 bounds=Center: (-5.25, 8.69, -6.82), Extents: (0.08, 0.03, 0.07)
+PASS: 空手判定命中真实敌人且只扣一次伤害
+PASS: 武器忽略无关攻击者的命中通知
+PASS: 主场景检查期间没有 Error 或 Exception，实际 0

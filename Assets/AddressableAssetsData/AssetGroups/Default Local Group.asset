@@ -105,6 +105,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - ItemSO
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bb4ecd508382d834ca828517d4806d30
+    m_Address: weapon_lynette_katana
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ItemSO
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: bcd9ba2f58c94abb93b8e17bc5a4f704
     m_Address: Assets/Prefabs/Item/test_potion/test_potion.asset
     m_ReadOnly: 0
@@ -119,6 +125,12 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d5d0d11aca224c59bcfabd865586a856
     m_Address: Assets/Prefabs/Weapon/weapon_002/weapon_002.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ItemSO
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dbfea322e2d8e6e40acfe99ace69198f
+    m_Address: weapon_keqing_unarmed
     m_ReadOnly: 0
     m_SerializedLabels:
     - ItemSO

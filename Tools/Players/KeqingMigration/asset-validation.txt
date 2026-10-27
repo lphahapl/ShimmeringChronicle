@@ -1,0 +1,10 @@
+PASS: 玩家预制体存在
+PASS: Humanoid Avatar 有效
+PASS: 通用动作控制器已挂载
+PASS: 碰撞控制器存在
+PASS: 空手两段攻击、图标和判定预制体有效
+PASS: 空手位于背包且配置为开局装备
+PASS: 空手覆盖控制器使用刻晴基础状态机
+PASS: Combo1 有伤害事件
+PASS: Combo1 保留接招事件
+PASS: Combo2 有伤害事件

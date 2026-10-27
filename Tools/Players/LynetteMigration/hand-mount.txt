@@ -1,0 +1,2 @@
+Source hand=右手首
+Bound hand=右手首

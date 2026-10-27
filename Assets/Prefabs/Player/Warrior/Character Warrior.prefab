@@ -199,9 +199,14 @@ MonoBehaviour:
   animator: {fileID: 0}
   playerCamera: {fileID: 0}
   gravity: -20
-  isCanAttack: 1
-  isTalking: 0
   showDebugHUD: 1
+  readInput: 1
+  maxSpeed: 2
+  acceleration: 2
+  turnSmoothTime: 0.12
+  standingTurnEnterAngle: 60
+  movingTurnEnterAngle: 100
+  turnExitAngle: 10
 --- !u!114 &4092056495037044919
 MonoBehaviour:
   m_ObjectHideFlags: 0

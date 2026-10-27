@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ef66cb190b9b214daaecf638b5abe31, type: 3}
+  m_Name: LynetteKatana
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponSO
+  id: weapon_lynette_katana
+  itemName: "\u7433\u59AE\u7279\u7684\u592A\u5200"
+  description: "\u6E90\u573A\u666F\u4F7F\u7528\u7684\u592A\u5200\uFF0C\u4E09\u6BB5\u65A9\u51FB\uFF0C\u5171\u7528\u901A\u7528\u72B6\u6001\u673A\u3002"
+  icon: {fileID: 21300000, guid: 1d560ec025ad2ea4eb760740ee48884c, type: 3}
+  stackCount: 1
+  prefab: {fileID: 2583732428347140825, guid: 705267bed86bd064195ac3035829a8f8, type: 3}
+  overrideController: {fileID: 22100000, guid: 74d358ca95f8fe240b756e701f6c19d5, type: 2}
+  combo:
+  - damagePerHit: 18
+    radius: 2
+    angle: 130
+    poiseDamage: 30
+    priority: 50
+    scale: 0.08
+    time: 0.045
+    audioClip: {fileID: 0}
+    eff: {fileID: 0}
+    judgeOffset: {x: 0, y: 0.9, z: 0.8}
+  - damagePerHit: 24
+    radius: 2.15
+    angle: 130
+    poiseDamage: 45
+    priority: 50
+    scale: 0.08
+    time: 0.045
+    audioClip: {fileID: 0}
+    eff: {fileID: 0}
+    judgeOffset: {x: 0, y: 0.9, z: 0.8}
+  - damagePerHit: 30
+    radius: 2.3
+    angle: 130
+    poiseDamage: 60
+    priority: 50
+    scale: 0.08
+    time: 0.045
+    audioClip: {fileID: 0}
+    eff: {fileID: 0}
+    judgeOffset: {x: 0, y: 0.9, z: 0.8}
+  stopDistance: 0
+  attackBreak: 0.8

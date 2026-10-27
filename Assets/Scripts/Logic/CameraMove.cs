@@ -11,7 +11,7 @@ public class CameraMove : MonoBehaviour
     public float minPitch = -60f;
     public float maxPitch = 70f;
 
-    private PlayerController playerController;
+    private PlayerObj playerObj;
     private float yaw;//绕y旋转
     private float pitch;//绕x旋转
 
@@ -26,7 +26,7 @@ public class CameraMove : MonoBehaviour
                 player = obj.transform;
         }
 
-        if (player != null) playerController = player.GetComponent<PlayerController>();
+        if (player != null) playerObj = player.GetComponent<PlayerObj>();
 
         yaw = transform.eulerAngles.y;
         pitch = Mathf.DeltaAngle(0f, transform.eulerAngles.x);//转到正负180之间
@@ -37,7 +37,7 @@ public class CameraMove : MonoBehaviour
     {
         if (player == null) return;
         bool canRotate = true;
-        if (playerController != null && playerController.isTalking) canRotate = false;
+        if (playerObj != null && playerObj.IsTalking) canRotate = false;
         var manager = UIManager.Instance;
         if (manager != null && manager.HasOpenPanel) canRotate = false;
         if (canRotate)

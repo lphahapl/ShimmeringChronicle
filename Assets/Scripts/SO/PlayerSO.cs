@@ -23,6 +23,9 @@ public class PlayerSO : BaseDataSO<PlayerData>
     [Tooltip("背包格子数。列表长度就是容量，界面上固定显示这么多格，空格用 null 占位")]
     [Min(0)] public int bagCapacity = 25;
 
+    [Tooltip("开局从背包中装备这件武器，仍然使用背包里的同一份数据")]
+    public WeaponSO startingWeapon;
+
     public List<ItemSlotData> quickBar;
     public List<ItemSlotData> Bag;
 

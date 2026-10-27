@@ -1,0 +1,19 @@
+PASS: 使用琳妮特自身有效 Humanoid Avatar
+PASS: 开局装备背包中的三段太刀
+PASS: 太刀挂在源场景对应右手挂点
+PASS: 握持标记贴近手部
+PASS: 运行时使用通用状态机的武器覆盖动画
+PASS: 移动动画实际推动角色
+PASS: 移动受墙体碰撞约束
+PASS: 转身动画正常重定向
+PASS: 闪避进入通用 Dodge 状态
+PASS: 第 1 段源攻击完成一次命中，实际 1
+PASS: 第 2 段源攻击完成一次命中，实际 1
+PASS: 第 3 段源攻击完成一次命中，实际 1
+PASS: 三段动画命中沿用真实 WeaponObj/EnemyObj 扣血，总伤害 72
+PASS: 未破韧不触发硬直
+PASS: 破韧播放受击且只通知一次
+PASS: 受击不重复扣血
+PASS: 对话锁定移动和攻击缓存
+PASS: 死亡状态与通用死亡动画一致
+PASS: 运行期间没有 Error 或 Exception，实际 0

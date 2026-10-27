@@ -46,7 +46,7 @@ public class BagPanel : UIBase
     protected override void Awake()
     {
         base.Awake();
-
+        player = GameObject.FindWithTag("Player").GetComponent<PlayerObj>();
 
         this.Subscribe(GameEvents.OnItemsChanged, OnItemsChanged);
         StartHidden();

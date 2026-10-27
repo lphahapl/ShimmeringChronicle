@@ -1,0 +1,7 @@
+PASS: 45 source asset hashes unchanged
+PASS: no ternary operator in Assets/Scripts/Logic/PlayerController.cs
+PASS: no old state-machine branch in Assets/Scripts/Logic/PlayerController.cs
+PASS: no ternary operator in Assets/Scripts/Logic/PlayerInput.cs
+PASS: no old state-machine branch in Assets/Scripts/Logic/PlayerInput.cs
+PASS: PlayerInputReader removed
+PASS: no duplicate asset GUIDs

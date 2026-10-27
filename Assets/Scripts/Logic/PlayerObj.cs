@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -8,12 +9,28 @@ using UnityEngine;
 ///
 /// （以前它实现 IItemOperator，等于说"玩家就是一个容器"，但它明明有两个。）
 /// </summary>
+[DefaultExecutionOrder(-30)]
 public class PlayerObj : MonoBehaviour, IDamageable, IContainerOwner,ICanChangeHandingItem
 {
     [SerializeField] PlayerSO config;
 
     private PlayerData data;
     public TMP_Text prompt;
+    // 玩家事实只在这里保存，动作脚本只响应变化。
+    public event Action<ItemData> EquippedItemChanged;
+    public event Action<GameObject> Staggered;
+    public event Action<bool> ActionLockChanged;
+    public bool IsTalking { get; private set; }
+    public bool CanAct => isActiveAndEnabled && !IsDead && !IsTalking;
+    public ItemData EquippedItem
+    {
+        get
+        {
+            if (Data == null) return null;
+            return Data.HandingItem;
+        }
+    }
+
     public IItemOperator GetContainer(ContainerKind kind = ContainerKind.Default)
     {
         return kind switch
@@ -29,7 +46,14 @@ public class PlayerObj : MonoBehaviour, IDamageable, IContainerOwner,ICanChangeH
     public float poiseRecoveryPerSecond;
     public float poise;
     public float poiseRecoveryTime;
-    public float dtFix => hitStop ? hitStop.DeltaTime : Time.deltaTime;
+    public float dtFix
+    {
+        get
+        {
+            if (hitStop != null) return hitStop.DeltaTime;
+            return Time.deltaTime;
+        }
+    }
 
     public MissionSO t;
     public MissionData missionData;
@@ -46,12 +70,20 @@ public class PlayerObj : MonoBehaviour, IDamageable, IContainerOwner,ICanChangeH
     public ItemData SelectedItem => GetSelectedItem();
     private ItemData GetSelectedItem()
     {
-        if (SelectedSlot == null || !SelectedSlot.isActiveAndEnabled) return null;
+        if (SelectedSlot == null)
+        {
+            if (displayedItem == null || displayedItem.count <= 0) return null;
+            if (Data.Bag.Contains(displayedItem) || Data.quickBar.Contains(displayedItem)) return displayedItem;
+            return null;
+        }
         // Read the source independently of UI refresh order.
-        var items = SelectedSlot.Owner?.GetItemList();
+        IReadOnlyList<ItemData> items = null;
+        if (SelectedSlot.Owner != null) items = SelectedSlot.Owner.GetItemList();
         int index = SelectedSlot.index;
-        var item = items != null && index >= 0 && index < items.Count ? items[index] : null;
-        return item != null && item.count > 0 ? item : null;
+        ItemData item = null;
+        if (items != null && index >= 0 && index < items.Count) item = items[index];
+        if (item != null && item.count > 0) return item;
+        return null;
     }
 
     /// <summary>已经死了。死了之后不再受伤，也不会重复广播死亡</summary>
@@ -104,30 +136,37 @@ public class PlayerObj : MonoBehaviour, IDamageable, IContainerOwner,ICanChangeH
         var d = Data;
         if (d == null) return;
 
-        d.Bag ??= new List<ItemData>();
-        d.quickBar ??= new List<ItemData>();
+        if (d.Bag == null) d.Bag = new List<ItemData>();
+        if (d.quickBar == null) d.quickBar = new List<ItemData>();
 
-        bag ??= new ItemContainer(d.Bag);
-        quickBar ??= new ItemContainer(d.quickBar);
+        if (bag == null) bag = new ItemContainer(d.Bag);
+        if (quickBar == null) quickBar = new ItemContainer(d.quickBar);
     }
     public void Awake()
     {
         if (!hitStop) hitStop = GetComponent<CharacterTime>();
         interactionMask = LayerMask.GetMask("Interactable");
-        Data.missions.Add("mission_001", missionData = new MissionData(t));
+        if (Data != null && t != null && !Data.missions.ContainsKey(t.missionID))
+        {
+            missionData = new MissionData(t);
+            Data.missions.Add(t.missionID, missionData);
+        }
         
         this.Publish<PlayerData>(GameEvents.OnMissionsChanged, this.data);
     }
     void OnEnable()
     {
+        this.Subscribe(GameEvents.OnPlayerTalk, OnPlayerTalk);
+        this.Subscribe(GameEvents.HitStopRequested, OnHitStopRequested);
         this.Subscribe(GameEvents.OnSlotSelectionRequested, OnSlotSelectionRequested);
         this.Subscribe(GameEvents.OnItemsChanged, OnItemsChanged);
     }
     public void Start()
     {
-        UIManager.Instance.RefreshAll();
+        EquipStartingWeapon();
+        if (UIManager.Instance != null) UIManager.Instance.RefreshAll();
         this.Publish(GameEvents.OnMissionsChanged, Data);
-        print(Data.missions.Count);
+
     }
 
     /// <summary>
@@ -188,26 +227,74 @@ public class PlayerObj : MonoBehaviour, IDamageable, IContainerOwner,ICanChangeH
     {
         damage = Mathf.Max(0f, damage);
         poiseDamage = Mathf.Max(0f, poiseDamage);
+        if (IsDead || Data == null) return;
         if (damage <= 0f && poiseDamage <= 0f) return;
-        if (IsDead) return;
-
-        var d = Data;
-        if (d == null) return;
-
-        // 先扣韧再通知受击，破韧的这一击即可打断动作。
         poise = Mathf.Max(0f, poise - poiseDamage);
-        poiseRecoveryTime = d.poiseRecoveryTime;
-
-        d.hp = Mathf.Max(0f, d.hp - damage);    // 减伤只需要下界保底
-
-        
+        poiseRecoveryTime = Data.poiseRecoveryTime;
+        Data.hp = Mathf.Max(0f, Data.hp - damage);
         this.Publish(GameEvents.Damaged, gameObject, damage, attacker);
-        this.Publish(GameEvents.HpChanged, gameObject, d.hp, d.maxHp);
+        this.Publish(GameEvents.HpChanged, gameObject, Data.hp, Data.maxHp);
+        if (Data.hp <= 0f) Die();
+        else if (poise <= 0f && Staggered != null) Staggered(attacker);
+    }
 
-        if (d.hp <= 0f)
+    public void Die()
+    {
+        if (IsDead || Data == null) return;
+        IsDead = true;
+        if (Data.hp > 0f)
         {
-            IsDead = true;
-            this.Publish(GameEvents.Died, gameObject);
+            Data.hp = 0f;
+            this.Publish(GameEvents.HpChanged, gameObject, Data.hp, Data.maxHp);
+        }
+        if (ActionLockChanged != null) ActionLockChanged(true);
+        this.Publish(GameEvents.Died, gameObject);
+    }
+
+    public void RemovePlayer()
+    {
+        Destroy(gameObject);
+    }
+
+    void OnPlayerTalk(PlayerObj talkingPlayer, bool talking)
+    {
+        if (talkingPlayer != this || IsTalking == talking) return;
+        IsTalking = talking;
+        if (ActionLockChanged != null) ActionLockChanged(!CanAct);
+    }
+
+    void OnHitStopRequested(GameObject victim, GameObject attacker, AttackData attack)
+    {
+        if (victim != gameObject && attacker != gameObject) return;
+        if (hitStop == null || attack == null || attack.time <= 0f) return;
+        hitStop.Apply(attack.priority, attack.scale, attack.time);
+    }
+
+    public void PublishAttackHit(WeaponData weapon, int index)
+    {
+        if (!CanAct || weapon == null || !ReferenceEquals(weapon, Data.GetWeaponData())) return;
+        if (weapon.combo == null || index < 0 || index >= weapon.combo.Count) return;
+        this.Publish(GameEvents.OnPlayerCombo, this, index);
+    }
+
+    void EquipStartingWeapon()
+    {
+        if (config == null || config.startingWeapon == null || EquippedItem != null) return;
+        foreach (ItemData item in Data.Bag)
+        {
+            if (item != null && item.id == config.startingWeapon.id)
+            {
+                ChangeItem(item);
+                return;
+            }
+        }
+        foreach (ItemData item in Data.quickBar)
+        {
+            if (item != null && item.id == config.startingWeapon.id)
+            {
+                ChangeItem(item);
+                return;
+            }
         }
     }
 
@@ -231,6 +318,9 @@ public class PlayerObj : MonoBehaviour, IDamageable, IContainerOwner,ICanChangeH
 
     void OnDisable()
     {
+        this.UnSubscribe(GameEvents.OnPlayerTalk, OnPlayerTalk);
+        this.UnSubscribe(GameEvents.HitStopRequested, OnHitStopRequested);
+        IsTalking = false;
         this.UnSubscribe(GameEvents.OnSlotSelectionRequested, OnSlotSelectionRequested);
         this.UnSubscribe(GameEvents.OnItemsChanged, OnItemsChanged);
         SelectedSlot = null;
@@ -328,7 +418,7 @@ public class PlayerObj : MonoBehaviour, IDamageable, IContainerOwner,ICanChangeH
    
     public bool SelectSlot(ItemSlot slot)
     {
-        if (TryGetComponent<PlayerController>(out var controller) && controller.isTalking) return false;
+        if (!CanAct) return false;
         if (slot == null || (slot.Owner != Bag && slot.Owner != QuickBar)) return false;
         if (SelectedSlot == slot) return false;
         SelectedSlot = slot;
@@ -348,7 +438,8 @@ public class PlayerObj : MonoBehaviour, IDamageable, IContainerOwner,ICanChangeH
 
     public bool ChangeItem(ItemData itemData)
     {
-        displayedItem = itemData != null && itemData.count > 0 ? itemData : null;
+        displayedItem = null;
+        if (itemData != null && itemData.count > 0) displayedItem = itemData;
         if (Data != null) Data.HandingItem = displayedItem;
         if (HandingItem != null)
         {
@@ -358,6 +449,7 @@ public class PlayerObj : MonoBehaviour, IDamageable, IContainerOwner,ICanChangeH
         }
 
         
+        if (EquippedItemChanged != null) EquippedItemChanged(displayedItem);
         if (itemData == null || itemData.count <= 0) return true;
         if (handPos == null || itemData.prefab == null) return false;
 

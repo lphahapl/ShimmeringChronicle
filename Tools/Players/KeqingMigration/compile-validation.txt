@@ -1,0 +1,6 @@
+Unity 6000.3.10f1 compilation and final validation
+PASS: Assembly-CSharp.dll compiled at 2026-10-25T15:17:32
+PASS: Assembly-CSharp-Editor.dll compiled at 2026-10-25T15:17:33
+asset-validation.txt: passed=10, failed=0
+play-validation.txt: passed=18, failed=0
+main-scene-validation.txt: passed=9, failed=0

@@ -1,0 +1,26 @@
+PASS: 琳妮特玩家预制体存在
+PASS: 琳妮特自身 Humanoid Avatar 有效
+PASS: 直接共用通用基础状态机
+PASS: 共用玩家逻辑
+PASS: 源场景太刀与三段伤害配置、图标存在
+PASS: 太刀覆盖动画基于同一通用状态机
+PASS: 独立动画 Lucy_Walk_F_Start_Root
+PASS: 独立动画 Combo3
+PASS: 独立动画 Keqing_RunF_Loop
+PASS: 独立动画 Lucy_Slide_F_Root
+PASS: 独立动画 Keqing_TurnL90_Loop
+PASS: 独立动画 Lucy_Slide_B_Root
+PASS: 独立动画 Lucy_TurnR_180_Root_Loop
+PASS: 独立动画 Lucy_TurnL_180_Root_Loop
+PASS: 独立动画 Keqing_Combo1
+PASS: 独立动画 Lucy_Slide_L_Root
+PASS: 独立动画 Lucy_Idle
+PASS: 独立动画 Keqing_WalkF_Loop
+PASS: 独立动画 Keqing_Combo2
+PASS: 独立动画 Keqing_TurnR90_Loop
+PASS: 独立动画 Lucy_Slide_R_Root
+PASS: 独立动画 hit_head_front
+PASS: 独立动画 dead_01
+PASS: 源攻击 1 为 Humanoid 动画
+PASS: 源攻击 2 为 Humanoid 动画
+PASS: 源攻击 3 为 Humanoid 动画

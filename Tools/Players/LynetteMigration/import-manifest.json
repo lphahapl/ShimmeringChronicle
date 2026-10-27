@@ -1,0 +1,185 @@
+{
+  "files": [
+    {
+      "source": "Assets\\Arts\\Models\\Lynette\\Lynette.fbx",
+      "target": "Assets\\Prefabs\\Player\\Lynette\\Models\\Lynette.fbx",
+      "sha256": "f982ab2dba111af4426eb801cfb14b77b5ca812d9227b71efc8e9fafe12883ee"
+    },
+    {
+      "source": "Assets\\Arts\\Models\\Lynette\\Original_Model_Readme.txt",
+      "target": "Assets\\Prefabs\\Player\\Lynette\\Models\\Original_Model_Readme.txt",
+      "sha256": "8de5bb7164cb260815713cf9705978b79cd8897fe3d9b85a5960f9824cf5b462"
+    },
+    {
+      "source": "Assets\\Arts\\Models\\Lynette\\Textures\\body.png",
+      "target": "Assets\\Prefabs\\Player\\Lynette\\Textures\\body.png",
+      "sha256": "2c33cbdf855f41309a9179cf16adf33b58dc29dc3259d4483760eae8201caa32"
+    },
+    {
+      "source": "Assets\\Arts\\Models\\Lynette\\Textures\\face.png",
+      "target": "Assets\\Prefabs\\Player\\Lynette\\Textures\\face.png",
+      "sha256": "8485b6f26d8c512f53b7d22b2357abebe68bbebc4bbc220125893311301e09f1"
+    },
+    {
+      "source": "Assets\\Arts\\Models\\Lynette\\Textures\\hair.bmp",
+      "target": "Assets\\Prefabs\\Player\\Lynette\\Textures\\hair.bmp",
+      "sha256": "5266df6442d7c69d19908b558254d85bda94ead656c2a9c88aa7d88b68561c42"
+    },
+    {
+      "source": "Assets\\Arts\\Models\\Lynette\\Textures\\hair.png",
+      "target": "Assets\\Prefabs\\Player\\Lynette\\Textures\\hair.png",
+      "sha256": "8c03a799563871f323d278232a2320e723d31e5066568ac6587a5db3cbdbc009"
+    },
+    {
+      "source": "Assets\\Arts\\Models\\Lynette\\Textures\\hair_s.bmp",
+      "target": "Assets\\Prefabs\\Player\\Lynette\\Textures\\hair_s.bmp",
+      "sha256": "5a9b024bd19b06f228c4e33514d5a5047dd03c01277ee42f6f5ab6d9c6668ddb"
+    },
+    {
+      "source": "Assets\\Arts\\Models\\Lynette\\Textures\\s1.bmp",
+      "target": "Assets\\Prefabs\\Player\\Lynette\\Textures\\s1.bmp",
+      "sha256": "351911392deac43e4a1f812e84b8227ad522e56d6de8cd2be26b8895c2053da3"
+    },
+    {
+      "source": "Assets\\Arts\\Models\\Lynette\\Textures\\skin.bmp",
+      "target": "Assets\\Prefabs\\Player\\Lynette\\Textures\\skin.bmp",
+      "sha256": "02d7360ca41412d8a7d44f9930d73c700668511afdaad6b19976d09d3b477f99"
+    },
+    {
+      "source": "Assets\\Arts\\Models\\Lynette\\Textures\\skin.png",
+      "target": "Assets\\Prefabs\\Player\\Lynette\\Textures\\skin.png",
+      "sha256": "33396ff6f11bb0ef7df02dabb0d46c5a8b997d328a08d3f50c476199585a2592"
+    },
+    {
+      "source": "Assets\\Arts\\Models\\Lynette\\Textures\\spa_h.png",
+      "target": "Assets\\Prefabs\\Player\\Lynette\\Textures\\spa_h.png",
+      "sha256": "0d9c4faf0d749ecc27c84d6c0e8ecfa874966bf60e5136113f97393ff6766b96"
+    },
+    {
+      "source": "Assets\\Arts\\Models\\Lynette\\Textures\\texture_15.png",
+      "target": "Assets\\Prefabs\\Player\\Lynette\\Textures\\texture_15.png",
+      "sha256": "12bdd32ec7839fbe17f69666cb379636d8d1fddc263e09f0d9630fed46d25250"
+    },
+    {
+      "source": "Assets\\Arts\\Models\\Lynette\\Textures\\texture_17.png",
+      "target": "Assets\\Prefabs\\Player\\Lynette\\Textures\\texture_17.png",
+      "sha256": "20feb47c38cb00a38cc96e1b81b2644a949e3bab59a67c5f5d291db62c4d939c"
+    },
+    {
+      "source": "Assets\\Arts\\Models\\Lynette\\Textures\\texture_19.png",
+      "target": "Assets\\Prefabs\\Player\\Lynette\\Textures\\texture_19.png",
+      "sha256": "6308063a6a0ae10004d797bf756abf6cd770d83d2d7ebb6295029aa30a1060e7"
+    },
+    {
+      "source": "Assets\\Arts\\Models\\Lynette\\Textures\\texture_21.png",
+      "target": "Assets\\Prefabs\\Player\\Lynette\\Textures\\texture_21.png",
+      "sha256": "d20e2e1445d98e9886e4f482527914b1b25a0b21c32847195b51fced92d94d83"
+    },
+    {
+      "source": "Assets\\Arts\\Models\\Lynette\\Textures\\texture_22.png",
+      "target": "Assets\\Prefabs\\Player\\Lynette\\Textures\\texture_22.png",
+      "sha256": "683bffd02deca25cce9614dd79fa938afb9ade4c41d24e2f0b3761e8602972a6"
+    },
+    {
+      "source": "Assets\\Arts\\Models\\Lynette\\Textures\\texture_24.png",
+      "target": "Assets\\Prefabs\\Player\\Lynette\\Textures\\texture_24.png",
+      "sha256": "4592a7a2fcea1f1a2bf794bfaf78d5e79d30435aaf04af7e3ca363c21c8f9bfe"
+    },
+    {
+      "source": "Assets\\Arts\\Models\\Lynette\\Textures\\toon_defo.bmp",
+      "target": "Assets\\Prefabs\\Player\\Lynette\\Textures\\toon_defo.bmp",
+      "sha256": "9588c05a177dddea99eca5b7afbe05bc23e2f740aeffe574580ffe3aca3be1a5"
+    },
+    {
+      "source": "Assets\\Arts\\Models\\Lynette\\Weapons\\Lynette_Katana_Grip.mesh.asset",
+      "target": "Assets\\Prefabs\\Player\\Lynette\\Weapons\\Source\\Lynette_Katana_Grip.mesh.asset",
+      "sha256": "7c3339de4bbd8b8f7bea55b7dc75eb2bfbaa7ed9328eb77cc9a6a701f9114081"
+    },
+    {
+      "source": "Assets\\Arts\\Models\\Lynette\\Weapons\\Lynette_Katana_Grip.prefab",
+      "target": "Assets\\Prefabs\\Player\\Lynette\\Weapons\\Source\\Lynette_Katana_Grip.prefab",
+      "sha256": "eea73818f4d9d0df8562506d7c4ed35d2d730fcbe8b511bf744f976503293390"
+    },
+    {
+      "source": "Assets\\CombatGirlsCharacterPack\\Humanoid_Bot\\Materials\\Humanoid_Body_PlasticW.mat",
+      "target": "Assets\\Prefabs\\Player\\Lynette\\Animations\\Source\\CombatGirlsCharacterPack\\Humanoid_Bot\\Materials\\Humanoid_Body_PlasticW.mat",
+      "sha256": "45fc8e22a31ffc940e67a7790e8be9837931a600f837fed7f8036253f85f487f"
+    },
+    {
+      "source": "Assets\\CombatGirlsCharacterPack\\Humanoid_Bot\\Materials\\Humanoid_Body_PlasticY.mat",
+      "target": "Assets\\Prefabs\\Player\\Lynette\\Animations\\Source\\CombatGirlsCharacterPack\\Humanoid_Bot\\Materials\\Humanoid_Body_PlasticY.mat",
+      "sha256": "052a9f03ff52f43f1fe8661b581deaddc5d04b5b27fdec082b49c64de01d3080"
+    },
+    {
+      "source": "Assets\\CombatGirlsCharacterPack\\Humanoid_Bot\\Materials\\Humanoid_Face.mat",
+      "target": "Assets\\Prefabs\\Player\\Lynette\\Animations\\Source\\CombatGirlsCharacterPack\\Humanoid_Bot\\Materials\\Humanoid_Face.mat",
+      "sha256": "412483e92d72879fcd04a1e25c837901a456732263a37a59c8887e4100d9ea41"
+    },
+    {
+      "source": "Assets\\CombatGirlsCharacterPack\\Humanoid_Bot\\Models\\Humanoid_F.fbx",
+      "target": "Assets\\Prefabs\\Player\\Lynette\\Animations\\Source\\CombatGirlsCharacterPack\\Humanoid_Bot\\Models\\Humanoid_F.fbx",
+      "sha256": "960b09ae45717eccd9012d6751c18ed43b63357dc9cdb09d695c610e796f48eb"
+    },
+    {
+      "source": "Assets\\CombatGirlsCharacterPack\\Humanoid_Bot\\Texture\\Humanoid_Body_Albedo.png",
+      "target": "Assets\\Prefabs\\Player\\Lynette\\Animations\\Source\\CombatGirlsCharacterPack\\Humanoid_Bot\\Texture\\Humanoid_Body_Albedo.png",
+      "sha256": "400d838b024bab7d2b35ac4948f36269006a9bcf4a3aa9541c8a3cfc1878aeef"
+    },
+    {
+      "source": "Assets\\CombatGirlsCharacterPack\\Humanoid_Bot\\Texture\\Humanoid_Body_MetallicSmoothness.png",
+      "target": "Assets\\Prefabs\\Player\\Lynette\\Animations\\Source\\CombatGirlsCharacterPack\\Humanoid_Bot\\Texture\\Humanoid_Body_MetallicSmoothness.png",
+      "sha256": "e8ae18c3b7af2827de5c6184001fd086d436799b6754a62018a86f16ed5ab5a7"
+    },
+    {
+      "source": "Assets\\CombatGirlsCharacterPack\\Humanoid_Bot\\Texture\\Humanoid_Body_Normal.png",
+      "target": "Assets\\Prefabs\\Player\\Lynette\\Animations\\Source\\CombatGirlsCharacterPack\\Humanoid_Bot\\Texture\\Humanoid_Body_Normal.png",
+      "sha256": "fda20329aed82bc440e63affb1ac5fce3cc9be243b33f3c21bd1c691f16527b8"
+    },
+    {
+      "source": "Assets\\CombatGirlsCharacterPack\\Humanoid_Bot\\Texture\\Humanoid_Head_Albedo.png",
+      "target": "Assets\\Prefabs\\Player\\Lynette\\Animations\\Source\\CombatGirlsCharacterPack\\Humanoid_Bot\\Texture\\Humanoid_Head_Albedo.png",
+      "sha256": "9abf38b960a984098d7523f2061d064ae1e4b0d0164b77045ee39a4a9682287d"
+    },
+    {
+      "source": "Assets\\CombatGirlsCharacterPack\\School_Katana_Girl\\Animations\\Normal\\Attack1.fbx",
+      "target": "Assets\\Prefabs\\Player\\Lynette\\Animations\\Source\\CombatGirlsCharacterPack\\School_Katana_Girl\\Animations\\Normal\\Attack1.fbx",
+      "sha256": "80fb044a7bccdfca897474d99c5b3e2015fe58fc8ce8e62f27253608fd28353a"
+    },
+    {
+      "source": "Assets\\CombatGirlsCharacterPack\\School_Katana_Girl\\Animations\\Normal\\Attack2.fbx",
+      "target": "Assets\\Prefabs\\Player\\Lynette\\Animations\\Source\\CombatGirlsCharacterPack\\School_Katana_Girl\\Animations\\Normal\\Attack2.fbx",
+      "sha256": "178131c0ab07da55d4e6f64db179a143461b776dff341b3e75801a242254e7f3"
+    },
+    {
+      "source": "Assets\\CombatGirlsCharacterPack\\School_Katana_Girl\\Animations\\Normal\\Attack3.fbx",
+      "target": "Assets\\Prefabs\\Player\\Lynette\\Animations\\Source\\CombatGirlsCharacterPack\\School_Katana_Girl\\Animations\\Normal\\Attack3.fbx",
+      "sha256": "98534c9b4bbffeaca466ca6f1efa428d04ed08b1b3d5b0b2f80e2a87108994e3"
+    },
+    {
+      "source": "Assets\\Grruzam Powerful Sword Animation(Great Sword, Katana)\\Modeling\\Modeling_Weapon_katana_Blade.FBX",
+      "target": "Assets\\Prefabs\\Player\\Lynette\\Weapons\\Source\\External\\Grruzam Powerful Sword Animation(Great Sword, Katana)\\Modeling\\Modeling_Weapon_katana_Blade.FBX",
+      "sha256": "686cac22b5da2f5bbf77e2fd34ad095ba01079acc82d6dae6a742ed4508a9ea1"
+    }
+  ],
+  "guid_remap": {},
+  "attacks": [
+    {
+      "state": "Attack1",
+      "path": "Assets/Prefabs/Player/Lynette/Animations/Source/CombatGirlsCharacterPack/School_Katana_Girl/Animations/Normal/Attack1.fbx",
+      "fileID": "-441296982555202684"
+    },
+    {
+      "state": "Attack2",
+      "path": "Assets/Prefabs/Player/Lynette/Animations/Source/CombatGirlsCharacterPack/School_Katana_Girl/Animations/Normal/Attack2.fbx",
+      "fileID": "-8632713256952390345"
+    },
+    {
+      "state": "Attack3",
+      "path": "Assets/Prefabs/Player/Lynette/Animations/Source/CombatGirlsCharacterPack/School_Katana_Girl/Animations/Normal/Attack3.fbx",
+      "fileID": "-2809026575308471513"
+    }
+  ],
+  "model": "Assets/Prefabs/Player/Lynette/Models/Lynette.fbx",
+  "weapon": "Assets/Prefabs/Player/Lynette/Weapons/Source/Lynette_Katana_Grip.prefab",
+  "sourceHandFileID": "7779381519644748394"
+}
